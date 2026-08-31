@@ -1,0 +1,39 @@
+@import "tailwindcss";
+
+/* This app uses a single light theme (no light/dark toggle yet) — kept as
+   the one source of truth here since Tailwind v4 utilities live inside a
+   cascade layer and would otherwise silently lose to any unlayered rule
+   here, regardless of specificity. */
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+
+  /* Storybook palette — scoped to the interactive Walkthrough card and its
+     shared chrome (progress bar, Term tooltips, sliders). The outer app
+     (nav, breadcrumbs, module pages) intentionally stays white/neutral and
+     does not use these. See docs/guideline.md and the "storybook style
+     pass" plan for the reasoning. */
+  --storybook-paper: #faf3e1;
+  --storybook-ink: #2a2420;
+  --storybook-accent: #e2703a;
+  --storybook-accent-dark: #b8551f;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+
+  --color-storybook-paper: var(--storybook-paper);
+  --color-storybook-ink: var(--storybook-ink);
+  --color-storybook-accent: var(--storybook-accent);
+  --color-storybook-accent-dark: var(--storybook-accent-dark);
+  --font-storybook-heading: var(--font-caveat);
+  --font-storybook-body: var(--font-nunito);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}

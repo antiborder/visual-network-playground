@@ -1,0 +1,18 @@
+# Node / frontend
+node_modules/
+.next/
+frontend/.env*.local
+frontend/dist/
+frontend/coverage/
+
+# Env / secrets
+.env
+.env.*
+!.env.example
+
+# OS
+.DS_Store
+
+# Editors
+.vscode/
+.idea/

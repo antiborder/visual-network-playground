@@ -11,11 +11,17 @@ export function SegmentedProgressBar({
   sections,
   currentStep,
   onSelectStep,
+  proportional = false,
 }: {
   /** sections[i] = the section label of step i, for every step in order. */
   sections: string[];
   currentStep: number;
   onSelectStep: (index: number) => void;
+  /** Size each segment in proportion to how many steps it contains, instead
+   * of giving every segment equal width regardless of length. Opt-in per
+   * walkthrough while this rolls out chapter by chapter — see the chat
+   * that requested it. */
+  proportional?: boolean;
 }) {
   const segments: { section: string; start: number; end: number }[] = [];
   sections.forEach((section, i) => {
@@ -54,7 +60,8 @@ export function SegmentedProgressBar({
             onKeyDown={(e) => {
               if (e.key === "Enter" || e.key === " ") onSelectStep(seg.start);
             }}
-            className="flex-1 h-1.5 rounded-full bg-neutral-200 overflow-hidden cursor-pointer"
+            className="h-1.5 rounded-full bg-neutral-200 overflow-hidden cursor-pointer"
+            style={{ flex: proportional ? `${segLen} 1 0%` : "1 1 0%" }}
           >
             <div
               className="h-full bg-storybook-accent transition-all"

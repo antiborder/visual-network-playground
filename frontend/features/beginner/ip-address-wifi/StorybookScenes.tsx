@@ -258,7 +258,8 @@ function RailLine({ x1, y1, x2, y2 }: { x1: number; y1: number; x2: number; y2: 
   );
 }
 
-/** A small train car on the rails — a passenger (data) in transit. */
+/** A small train car on the rails — the vehicle carrying packets (crates)
+ * between stations; not itself a stand-in for data. */
 function TrainCar({ x, y }: { x: number; y: number }) {
   return (
     <g transform={`translate(${x},${y})`}>
@@ -704,11 +705,11 @@ export function SceneWorldNetworks() {
   return frame(
     <>
       <GroundLine />
-      <CloudShape x={90} y={40} scale={0.5} />
-      <CloudShape x={200} y={35} scale={0.6} />
-      <CloudShape x={250} y={70} scale={0.4} />
-      <line x1={105} y1={50} x2={185} y2={45} stroke={INK} strokeOpacity="0.3" strokeWidth="1.3" strokeDasharray="3 3" />
-      <line x1={215} y1={50} x2={245} y2={65} stroke={INK} strokeOpacity="0.3" strokeWidth="1.3" strokeDasharray="3 3" />
+      <StationBuilding x={90} y={65} scale={0.5} />
+      <StationBuilding x={200} y={60} scale={0.6} />
+      <StationBuilding x={250} y={80} scale={0.4} />
+      <line x1={100} y1={62} x2={185} y2={58} stroke={INK} strokeOpacity="0.3" strokeWidth="1.3" strokeDasharray="3 3" />
+      <line x1={212} y1={62} x2={243} y2={73} stroke={INK} strokeOpacity="0.3" strokeWidth="1.3" strokeDasharray="3 3" />
       <Mouse x={110} y={98} scale={0.9} />
     </>,
   );
@@ -722,6 +723,20 @@ export function SceneReadyToUpload() {
       <PhoneShape x={128} y={82} />
       <CheeseWedge x={128} y={60} />
       <CloudShape x={225} y={45} scale={0.6} />
+    </>,
+  );
+}
+
+/** Pip riding a train along the rails — the chapter-opening hero image
+ * pairing the "what you'll learn" summary with the railway framing the
+ * whole chapter uses, before the story proper (and the reason for it)
+ * even begins. */
+export function ScenePipOnTrain() {
+  return frame(
+    <>
+      <RailLine x1={10} y1={100} x2={290} y2={100} />
+      <TrainCar x={150} y={88} />
+      <Mouse x={150} y={70} scale={0.65} />
     </>,
   );
 }
@@ -994,6 +1009,126 @@ export function SceneBoardPosted() {
       <GroundLine />
       <BoardShape x={150} y={65} whole />
       <Mouse x={90} y={98} scale={0.85} />
+    </>,
+  );
+}
+
+// -------- "The Short Way Home" (dream/train-world) scenes (v3) --------
+
+/** A small crate — the photo, boxed up into one labeled parcel among many
+ * once it's sliced into packets for the trip. */
+function Crate({ x, y }: { x: number; y: number }) {
+  return (
+    <g transform={`translate(${x},${y})`}>
+      <rect x="-8" y="-8" width="16" height="16" fill={PAPER} stroke={INK} strokeWidth="1.3" />
+      <line x1="-8" y1="0" x2="8" y2="0" stroke={INK} strokeOpacity="0.5" strokeWidth="1" />
+      <line x1="0" y1="-8" x2="0" y2="8" stroke={INK} strokeOpacity="0.5" strokeWidth="1" />
+    </g>
+  );
+}
+
+/** A small station announcement horn — the broadcast-and-reply moment
+ * (ARP) happening out loud over the platform speakers. */
+function Megaphone({ x, y }: { x: number; y: number }) {
+  return (
+    <g transform={`translate(${x},${y})`}>
+      <path d="M-7 -4 L4 -9 L4 9 L-7 4 Z" fill={ACCENT} fillOpacity="0.4" stroke={INK} strokeWidth="1.2" strokeLinejoin="round" />
+      <path d="M4 -9 L13 -12 L13 12 L4 9 Z" fill={ACCENT} fillOpacity="0.2" stroke={INK} strokeWidth="1" strokeLinejoin="round" />
+    </g>
+  );
+}
+
+export function SceneAtPhoneStation() {
+  return frame(
+    <>
+      <RailLine x1={10} y1={100} x2={290} y2={100} />
+      <StationBuilding x={90} y={100} scale={0.9} />
+      <Building x={225} y={100} />
+      <Mouse x={155} y={100} scale={0.85} />
+    </>,
+  );
+}
+
+export function SceneStationMap() {
+  return frame(
+    <>
+      <RailLine x1={10} y1={100} x2={290} y2={100} />
+      <StationBuilding x={235} y={100} scale={0.8} />
+      <Mouse x={140} y={100} scale={0.85} />
+      <Notebook x={185} y={70} />
+    </>,
+  );
+}
+
+export function SceneCargoSlicing() {
+  return frame(
+    <>
+      <RailLine x1={10} y1={100} x2={290} y2={100} />
+      <StationBuilding x={90} y={100} scale={0.85} />
+      <Mouse x={150} y={100} scale={0.85} />
+      <Crate x={195} y={78} />
+      <Crate x={215} y={70} />
+      <Crate x={210} y={90} />
+    </>,
+  );
+}
+
+export function SceneCheckingSameLine() {
+  return frame(
+    <>
+      <RailLine x1={10} y1={100} x2={290} y2={100} />
+      <StationBuilding x={80} y={100} scale={0.8} />
+      <StationBuilding x={225} y={100} scale={0.8} />
+      <Mouse x={150} y={100} scale={0.85} />
+      <Bubble x={150} y={50} text="Same line!" width={72} />
+    </>,
+  );
+}
+
+export function SceneStationAnnouncement() {
+  return frame(
+    <>
+      <RailLine x1={10} y1={100} x2={290} y2={100} />
+      <StationBuilding x={225} y={100} scale={0.85} />
+      <Mouse x={125} y={100} scale={0.85} />
+      <Megaphone x={165} y={80} />
+    </>,
+  );
+}
+
+export function SceneJunctionSwitch() {
+  return frame(
+    <>
+      <RailLine x1={10} y1={100} x2={150} y2={100} />
+      <RailLine x1={150} y1={100} x2={280} y2={62} />
+      <RailLine x1={150} y1={100} x2={280} y2={100} />
+      <Mouse x={105} y={100} scale={0.8} />
+      <TrainCar x={195} y={90} />
+    </>,
+  );
+}
+
+export function SceneArrivalAtDadStation() {
+  return frame(
+    <>
+      <RailLine x1={10} y1={100} x2={290} y2={100} />
+      <StationBuilding x={225} y={100} scale={0.95} />
+      <TrainCar x={150} y={88} />
+      <Mouse x={95} y={100} scale={0.85} />
+    </>,
+  );
+}
+
+/** Pip boarding the train alongside the crates — the moment the "package
+ * traveling through the network" analogy stops being something Pip only
+ * watches and becomes something he rides along with. */
+export function ScenePipBoardsTrain() {
+  return frame(
+    <>
+      <RailLine x1={10} y1={100} x2={290} y2={100} />
+      <StationBuilding x={230} y={100} scale={0.85} />
+      <TrainCar x={150} y={88} />
+      <Mouse x={110} y={100} scale={0.85} />
     </>,
   );
 }

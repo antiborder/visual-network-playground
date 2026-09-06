@@ -40,6 +40,22 @@ function CloudIcon({ x, y }: { x: number; y: number }) {
   );
 }
 
+/** A small train riding the line — Dad's railway analogy made visible: data
+ * traveling the chain the same way a train travels the rails. `y` is the
+ * connecting line's own y-coordinate; the car sits on top of it, wheels
+ * touching the line. */
+function TrainIcon({ x, y }: { x: number; y: number }) {
+  return (
+    <g>
+      <rect x={x - 12} y={y - 14} width={24} height={12} rx={2} fill={CARD} stroke={LINE} strokeWidth={1.5} />
+      <rect x={x - 7} y={y - 11} width={6} height={5} fill={ACCENT_FILL} stroke={LINE} strokeWidth={1} />
+      <rect x={x + 1} y={y - 11} width={6} height={5} fill={ACCENT_FILL} stroke={LINE} strokeWidth={1} />
+      <circle cx={x - 6} cy={y - 1} r={2.2} fill={SUBTLE} />
+      <circle cx={x + 6} cy={y - 1} r={2.2} fill={SUBTLE} />
+    </g>
+  );
+}
+
 /** Phone → Router → Modem → Internet, the whole chain in one row. This is
  * the chapter's "hero visual" (see docs/guideline.md): shown plain on the
  * chapter-at-a-glance step, then reused with one node highlighted right
@@ -60,6 +76,8 @@ export function NetworkChainDiagram({ highlight }: { highlight?: "router" | "mod
       <line x1={phoneX + 14} y1={y} x2={routerX - 26} y2={y} stroke={LINE} strokeWidth={1.5} strokeDasharray="4 4" />
       <line x1={routerX + 26} y1={y} x2={modemX - 26} y2={y} stroke={LINE} strokeWidth={1.5} />
       <line x1={modemX + 26} y1={y} x2={cloudX - 44} y2={y} stroke={LINE} strokeWidth={1.5} />
+
+      <TrainIcon x={(routerX + modemX) / 2} y={y} />
 
       <PhoneIcon x={phoneX} y={y} />
       <text x={phoneX} y={y + 32} textAnchor="middle" fontSize={13} fill={SUBTLE}>

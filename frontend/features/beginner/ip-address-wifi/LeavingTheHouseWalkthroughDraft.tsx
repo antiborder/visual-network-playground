@@ -321,6 +321,7 @@ export function LeavingTheHouseWalkthroughDraft({ onComplete }: { onComplete: ()
         sections={steps.map((s) => s.section)}
         currentStep={step}
         onSelectStep={setStep}
+        proportional
       />
 
       <div className="space-y-4">

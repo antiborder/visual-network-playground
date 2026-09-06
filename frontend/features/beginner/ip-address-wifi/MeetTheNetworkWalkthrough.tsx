@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { Term } from "@/components/Term";
 import { SegmentedProgressBar } from "@/components/SegmentedProgressBar";
 import { StoryText } from "@/components/StoryText";
@@ -13,7 +13,6 @@ import {
   NetworkOfNetworksDiagram,
   WifiLockDiagram,
   AddressAnalogyDiagram,
-  ClientServerDiagram,
 } from "./NetworkDiagrams";
 import {
   SceneHallwayBox,
@@ -26,7 +25,7 @@ import {
   SceneWorldNetworks,
   SceneWifiLock,
   ScenePhoneNumber,
-  SceneReadyToUpload,
+  ScenePipOnTrain,
   SceneFallingAsleep,
   SceneWakingAtStation,
 } from "./StorybookScenes";
@@ -36,7 +35,7 @@ import {
  * plot/illustrations as before — Pip's own Wi-Fi troubleshooting gives every
  * foundational term a concrete reason to come up — but every explanation
  * now leans on Dad's favorite way of making sense of networks: as a railway
- * system (devices = stations, Wi-Fi = an invisible rail, data = passengers,
+ * system (devices = stations, Wi-Fi = an invisible rail, data = crates,
  * the internet = the whole connected rail network). The chapter ends with
  * Pip falling asleep before he ever sends his photo, and waking up literally
  * inside that railway world — the twist that turns the analogy into the
@@ -46,9 +45,26 @@ import {
  * still uses the old wording until they're each converted in turn — see the
  * chat that made this call for why (existing terminology decisions from
  * earlier in the project were deliberately not treated as sacred here). */
-export function MeetTheNetworkWalkthrough({ onComplete }: { onComplete: () => void }) {
-  const [step, setStep] = useState(0);
-
+export function MeetTheNetworkWalkthrough({
+  onComplete,
+  finishLabel = "Finish",
+  onStepChange,
+  startAtEnd = false,
+}: {
+  onComplete: () => void;
+  /** Label for the button shown on the last step — "Finish" by default, or
+   * e.g. "Next Chapter" when the caller wants clicking it to leave this
+   * chapter entirely rather than just marking it done in place. */
+  finishLabel?: string;
+  /** Fires whenever the current step changes, so a wrapping "Lab" can react
+   * to the reader reaching a particular step (e.g. the last one) without
+   * needing to wait for the Finish/Next Chapter button to be clicked. */
+  onStepChange?: (step: number, total: number) => void;
+  /** Mount straight onto the last step instead of the first — for when the
+   * reader arrives here by clicking "Previous Chapter" from Chapter 2, and
+   * should land back where they'd have been, not at the very beginning. */
+  startAtEnd?: boolean;
+}) {
   // --- "Chasing the Signal" interference sandbox ---
   const [wallCount, setWallCount] = useState<0 | 1 | 2>(2);
 
@@ -67,33 +83,37 @@ export function MeetTheNetworkWalkthrough({ onComplete }: { onComplete: () => vo
     {
       section: "Welcome",
       title: "What you learn from this chapter",
+      story: {
+        text: "Meet Pip, a mouse whose Wi-Fi is acting up in his own room. Chasing down why gives you every basic term for how a home network fits together.",
+        illustration: <ScenePipOnTrain />,
+      },
       body: (
-        <div className="space-y-3">
-          <p>
-            Meet Pip, a mouse whose Wi-Fi is acting up in his own room. Chasing down why gives you
-            every basic term for how a home network fits together — Dad explains all of it his own
-            favorite way, as a railway system — before Pip ever gets around to sharing a photo with
-            the world.
-          </p>
-          <ol className="list-decimal pl-5 space-y-0.5">
-            <li>Chasing the Wi-Fi</li>
-            <li>The Home Network</li>
-            <li>An Address of His Own</li>
-            <li>A Strange Dream</li>
-          </ol>
-        </div>
+        <ul className="list-disc pl-5 space-y-0.5">
+          <li>Wi-Fi basics: signal strength, interference, and the 2.4GHz/5GHz tradeoff</li>
+          <li>The router and modem, and what makes a LAN different from the internet</li>
+          <li>IP addresses &mdash; private vs. global &mdash; and basic Wi-Fi security</li>
+        </ul>
       ),
     },
     {
       section: "Welcome",
       title: "The chapter at a glance",
+      story: {
+        text: "Pip is an ordinary mouse, living in an ordinary house. Dinner just finished, and he's back in his room for the night, trying to send a photo from his phone.\nPip: \"Ugh, so slow. Did Dad start streaming something again?\"\nHis Wi-Fi signal, it seems, is weak.",
+        illustration: <SceneHallwayBox />,
+      },
       body: (
-        <p>
-          In short: Pip chases a weak Wi-Fi signal from his room, meets the router and the modem
-          behind it, learns what a home network actually is — and picks up an address of his own
-          along the way. Dad explains every bit of it as a railway system, and by the end, that
-          railway stops feeling like just an analogy.
-        </p>
+        <div className="space-y-2">
+          <p>
+            This chapter builds up the pieces of a home network one at a time: how Wi-Fi carries
+            a signal, what a router and modem each do, and how a LAN differs from the internet —
+            all explained through a railway analogy.
+          </p>
+          <p>
+            It ends with every device getting its own address — the number that makes it
+            reachable at all.
+          </p>
+        </div>
       ),
       visual: <NetworkChainDiagram />,
     },
@@ -102,7 +122,7 @@ export function MeetTheNetworkWalkthrough({ onComplete }: { onComplete: () => vo
       section: "1. Chasing the Wi-Fi",
       title: "A Weak Signal",
       story: {
-        text: "Pip is an ordinary mouse, living in an ordinary house. Dinner just finished, and he's back in his room for the night, trying to send a photo from his phone.\nPip: \"Ugh, so slow. Did Dad start streaming something again?\"\nHis Wi-Fi signal is barely holding on, right here in his own room.\nPip: \"I wonder if Dad's in his room...\"\nPip steps out into the hallway.\nPip: \"Oh, right — the Wi-Fi comes from that white box.\"\nDown the dim hallway sits a small box, glowing faintly.\nSomewhere between his phone and that little box, something is supposed to be carrying his data through — and right now, it isn't.",
+        text: "His Wi-Fi signal is barely holding on, right here in his own room.\nPip: \"I wonder if Dad's in his room...\"\nPip steps out into the hallway.\nDown the dim hallway sits a small box, glowing faintly.\nPip: \"Oh, right — the Wi-Fi comes from that white box.\"\nSomewhere between his phone and that little box, something is supposed to be carrying his data through — and right now, it isn't.",
         illustration: <SceneHallwayBox />,
       },
       body: (
@@ -169,7 +189,7 @@ export function MeetTheNetworkWalkthrough({ onComplete }: { onComplete: () => vo
       section: "1. Chasing the Wi-Fi",
       title: "Two Speeds to Choose From",
       story: {
-        text: "Pip nearly jumps out of his fur — someone's right behind him.\nDad: \"What are you up to?\"\nPip: \"Aah! Oh — it's just you, Dad. Don't sneak up on me like that.\"\nDad: \"Sorry, sorry. You looked like you were wandering around out here.\"\nPip explains what's going on.\nDad: \"Ah, this I can explain — you know how I love trains. Think of it as two different rail services running side by side. 5 gigahertz is the express: faster up close, but it can't push through walls. 2.4 gigahertz is the local, all-stops line: slower, but it reaches farther and shrugs off walls better.\"\nPip: \"Huh — so it's not one Wi-Fi, it's two lines, and they trade off speed for reach.\"\nThat tradeoff, reach versus speed, is exactly what separates the 2.4GHz and 5GHz bands.\nPip: \"Oh, right — I think I saw '5GHz' and '2.4GHz' written on that white box.\"",
+        text: "Pip nearly jumps out of his fur — someone's right behind him.\nDad: \"What are you up to?\"\nPip: \"Aah! Oh — it's just you, Dad. Don't sneak up on me like that.\"\nDad: \"Sorry, sorry. You looked like you were wandering around out here.\"\nPip explains what's going on.\nDad: \"Ah — try switching to 5GHz?\"\nDad: \"5 gigahertz is the express: faster up close, but it can't push through walls.\"\nDad: \"2.4 gigahertz is the local, all-stops line: slower, but it reaches farther and shrugs off walls better.\"\nPip: \"Huh — so it's not one Wi-Fi, it's two lines, and they trade off speed for reach.\"\nThat tradeoff, reach versus speed, is exactly what separates the 2.4GHz and 5GHz bands.",
         illustration: <SceneTwoBands />,
       },
       body: (
@@ -221,16 +241,21 @@ export function MeetTheNetworkWalkthrough({ onComplete }: { onComplete: () => vo
       section: "1. Chasing the Wi-Fi",
       title: "The Router",
       story: {
-        text: "Pip crouches down by the blinking box in the corner of the study.\nPip: \"There it is — it really does say 5GHz and 2.4GHz. Both lights are lit, so I guess both lines come out of this one box?\"\nDad: \"That's right. In my head, that box is the junction station — every device's own little station in the house connects back to it, and it's what bundles all those local trips into one connection.\"\nDad explains, clearly happy to be asked.\nThat box, bundling one connection for every device in the house, is the router.",
+        text: "Pip: \"Oh, right — I think I saw '5GHz' and '2.4GHz' written on that white box.\"\nPip crouches down by the blinking box in the corner of the study.\nPip: \"There it is — it really does say 5GHz and 2.4GHz. Both lights are lit, so I guess both lines come out of this one box?\"\nDad: \"That's right. In my head, that box is the junction station — every device's own little station in the house connects back to it, and it's what bundles all those local trips into one connection.\"\nDad explains, clearly happy to be asked.\nThat box, bundling one connection for every device in the house, is the router.",
         illustration: <SceneRouterCloseup />,
       },
       body: (
-        <p>
-          A <Term id="router">router</Term> is the box that takes one internet connection and
-          spreads it to every device in the house — phones, PCs, smart devices, all through the
-          same one box. Dad&rsquo;s way of picturing it: the router is the junction station where
-          every device&rsquo;s own little station meets, before anything heads farther out.
-        </p>
+        <div className="space-y-2">
+          <p>
+            A <Term id="router">router</Term> is the box that takes one internet connection and
+            spreads it to every device in the house — phones, PCs, smart devices, all through the
+            same one box.
+          </p>
+          <p>
+            Dad&rsquo;s way of picturing it: the router is the junction station where every
+            device&rsquo;s own little station meets, before anything heads farther out.
+          </p>
+        </div>
       ),
       visual: (
         <LanMap devices={DEFAULT_DEVICES} conflictIds={new Set()} packet={null} showIp={false} />
@@ -378,9 +403,24 @@ export function MeetTheNetworkWalkthrough({ onComplete }: { onComplete: () => vo
     },
     {
       section: "3. An Address of His Own",
+      title: "Everyone on the List",
+      story: {
+        text: "Pip: \"So does that mean every phone and PC in this house uses the same password?\"\nDad: \"That's right — they're all connected to the same Wi-Fi router.\"\nDad: \"Let me show you the list of devices connected to our Wi-Fi, too.\"\nDad opens the router's app on his own phone.",
+        illustration: <ScenePhoneNumber />,
+      },
+      body: (
+        <p>
+          Dad&rsquo;s router keeps a running list of every device connected to the network, and
+          the number each one is currently using.
+        </p>
+      ),
+      visual: <LanMap devices={DEFAULT_DEVICES} conflictIds={new Set()} packet={null} showIp showCidr />,
+    },
+    {
+      section: "3. An Address of His Own",
       title: "A Number of His Own",
       story: {
-        text: "Pip: \"So does that mean every phone and PC in this house uses the same password?\"\nDad: \"That's right — they're all connected to the same Wi-Fi router.\"\nDad: \"Let me show you the list of devices connected to our Wi-Fi, too.\"\nDad opens the router's app on his own phone.\nPip: \"Whoa, there's a whole list! 'Pip's Phone — 192.168.1.10.' Is that... me?\"\nDad: \"Every station on a line gets a number like that. Four numbers separated by dots — an IP address.\"\nFour numbers separated by dots — that's an IP address, like a station number for a device on the network.",
+        text: "Pip: \"Whoa, there's a whole list! 'Pip's Phone — 192.168.1.10/24.' Is that... me?\"\nDad: \"Every station on a line gets a number like that. Four numbers separated by dots — an IP address.\"\nPip: \"What's the slash-24 part?\"\nDad: \"Don't worry about that bit for now — just the four numbers, for today.\"\nFour numbers separated by dots — that's an IP address, like a station number for a device on the network.",
         illustration: <ScenePhoneNumber />,
       },
       body: (
@@ -397,7 +437,6 @@ export function MeetTheNetworkWalkthrough({ onComplete }: { onComplete: () => vo
           </p>
         </div>
       ),
-      visual: <LanMap devices={DEFAULT_DEVICES} conflictIds={new Set()} packet={null} showIp />,
     },
     {
       section: "3. An Address of His Own",
@@ -418,108 +457,156 @@ export function MeetTheNetworkWalkthrough({ onComplete }: { onComplete: () => vo
             That&rsquo;s exactly what makes 192.168.1.10 a{" "}
             <Term id="private-ip">private address</Term> instead: reused by countless other
             homes&rsquo; routers, and meaningless on its own without a global address to say
-            which house it&rsquo;s in. In Dad&rsquo;s railway terms, it&rsquo;s a number that
-            only means something on our own little line — the mainline needs its own, separate
-            numbering entirely.
+            which house it&rsquo;s in.
+          </p>
+          <p>
+            In Dad&rsquo;s railway terms, it&rsquo;s a number that only means something on our
+            own little line — the mainline needs its own, separate numbering entirely.
           </p>
         </div>
       ),
       visual: <AddressAnalogyDiagram />,
     },
-    {
-      section: "3. An Address of His Own",
-      title: "Ready to Send",
-      story: {
-        text: "Pip remembers why he opened his phone in the first place.\nPip: \"Right — I still need to upload my photo to the Cheese-Lovers' Board.\"\nPip: \"It's not on my phone, not on Dad's PC. It must live on some computer far away — out in the cloud, as Dad calls it.\"\nDad: \"In my head, that's just a big station too — a huge one, always open, always waiting for someone to pull in.\"\nThat faraway computer is a server; Pip's own phone, reaching out to it, is a client. Sending his photo across is what \"uploading\" means.",
-        illustration: <SceneReadyToUpload />,
-      },
-      body: (
-        <div className="space-y-2">
-          <p>
-            The Cheese-Lovers&rsquo; Board doesn&rsquo;t live on Pip&rsquo;s phone or Dad&rsquo;s
-            PC — it lives on a <Term id="server">server</Term>, a faraway computer that&rsquo;s
-            always on, waiting for visitors. In Dad&rsquo;s railway picture, it&rsquo;s a huge
-            station somewhere out on the mainline that never closes.
-          </p>
-          <p>
-            Pip&rsquo;s phone, reaching out to it, is the <Term id="client">client</Term> —
-            the station that departs. Sending his photo across to that server is what
-            &ldquo;uploading&rdquo; means.
-          </p>
-        </div>
-      ),
-      visual: <ClientServerDiagram />,
-    },
     // -------------------------- 4. A Strange Dream ------------------------
     {
       section: "4. A Strange Dream",
-      title: "Lights Out",
+      title: "A Request from Dad",
       story: {
-        text: "Pip's thumb hovers over the upload button.\nPip: \"Okay, this time for real —\"\nBut a yawn cuts him off before he can finish the thought. It's been a long night of hallways, walls, and boxes with blinking lights.\nPip: \"...I'll just close my eyes for a second.\"\nHis phone slips from his hand, screen still open to the photo, still unsent.\nWithin a minute, Pip's fast asleep — his head still full of junction stations, mainlines, and station numbers.",
+        text: "Pip remembers why he opened his phone in the first place.\nPip: \"Right — I still need to upload my photo to the Cheese-Lovers' Board.\"\nJust then, Dad pokes his head in.\nDad: \"Hey — could you send me a copy of that photo too?\"\nPip: \"Sure thing. I'll send it later.\"\nDad: \"Alright then — good night.\"\nPip flops onto his bed, phone still in hand.\nPip: \"...still need to send that to Dad.\"\nWithin a minute, he's fast asleep.",
         illustration: <SceneFallingAsleep />,
       },
       body: (
-        <p className="text-storybook-ink/40 italic">(Technical explanation — not yet written.)</p>
+        <p>
+          Two trips are about to begin: a short one to Dad&rsquo;s PC, right here on the home
+          network, and a much longer one out to the internet, to the Cheese-Lovers&rsquo; Board.
+          The chapters ahead follow both.
+        </p>
       ),
     },
     {
       section: "4. A Strange Dream",
       title: "Waking at a Station",
       story: {
-        text: "Pip: \"...huh?\"\nHe opens his eyes to the low rumble of an engine and the smell of hot metal.\nHe's standing on a platform. Rails stretch out in both directions, further than he can see, hopping between little stations that look — oddly — like his own phone, and Dad's PC, and that blinking box in the hallway.\nA train pulls in beside him, doors sliding open.\nPip: \"...this is what Dad's been talking about, isn't it? Except it's not a picture in my head anymore. I'm actually standing in it.\"\nSomewhere out past the edge of the platform, an enormous network of rails hums quietly, carrying countless trips he can't yet see the end of.\nTo be continued.",
+        text: "A heavy metallic clatter rings out — clank, clank...\nPip: \"That sound...\"\nAnnouncement: \"Now arriving — Pip's Phone. Please mind your step.\"\nPip: \"Huh?\"\nPip opens his eyes. The scene is unfamiliar.\nHe was just in his room a moment ago...\nHe looks around — a train sits stopped nearby, a ticket gate right across from it.\nOn the wall beside it, painted in clear letters: \"PIP'S PHONE STATION.\"",
         illustration: <SceneWakingAtStation />,
       },
       body: (
-        <p className="text-storybook-ink/40 italic">(Technical explanation — not yet written.)</p>
+        <div className="space-y-3">
+          <p className="font-medium text-storybook-ink">Lost in the world of the network</p>
+          <p>
+            Everything Dad&rsquo;s been describing all night turns out to be real, right where
+            Pip&rsquo;s standing:
+          </p>
+          <div className="w-full max-w-xl overflow-x-auto rounded-lg border border-neutral-200 bg-white">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-neutral-200 text-left text-xs text-neutral-500">
+                  <th className="p-2 font-medium">Network term</th>
+                  <th className="p-2 font-medium">Dad&rsquo;s railway picture</th>
+                </tr>
+              </thead>
+              <tbody className="text-neutral-700">
+                <tr className="border-b border-neutral-100">
+                  <td className="p-2">Wi-Fi</td>
+                  <td className="p-2">An invisible rail</td>
+                </tr>
+                <tr className="border-b border-neutral-100">
+                  <td className="p-2">Router</td>
+                  <td className="p-2">The junction station bundling every device</td>
+                </tr>
+                <tr className="border-b border-neutral-100">
+                  <td className="p-2">Modem</td>
+                  <td className="p-2">The platform with a line out to the mainline</td>
+                </tr>
+                <tr className="border-b border-neutral-100">
+                  <td className="p-2">LAN</td>
+                  <td className="p-2">The private line running through just this house</td>
+                </tr>
+                <tr className="border-b border-neutral-100">
+                  <td className="p-2">Internet</td>
+                  <td className="p-2">The whole connected rail network</td>
+                </tr>
+                <tr>
+                  <td className="p-2">IP address</td>
+                  <td className="p-2">The number stenciled on a device&rsquo;s own station</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p>
+            Join Pip, lost in the world of the network — the rest of this story follows him
+            through it, one station at a time.
+          </p>
+        </div>
       ),
     },
     // ------------------------------ Wrap-up --------------------------
     {
       section: "Wrap-up",
-      title: "Now it's your turn",
+      title: "What You Learned",
+      story: {
+        text: "Pip: \"This is... Phone Station?\"\nRails stretch out in both directions, further than he can see, hopping between little stations that look — oddly — like Dad's PC, and that blinking box in the hallway.\nPip: \"...this is what Dad's been talking about, isn't it? Except it's not a picture in my head anymore. I'm actually standing in it.\"\nSomewhere out past the edge of the platform, an enormous network of rails hums quietly, carrying countless trips he can't yet see the end of.\nTo be continued.",
+        illustration: <SceneWakingAtStation />,
+      },
       body: (
         <div className="space-y-3">
-          <p>Here&rsquo;s everything this chapter covered:</p>
-          <ul className="list-disc pl-5 space-y-1">
+          <p>Here&rsquo;s what this chapter actually covered:</p>
+          <ul className="list-disc pl-5 space-y-2">
             <li>
               Wi-Fi signal strength fades with distance and <Term id="interference">interference</Term>{" "}
-              like walls; a router can offer more than one <Term id="wifi-band">Wi-Fi band</Term>,
-              trading reach for speed.
+              like walls; a router can broadcast more than one{" "}
+              <Term id="wifi-band">Wi-Fi band</Term> — 2.4GHz reaches farther, 5GHz is faster up
+              close — trading reach for speed.
             </li>
             <li>
-              A <Term id="router">router</Term> spreads one connection to every device in the
-              house; a <Term id="modem">modem</Term> connects that house to the internet provider
-              outside.
+              A <Term id="router">router</Term> spreads one internet connection to every device in
+              the house, forming a <Term id="lan">LAN</Term>; a <Term id="modem">modem</Term> is
+              the separate box that actually connects that house out to the internet provider.
+              Anything beyond the LAN is simply the internet — a network of networks.
             </li>
             <li>
-              Devices sharing one router form a <Term id="lan">LAN</Term>; anything beyond it is
-              simply the internet — a network of networks.
+              A Wi-Fi password locks a LAN to the people who know it, and every device gets its
+              own <Term id="ip-address">IP address</Term> to be reachable — a{" "}
+              <Term id="private-ip">private</Term> one that only means something at home, and a{" "}
+              <Term id="global-ip">global</Term> one needed to be reached from the internet.
             </li>
             <li>
-              A Wi-Fi password locks a LAN to people who know it. Every device also gets its own{" "}
-              <Term id="ip-address">IP address</Term> — a <Term id="private-ip">private</Term>{" "}
-              one at home, though reaching the internet needs a <Term id="global-ip">global</Term>{" "}
-              one instead.
-            </li>
-            <li>
-              A <Term id="client">client</Term> like Pip&rsquo;s phone reaches out to a{" "}
-              <Term id="server">server</Term> far away — sending data to one is what
-              &ldquo;uploading&rdquo; means.
-            </li>
-            <li>
-              Dad explains all of it as a railway system — and by the end of the chapter, Pip
-              wakes up standing right inside it.
+              Dad explains all of it as a railway system — devices as stations, Wi-Fi as an
+              invisible rail — and by the end of the chapter, Pip wakes up standing right inside
+              it, no longer just an analogy.
             </li>
           </ul>
         </div>
       ),
     },
+    {
+      section: "Wrap-up",
+      title: "Try It Yourself",
+      story: {
+        text: "Pip, it turns out, has wandered right into the world of the network itself.\nHow did the story treat you so far?\nIn the chapters ahead, Pip meets all sorts of characters along the way — some he'll part ways with just as quickly — experiencing the network firsthand, and building up from the basics to the more advanced, one station at a time.\nLook forward to what comes next.",
+        illustration: <SceneWakingAtStation />,
+      },
+      body: (
+        <p>
+          Right below this walkthrough, Pip&rsquo;s whole home line is waiting as a little
+          interactive railway map — every station, the Router, the Modem, all of it. Send a train
+          from any station and watch exactly where it goes. Give it a try, then click Next
+          Chapter whenever you&rsquo;re ready to continue Pip&rsquo;s story.
+        </p>
+      ),
+    },
   ];
+
+  const [step, setStep] = useState(startAtEnd ? steps.length - 1 : 0);
 
   const total = steps.length;
   const current = steps[step];
   const isLast = step === total - 1;
   const isFirst = step === 0;
+
+  useEffect(() => {
+    onStepChange?.(step, total);
+  }, [step, total, onStepChange]);
 
   const goNext = () => {
     if (isLast) {
@@ -546,7 +633,7 @@ export function MeetTheNetworkWalkthrough({ onComplete }: { onComplete: () => vo
             onClick={goNext}
             className="px-3 py-1.5 rounded-md bg-storybook-accent hover:bg-storybook-accent-dark text-sm font-medium text-white"
           >
-            {isLast ? "Finish" : "Next"}
+            {isLast ? finishLabel : "Next"}
           </button>
         </div>
         <span className="text-xs text-storybook-ink/60 sm:flex-1 sm:text-right">
@@ -558,6 +645,7 @@ export function MeetTheNetworkWalkthrough({ onComplete }: { onComplete: () => vo
         sections={steps.map((s) => s.section)}
         currentStep={step}
         onSelectStep={setStep}
+        proportional
       />
 
       <div className="space-y-4">

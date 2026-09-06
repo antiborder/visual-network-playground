@@ -199,11 +199,11 @@ Chapter 3で「投稿された」ところまで描いたPipの物語に対し�
 
 実装を進める中で、旧`ip-address-wifi` Unit(Chapter 1 Leaving the House / Chapter 2 Short Way Home / Chapter 3 Momo Gets Online)は**削除予定**であることが判明した。この3チャプターはUnit名を`[old] IP Address & Wi-Fi Connection [to be deleted]`に変更した上でそのまま残し、代わりに**新しいUnit「DRAFT: Pip's Network Story」**(`/beginner/pips-network-story`、実装は`features/beginner/ip-address-wifi/DraftBeginnerPlayground.tsx`)を切り出して、そちらでPipの一続きの物語として再構築していく。
 
-### 章順序(v3、暫定)
+### 章順序(v4、暫定)
 
 1. **Meet the Network**(既存どおり)
-2. **Momo Gets Online**(DHCP — **新規に繰り上げ**。ストーリー・主人公は全面的に描き直してよく、重要なのは項目22-26がわかりやすく学習できることのみ、という前提で再設計 — 詳細は下記)
-3. **The Short Way Home**(旧v2案では5番目だったが、**Finding the Boardより前**に繰り上げ — 理由は下記)
+2. **The Short Way Home**(旧v2案では5番目だったが、**Finding the Boardより前**に繰り上げ — 理由は下記。さらに、Momo Gets Onlineより先に据えることで、Meet the Networkの「アップロードしよう」という本筋がすぐ続く形にした)
+3. **Momo Gets Online**(DHCP — ストーリー・主人公は全面的に描き直してよく、重要なのは項目22-26がわかりやすく学習できることのみ、という前提で再設計 — 詳細は下記)
 4. **Finding the Board**(既存どおり、DNS)
 5. **Leaving the House**(既存を拡張、ただし**エンディングを変更** — 下記)
 6. **Who Goes There?**(既存どおり4番目だったが、依存関係上ここが正しい位置であることを確認 — 下記)
@@ -211,9 +211,12 @@ Chapter 3で「投稿された」ところまで描いたPipの物語に対し�
 
 Did It Work? / Seeing It All at Once の位置づけは②から変更なし(今回の見直し対象外)。
 
+**v3からの変更点:** Momo Gets OnlineとThe Short Way Homeの順序を入れ替え、Short Way HomeをChapter 2、Momo Gets OnlineをChapter 3にした(ユーザーの明示的な指示)。
+
 ### 変更理由
 
-- **Momo Gets OnlineをChapter 2(Meet the Networkの直後)に据えた理由・再設計方針:** DHCP(項目22-26)は「そもそもどうやってネットワークに参加し、アドレスをもらうか」という、ARP/サブネット(Short Way Home)やDNS(Finding the Board)よりもさらに手前・より基礎的な仕組み。Meet the NetworkはPip自身のIPアドレスが既に割り当てられていることに気づく場面で終わるが、**どうやって割り当てられたかまでは描いていない**ため、その直後にDHCPを置くと読んだばかりの疑問に鮮度の高いタイミングで答えられる。物語・主人公は旧来の「Momo(電球)視点」から作り直し、**Pipが観察者として絡む形**にする — 具体的には、`network.ts`の`DEFAULT_DEVICES`に元々含まれ、Meet the NetworkやShort Way HomeのLanMap上にずっと背景として映り込んでいる`iot`(スマート電球)を正式に「Momo」と命名し、「お父さんが新しい電球(Momo)を廊下に取り付け、Pipが『誰も番号を入力していないのに、もう繋がっている』と気づいてDORAの仕組みを目撃する」という筋にする。チーズ写真の本筋とは無関係な短い横道なので、ここに挟んでも後続のShort Way Home以降の本筋を邪魔しない。IPアドレス重複を回避する場面では、衝突しかけの相手をPip自身の192.168.1.10にすると、既読者にとって具体的な対比になる。
+- **Short Way HomeをMeet the Networkの直後(Chapter 2)に据えた理由:** Meet the Networkは「さあアップロードしよう」で終わり、Short Way Homeの冒頭(お父さんが「パパにも送ってくれよ」と頼む場面)はまさにその直後に起きる出来事として書かれている。Momo Gets Onlineはチーズ写真の本筋と無関係な横道なので、本筋の物語がすぐ続くよう、横道より先に本筋の一幕(Short Way Home)を置く。
+- **Momo Gets OnlineをChapter 3に据えた理由・再設計方針:** DHCP(項目22-26)は「そもそもどうやってネットワークに参加し、アドレスをもらうか」という、ARP/サブネット(Short Way Home)やDNS(Finding the Board)よりもさらに手前・より基礎的な仕組みではあるが、Short Way Homeの直後という位置でも(Meet the Networkの直後という位置と同様に)まだ十分に鮮度が高いタイミングで扱える。物語・主人公は旧来の「Momo(電球)視点」から作り直し、**Pipが観察者として絡む形**にする — 具体的には、`network.ts`の`DEFAULT_DEVICES`に元々含まれ、Meet the NetworkやShort Way HomeのLanMap上にずっと背景として映り込んでいる`iot`(スマート電球)を正式に「Momo」と命名し、「お父さんが新しい電球(Momo)を廊下に取り付け、Pipが『誰も番号を入力していないのに、もう繋がっている』と気づいてDORAの仕組みを目撃する」という筋にする。IPアドレス重複を回避する場面では、衝突しかけの相手をPip自身の192.168.1.10にすると、既読者にとって具体的な対比になる。
 - **Short Way HomeをFinding the Boardより前にした理由:** (a) 依存関係が非対称。DNS(Finding the Board)は「すでにIP接続ができている」ことが前提の応用的な仕組みだが、LAN内配送(Short Way Home)の仕組みはDNSに一切依存しない、より下位層の基礎知識。(b) 難易度。実際にチャットの中で技術的に洗い出した結果、「インターネットに出てからcheeseloversのサーバーに着くまで」に発生する概念は22項目中わずか2項目しか初級ではなかった(ほとんどが中級・上級、または`curriculum.md`未収録)のに対し、「PipがLAN内でお父さんのPCに写真を共有する」に発生する概念は18項目中14項目が初級だった。易しい方を先に置く方が段階学習として自然。
 - **Leaving the Houseのエンディングを変更した理由:** 上記の技術的洗い出しの結果、「サーバーに実際に届く」ところまで初級のまま描くのは無理があると判明したため、**パケットがインターネットに出たところで意図的にクリフハンガーにする**方針に変更(「長い道のりを経て、チーズの写真はやっとinternetという広い空へ出ることができました。果たしてcheeseloversへ投稿できるのでしょうか？…続きは後の章へ」)。これに伴い、以前この章に実装していた再構成(item 58の2回目)・返信の往路(NAT逆変換・ステートフルインスペンション item 102)は一旦削除した。**item 102(ステートフルインスペクション)の置き場所は現時点で未定**— 元々はこの章の返信シーンに統合する予定だったが、返信シーン自体が(サーバーに届くかどうか未解決なので)描けなくなったため、Who Goes There?章に統合するか、後日の継続章に回すか、要検討。
 - **Who Goes There?をLeaving the Houseの直後にした理由:** ファイアウォールのIN/OUT+IPアドレス+ポート番号の組み合わせでルールを説明する章のため、ポート番号/NATの概念(Leaving the Houseで初めて登場)が既習である必要がある。Short Way HomeとFinding the Boardの間に置く案も検討したが、その時点ではポートの概念がまだ無いため不適。

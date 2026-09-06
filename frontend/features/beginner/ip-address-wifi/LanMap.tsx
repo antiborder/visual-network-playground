@@ -52,6 +52,7 @@ export function LanMap({
   packet,
   showMac = false,
   showIp = true,
+  showCidr = false,
   showInternet = false,
 }: {
   devices: Device[];
@@ -64,6 +65,12 @@ export function LanMap({
    * first "meet the network" step, before IP addresses have been explained
    * at all. */
   showIp?: boolean;
+  /** Append the /24 prefix length to each IP address — off by default.
+   * Meant only for the couple of Chapter 1 steps where Dad's router-app
+   * screen should plant an unexplained "I've seen that before" seed ahead
+   * of Chapter 2 actually teaching what CIDR notation means; every other
+   * caller should leave this off so it doesn't appear unexplained. */
+  showCidr?: boolean;
   /** Draw a cloud labeled "The Internet" outside the LAN box, connected to
    * the router by a line crossing the dashed boundary — for the one step
    * that specifically contrasts the LAN with what lies beyond it. */
@@ -165,6 +172,7 @@ export function LanMap({
         {showIp && (
           <text x={0} y={45} textAnchor="middle" fontSize={12} fill="#525252">
             {formatIp(router.lastOctet)}
+            {showCidr && "/24"}
           </text>
         )}
         {showMac && (
@@ -193,6 +201,7 @@ export function LanMap({
                 fontFamily="monospace"
               >
                 {formatIp(device.lastOctet)}
+                {showCidr && "/24"}
               </text>
             )}
             {showMac && (

@@ -788,6 +788,7 @@ export function DnsWalkthrough({ onComplete }: { onComplete: () => void }) {
         sections={steps.map((s) => s.section)}
         currentStep={step}
         onSelectStep={setStep}
+        proportional
       />
 
       <div className="space-y-4">

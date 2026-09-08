@@ -33,6 +33,27 @@
   --font-storybook-body: var(--font-nunito);
 }
 
+/* App-wide "one size up" bump — every named text-* utility shifted +2px
+   from Tailwind's default scale (line-height ratios are unitless, so they
+   keep scaling correctly without being touched here). Requested across the
+   whole app, not just one component, so this is the one central lever
+   instead of hunting down every text-* usage individually. */
+@theme {
+  --text-xs: 0.875rem; /* 12px -> 14px */
+  --text-sm: 1rem; /* 14px -> 16px */
+  --text-base: 1.125rem; /* 16px -> 18px */
+  --text-lg: 1.25rem; /* 18px -> 20px */
+  --text-xl: 1.375rem; /* 20px -> 22px */
+  --text-2xl: 1.625rem; /* 24px -> 26px */
+  --text-3xl: 2rem; /* 30px -> 32px */
+  --text-4xl: 2.375rem; /* 36px -> 38px */
+  --text-5xl: 3.125rem; /* 48px -> 50px */
+  --text-6xl: 3.875rem; /* 60px -> 62px */
+  --text-7xl: 4.625rem; /* 72px -> 74px */
+  --text-8xl: 6.125rem; /* 96px -> 98px */
+  --text-9xl: 8.125rem; /* 128px -> 130px */
+}
+
 body {
   background: var(--background);
   color: var(--foreground);

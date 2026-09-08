@@ -33,10 +33,10 @@ function StationIcon({ x, y, label, ip }: { x: number; y: number; label: string;
   return (
     <g>
       <rect x={x - 32} y={y - 17} width={64} height={34} rx={4} fill={CARD} stroke={LINE} strokeWidth={1.5} />
-      <text x={x} y={y - 2} textAnchor="middle" fontSize={12} fontWeight={600} fill={INK}>
+      <text x={x} y={y - 2} textAnchor="middle" fontSize={14} fontWeight={600} fill={INK}>
         {label}
       </text>
-      <text x={x} y={y + 13} textAnchor="middle" fontSize={10} fill={SUBTLE}>
+      <text x={x} y={y + 13} textAnchor="middle" fontSize={12} fill={SUBTLE}>
         {ip}
       </text>
     </g>
@@ -47,7 +47,7 @@ function JunctionIcon({ x, y, label }: { x: number; y: number; label: string }) 
   return (
     <g>
       <rect x={x - 28} y={y - 20} width={56} height={40} rx={4} fill={ACCENT_FILL} stroke={ACCENT} strokeWidth={2} />
-      <text x={x} y={y + 34} textAnchor="middle" fontSize={12} fontWeight={600} fill={INK}>
+      <text x={x} y={y + 34} textAnchor="middle" fontSize={14} fontWeight={600} fill={INK}>
         {label}
       </text>
     </g>
@@ -58,10 +58,10 @@ function MainlineIcon({ x, y }: { x: number; y: number }) {
   return (
     <g>
       <ellipse cx={x} cy={y} rx={46} ry={26} fill={CLOUD_FILL} stroke={CLOUD_STROKE} strokeWidth={1.5} />
-      <text x={x} y={y - 2} textAnchor="middle" fontSize={11} fontWeight={600} fill="#44403c">
+      <text x={x} y={y - 2} textAnchor="middle" fontSize={13} fontWeight={600} fill="#44403c">
         The Mainline
       </text>
-      <text x={x} y={y + 12} textAnchor="middle" fontSize={10} fill={SUBTLE}>
+      <text x={x} y={y + 12} textAnchor="middle" fontSize={12} fill={SUBTLE}>
         (the internet)
       </text>
     </g>

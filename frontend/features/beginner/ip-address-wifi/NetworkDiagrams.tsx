@@ -80,22 +80,22 @@ export function NetworkChainDiagram({ highlight }: { highlight?: "router" | "mod
       <TrainIcon x={(routerX + modemX) / 2} y={y} />
 
       <PhoneIcon x={phoneX} y={y} />
-      <text x={phoneX} y={y + 32} textAnchor="middle" fontSize={13} fill={SUBTLE}>
+      <text x={phoneX} y={y + 32} textAnchor="middle" fontSize={15} fill={SUBTLE}>
         Phone
       </text>
 
       <BoxIcon x={routerX} y={y} accent={highlight === "router"} />
-      <text x={routerX} y={y + 32} textAnchor="middle" fontSize={13} fontWeight={highlight === "router" ? 700 : 400} fill={highlight === "router" ? ACCENT : SUBTLE}>
+      <text x={routerX} y={y + 32} textAnchor="middle" fontSize={15} fontWeight={highlight === "router" ? 700 : 400} fill={highlight === "router" ? ACCENT : SUBTLE}>
         Router
       </text>
 
       <BoxIcon x={modemX} y={y} accent={highlight === "modem"} />
-      <text x={modemX} y={y + 32} textAnchor="middle" fontSize={13} fontWeight={highlight === "modem" ? 700 : 400} fill={highlight === "modem" ? ACCENT : SUBTLE}>
+      <text x={modemX} y={y + 32} textAnchor="middle" fontSize={15} fontWeight={highlight === "modem" ? 700 : 400} fill={highlight === "modem" ? ACCENT : SUBTLE}>
         Modem
       </text>
 
       <CloudIcon x={cloudX} y={y} />
-      <text x={cloudX} y={y + 4} textAnchor="middle" fontSize={13} fontWeight={600} fill="#44403c">
+      <text x={cloudX} y={y + 4} textAnchor="middle" fontSize={15} fontWeight={600} fill="#44403c">
         Internet
       </text>
     </svg>
@@ -128,17 +128,17 @@ export function SignalDistanceDiagram() {
         />
       ))}
       <BoxIcon x={routerX} y={routerY + 20} accent />
-      <text x={routerX} y={routerY + 52} textAnchor="middle" fontSize={13} fill={SUBTLE}>
+      <text x={routerX} y={routerY + 52} textAnchor="middle" fontSize={15} fill={SUBTLE}>
         Router
       </text>
 
       <PhoneIcon x={210} y={routerY} />
-      <text x={210} y={routerY + 32} textAnchor="middle" fontSize={13} fill={INK} fontWeight={600}>
+      <text x={210} y={routerY + 32} textAnchor="middle" fontSize={15} fill={INK} fontWeight={600}>
         Full strength
       </text>
 
       <PhoneIcon x={350} y={routerY} />
-      <text x={350} y={routerY + 32} textAnchor="middle" fontSize={13} fill={SUBTLE}>
+      <text x={350} y={routerY + 32} textAnchor="middle" fontSize={15} fill={SUBTLE}>
         Barely holding on
       </text>
     </svg>
@@ -167,7 +167,7 @@ export function InterferenceDiagram({ wallCount }: { wallCount: 0 | 1 | 2 }) {
       <line x1={routerX + 24} y1={y} x2={deviceX - 12} y2={y} stroke={LINE} strokeWidth={1.5} strokeDasharray="4 4" />
 
       <BoxIcon x={routerX} y={y} accent />
-      <text x={routerX} y={y + 32} textAnchor="middle" fontSize={13} fill={SUBTLE}>
+      <text x={routerX} y={y + 32} textAnchor="middle" fontSize={15} fill={SUBTLE}>
         Router
       </text>
 
@@ -185,7 +185,7 @@ export function InterferenceDiagram({ wallCount }: { wallCount: 0 | 1 | 2 }) {
       ))}
 
       <PhoneIcon x={deviceX} y={y} />
-      <text x={deviceX} y={y + 32} textAnchor="middle" fontSize={13} fill={SUBTLE}>
+      <text x={deviceX} y={y + 32} textAnchor="middle" fontSize={15} fill={SUBTLE}>
         Pip&rsquo;s room
       </text>
 
@@ -201,7 +201,7 @@ export function InterferenceDiagram({ wallCount }: { wallCount: 0 | 1 | 2 }) {
           />
         ))}
       </g>
-      <text x={(routerX + deviceX) / 2} y={y - 50} textAnchor="middle" fontSize={13} fontWeight={600} fill={STRENGTH_COLOR}>
+      <text x={(routerX + deviceX) / 2} y={y - 50} textAnchor="middle" fontSize={15} fontWeight={600} fill={STRENGTH_COLOR}>
         {STRENGTH_LABEL}
       </text>
     </svg>
@@ -231,7 +231,7 @@ export function NetworkOfNetworksDiagram() {
         <line key={i} x1={h.x} y1={h.y} x2={cx} y2={cy} stroke={LINE} strokeWidth={1.5} />
       ))}
       <CloudIcon x={cx} y={cy} />
-      <text x={cx} y={cy + 4} textAnchor="middle" fontSize={13} fontWeight={600} fill="#44403c">
+      <text x={cx} y={cy + 4} textAnchor="middle" fontSize={15} fontWeight={600} fill="#44403c">
         Internet
       </text>
       {houses.map((h, i) => (
@@ -261,22 +261,22 @@ export function WifiLockDiagram() {
         <rect x={-8} y={0} width={16} height={13} rx={2} fill="#fef3c7" stroke="#d97706" strokeWidth={1.5} />
         <path d="M -5 0 L -5 -5 A 5 5 0 0 1 5 -5 L 5 0" fill="none" stroke="#d97706" strokeWidth={1.5} />
       </g>
-      <text x={routerX} y={routerY + 52} textAnchor="middle" fontSize={13} fill={SUBTLE}>
+      <text x={routerX} y={routerY + 52} textAnchor="middle" fontSize={15} fill={SUBTLE}>
         Password-locked Wi-Fi
       </text>
 
       <line x1={routerX - 30} y1={routerY + 5} x2={90} y2={100} stroke="#16a34a" strokeWidth={1.5} strokeDasharray="4 4" />
       <PhoneIcon x={80} y={108} />
-      <text x={80} y={128} textAnchor="middle" fontSize={13} fill="#16a34a" fontWeight={600}>
+      <text x={80} y={128} textAnchor="middle" fontSize={15} fill="#16a34a" fontWeight={600}>
         Knows the password
       </text>
 
       <line x1={routerX + 30} y1={routerY + 5} x2={320} y2={100} stroke="#dc2626" strokeWidth={1.5} strokeDasharray="4 4" />
-      <text x={320} y={92} textAnchor="middle" fontSize={16} fill="#dc2626" fontWeight={700}>
+      <text x={320} y={92} textAnchor="middle" fontSize={18} fill="#dc2626" fontWeight={700}>
         ✕
       </text>
       <PhoneIcon x={320} y={108} />
-      <text x={320} y={128} textAnchor="middle" fontSize={13} fill="#dc2626" fontWeight={600}>
+      <text x={320} y={128} textAnchor="middle" fontSize={15} fill="#dc2626" fontWeight={600}>
         Doesn&rsquo;t know it
       </text>
     </svg>
@@ -319,7 +319,7 @@ export function AddressAnalogyDiagram() {
             >
               <td className="p-2 text-neutral-500">{row.label}</td>
               <td className="p-2">{row.postal}</td>
-              <td className={`p-2 text-[13px] ${row.matches ? "font-mono text-cyan-800 font-semibold" : "text-neutral-400 italic"}`}>
+              <td className={`p-2 text-[15px] ${row.matches ? "font-mono text-cyan-800 font-semibold" : "text-neutral-400 italic"}`}>
                 {row.network}
               </td>
             </tr>
@@ -349,23 +349,23 @@ export function ClientServerDiagram() {
           <path d="M0,0 L8,4 L0,8 Z" fill={ACCENT} />
         </marker>
       </defs>
-      <text x={(clientX + serverX) / 2} y={y - 10} textAnchor="middle" fontSize={12} fill={ACCENT}>
+      <text x={(clientX + serverX) / 2} y={y - 10} textAnchor="middle" fontSize={14} fill={ACCENT}>
         uploading the photo
       </text>
 
       <PhoneIcon x={clientX} y={y} />
-      <text x={clientX} y={y + 32} textAnchor="middle" fontSize={13} fontWeight={600} fill={INK}>
+      <text x={clientX} y={y + 32} textAnchor="middle" fontSize={15} fontWeight={600} fill={INK}>
         Client
       </text>
-      <text x={clientX} y={y + 46} textAnchor="middle" fontSize={12} fill={SUBTLE}>
+      <text x={clientX} y={y + 46} textAnchor="middle" fontSize={14} fill={SUBTLE}>
         Pip&rsquo;s phone
       </text>
 
       <CloudIcon x={serverX} y={y} />
-      <text x={serverX} y={y + 32} textAnchor="middle" fontSize={13} fontWeight={600} fill={INK}>
+      <text x={serverX} y={y + 32} textAnchor="middle" fontSize={15} fontWeight={600} fill={INK}>
         Server
       </text>
-      <text x={serverX} y={y + 46} textAnchor="middle" fontSize={12} fill={SUBTLE}>
+      <text x={serverX} y={y + 46} textAnchor="middle" fontSize={14} fill={SUBTLE}>
         Cheese-Lovers&rsquo; Board
       </text>
     </svg>

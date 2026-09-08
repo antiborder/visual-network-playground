@@ -15,7 +15,7 @@ export function RecursiveVsIterative({ domain = "example.com" }: { domain?: stri
     <div className="w-full max-w-xl grid sm:grid-cols-2 gap-4">
       <div className="rounded-lg border border-neutral-200 bg-white p-3 space-y-2">
         <div className="text-xs font-semibold text-cyan-700 uppercase tracking-wide">Recursive</div>
-        <div className="flex flex-col items-center gap-1 text-[13px] text-neutral-700">
+        <div className="flex flex-col items-center gap-1 text-[15px] text-neutral-700">
           <div className="rounded border border-neutral-300 px-2 py-1">Your Device</div>
           <div className="text-neutral-400 text-xs">↕ &ldquo;Where&rsquo;s {domain}?&rdquo;</div>
           <div className="rounded border border-neutral-300 px-2 py-1">Recursive Resolver</div>
@@ -29,7 +29,7 @@ export function RecursiveVsIterative({ domain = "example.com" }: { domain?: stri
         <div className="text-xs font-semibold text-cyan-700 uppercase tracking-wide">Iterative</div>
         <div className="space-y-1.5">
           {ITERATIVE_ROWS.map((row) => (
-            <div key={row.server} className="flex items-center justify-between text-[13px] text-neutral-700">
+            <div key={row.server} className="flex items-center justify-between text-[15px] text-neutral-700">
               <span>Resolver ↔ {row.server}</span>
               <span
                 className={`rounded-full text-xs px-2 py-0.5 ${

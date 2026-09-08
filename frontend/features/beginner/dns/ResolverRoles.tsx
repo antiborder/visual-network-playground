@@ -30,7 +30,7 @@ export function ResolverRoles({ domain = "example.com" }: { domain?: string }) {
           <div key={step.name} className="w-full flex flex-col items-center gap-1">
             {i > 0 && <span className="text-neutral-300 text-xs">↓</span>}
             <div className="rounded border border-neutral-300 bg-neutral-50 px-3 py-1.5 text-center w-full max-w-56">
-              <div className="text-[13px] font-medium text-neutral-700">{step.name}</div>
+              <div className="text-[15px] font-medium text-neutral-700">{step.name}</div>
               <div className="text-xs text-neutral-400">{step.caption}</div>
             </div>
           </div>

@@ -70,16 +70,16 @@ export function FirewallGate({
         role="img"
         aria-label="Firewall gate between the inside network and the internet"
       >
-        <text x={INSIDE_X} y={25} textAnchor="middle" fontSize={12} fontWeight={600} fill="#171717">
+        <text x={INSIDE_X} y={25} textAnchor="middle" fontSize={14} fontWeight={600} fill="#171717">
           Inside
         </text>
-        <text x={INTERNET_X} y={25} textAnchor="middle" fontSize={12} fontWeight={600} fill="#171717">
+        <text x={INTERNET_X} y={25} textAnchor="middle" fontSize={14} fontWeight={600} fill="#171717">
           Internet
         </text>
         <line x1={INSIDE_X} y1={Y} x2={GATE_X} y2={Y} stroke="#d4d4d4" strokeWidth={2} />
         <line x1={GATE_X} y1={Y} x2={INTERNET_X} y2={Y} stroke="#d4d4d4" strokeWidth={2} />
         <rect x={GATE_X - 14} y={Y - 30} width={28} height={60} rx={4} fill="#fafafa" stroke="#525252" strokeWidth={2} />
-        <text x={GATE_X} y={Y + 45} textAnchor="middle" fontSize={12} fill="#737373">
+        <text x={GATE_X} y={Y + 45} textAnchor="middle" fontSize={14} fill="#737373">
           Gate
         </text>
         {dot && <circle cx={dot.x} cy={Y} r={7} fill={dot.color} />}

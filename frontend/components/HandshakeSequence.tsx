@@ -38,10 +38,10 @@ export function HandshakeSequence({
       role="img"
       aria-label={`Sequence diagram between ${leftLabel} and ${rightLabel}`}
     >
-      <text x={LEFT_X} y={22} textAnchor="middle" fontSize={12} fontWeight={600} fill="#171717">
+      <text x={LEFT_X} y={22} textAnchor="middle" fontSize={14} fontWeight={600} fill="#171717">
         {leftLabel}
       </text>
-      <text x={RIGHT_X} y={22} textAnchor="middle" fontSize={12} fontWeight={600} fill="#171717">
+      <text x={RIGHT_X} y={22} textAnchor="middle" fontSize={14} fontWeight={600} fill="#171717">
         {rightLabel}
       </text>
       <line x1={LEFT_X} y1={30} x2={LEFT_X} y2={height - 10} stroke="#d4d4d4" strokeWidth={2} />
@@ -68,14 +68,14 @@ export function HandshakeSequence({
               x={(x1 + x2) / 2}
               y={y - 6}
               textAnchor="middle"
-              fontSize={12}
+              fontSize={14}
               fontWeight={isLatest ? 600 : 400}
               fill={isLatest ? "#0891b2" : "#404040"}
             >
               {step.label}
             </text>
             {step.detail && revealed && (
-              <text x={(x1 + x2) / 2} y={y + 14} textAnchor="middle" fontSize={11} fill="#737373">
+              <text x={(x1 + x2) / 2} y={y + 14} textAnchor="middle" fontSize={13} fill="#737373">
                 {step.detail}
               </text>
             )}

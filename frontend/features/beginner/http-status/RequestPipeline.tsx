@@ -60,7 +60,7 @@ export function RequestPipeline({
           return (
             <g key={label} transform={`translate(${nodeX(i)}, ${Y})`}>
               <rect x={-42} y={-20} width={84} height={40} rx={6} fill={c.fill} stroke={c.stroke} strokeWidth={2} />
-              <text x={0} y={5} textAnchor="middle" fontSize={12} fontWeight={600} fill="#171717">
+              <text x={0} y={5} textAnchor="middle" fontSize={14} fontWeight={600} fill="#171717">
                 {label}
               </text>
             </g>

@@ -105,10 +105,10 @@ Where a Step has a picture-book "story" half above the technical explanation:
 
 ## Typography
 
-- **Minimum font size is 12px**, reserved for genuinely supplementary/sub text only — captions,
+- **Minimum font size is 14px**, reserved for genuinely supplementary/sub text only — captions,
   eyebrow labels, badges, axis/range endpoint labels, secondary readouts (e.g. a MAC address
   shown under a primary IP address). Everything else (primary labels, body text, alert/warning
-  text, node names in a diagram) has a **13px floor**. The one exception is text whose role
+  text, node names in a diagram) has a **15px floor**. The one exception is text whose role
   inherently requires smallness regardless of these floors (subscripts, superscripts, exponents).
 
 ## Platform

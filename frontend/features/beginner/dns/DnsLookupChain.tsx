@@ -66,7 +66,7 @@ export function DnsLookupChain({
                   x={(nodeX(i) + nodeX(i + 1)) / 2}
                   y={y - 32}
                   textAnchor="middle"
-                  fontSize={12}
+                  fontSize={14}
                   fill="#a3a3a3"
                 >
                   {isIterative ? "iterative" : "recursive"}
@@ -93,15 +93,15 @@ export function DnsLookupChain({
               />
               {words.length > 1 ? (
                 <>
-                  <text x={0} y={-3} textAnchor="middle" fontSize={13} fontWeight={600} fill={reached ? "#0e7490" : "#a3a3a3"}>
+                  <text x={0} y={-3} textAnchor="middle" fontSize={15} fontWeight={600} fill={reached ? "#0e7490" : "#a3a3a3"}>
                     {words[0]}
                   </text>
-                  <text x={0} y={12} textAnchor="middle" fontSize={13} fontWeight={600} fill={reached ? "#0e7490" : "#a3a3a3"}>
+                  <text x={0} y={12} textAnchor="middle" fontSize={15} fontWeight={600} fill={reached ? "#0e7490" : "#a3a3a3"}>
                     {words.slice(1).join(" ")}
                   </text>
                 </>
               ) : (
-                <text x={0} y={5} textAnchor="middle" fontSize={13} fontWeight={600} fill={reached ? "#0e7490" : "#a3a3a3"}>
+                <text x={0} y={5} textAnchor="middle" fontSize={15} fontWeight={600} fill={reached ? "#0e7490" : "#a3a3a3"}>
                   {label}
                 </text>
               )}

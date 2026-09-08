@@ -135,7 +135,7 @@ export function LanMap({
         stroke="#d4d4d4"
         strokeDasharray="6 5"
       />
-      <text x={24} y={32} fontSize={12} fill="#737373">
+      <text x={24} y={32} fontSize={14} fill="#737373">
         Home network
       </text>
 
@@ -166,17 +166,17 @@ export function LanMap({
 
       <g transform={`translate(${ROUTER_X}, ${ROUTER_Y})`}>
         <rect x={-24} y={-16} width={48} height={32} rx={4} fill="#ecfeff" stroke="#0891b2" strokeWidth={2} />
-        <text x={0} y={30} textAnchor="middle" fontSize={13} fill="#171717" fontWeight={600}>
+        <text x={0} y={30} textAnchor="middle" fontSize={15} fill="#171717" fontWeight={600}>
           {KIND_LABEL.router}
         </text>
         {showIp && (
-          <text x={0} y={45} textAnchor="middle" fontSize={12} fill="#525252">
+          <text x={0} y={45} textAnchor="middle" fontSize={14} fill="#525252">
             {formatIp(router.lastOctet)}
             {showCidr && "/24"}
           </text>
         )}
         {showMac && (
-          <text x={0} y={59} textAnchor="middle" fontSize={12} fill="#a3a3a3" fontFamily="monospace">
+          <text x={0} y={59} textAnchor="middle" fontSize={14} fill="#a3a3a3" fontFamily="monospace">
             {router.mac}
           </text>
         )}
@@ -188,7 +188,7 @@ export function LanMap({
           <g key={device.id} transform={`translate(${x}, ${y})`}>
             {conflicted && <circle r={22} fill="#fecaca" opacity={0.7} />}
             <DeviceIcon kind={device.kind} conflicted={conflicted} />
-            <text x={0} y={34} textAnchor="middle" fontSize={13} fill="#171717" fontWeight={600}>
+            <text x={0} y={34} textAnchor="middle" fontSize={15} fill="#171717" fontWeight={600}>
               {KIND_LABEL[device.kind]}
             </text>
             {showIp && (
@@ -196,7 +196,7 @@ export function LanMap({
                 x={0}
                 y={49}
                 textAnchor="middle"
-                fontSize={12}
+                fontSize={14}
                 fill={conflicted ? "#dc2626" : "#525252"}
                 fontFamily="monospace"
               >
@@ -205,12 +205,12 @@ export function LanMap({
               </text>
             )}
             {showMac && (
-              <text x={0} y={63} textAnchor="middle" fontSize={12} fill="#a3a3a3" fontFamily="monospace">
+              <text x={0} y={63} textAnchor="middle" fontSize={14} fill="#a3a3a3" fontFamily="monospace">
                 {device.mac}
               </text>
             )}
             {conflicted && (
-              <text x={0} y={-32} textAnchor="middle" fontSize={13} fill="#dc2626" fontWeight={600}>
+              <text x={0} y={-32} textAnchor="middle" fontSize={15} fill="#dc2626" fontWeight={600}>
                 IP conflict
               </text>
             )}
@@ -250,7 +250,7 @@ export function LanMap({
           {arp.arrived && arp.isConflict && (
             <>
               <circle cx={arp.senderX} cy={arp.senderY} r={24} fill="none" stroke="#dc2626" strokeWidth={3} opacity={0.8} />
-              <text x={arp.senderX} y={arp.senderY - 32} textAnchor="middle" fontSize={13} fill="#dc2626" fontWeight={600}>
+              <text x={arp.senderX} y={arp.senderY - 32} textAnchor="middle" fontSize={15} fill="#dc2626" fontWeight={600}>
                 2 replies — ambiguous
               </text>
             </>
@@ -272,10 +272,10 @@ export function LanMap({
             strokeWidth={1.5}
           />
           <ellipse cx={INTERNET_CX} cy={ROUTER_Y} rx={55} ry={26} fill="#f5f5f4" stroke="#a8a29e" strokeWidth={1.5} />
-          <text x={INTERNET_CX} y={ROUTER_Y - 3} textAnchor="middle" fontSize={13} fontWeight={600} fill="#44403c">
+          <text x={INTERNET_CX} y={ROUTER_Y - 3} textAnchor="middle" fontSize={15} fontWeight={600} fill="#44403c">
             The Internet
           </text>
-          <text x={INTERNET_CX} y={ROUTER_Y + 13} textAnchor="middle" fontSize={12} fill="#78716c">
+          <text x={INTERNET_CX} y={ROUTER_Y + 13} textAnchor="middle" fontSize={14} fill="#78716c">
             everything outside
           </text>
         </g>

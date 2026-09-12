@@ -405,7 +405,7 @@ export function MeetTheNetworkWalkthrough({
       section: "3. An Address of His Own",
       title: "Everyone on the List",
       story: {
-        text: "Pip: \"So does that mean every phone and PC in this house uses the same password?\"\nDad: \"That's right — they're all connected to the same Wi-Fi router.\"\nDad: \"Let me show you the list of devices connected to our Wi-Fi, too.\"\nDad opens the router's app on his own phone.",
+        text: "Pip: \"So does that mean every phone and PC in this house uses the same password?\"\nDad: \"That's right — they're all connected to the same Wi-Fi router.\"\nDad: \"Let me show you the list of devices connected to our Wi-Fi, too.\"\nDad opens the router's app on his own phone.\nPip: \"There's a slash-24 at the end of the IP address — what's that?\"\nDad: \"Ah, that one — you'll understand once you actually step inside the network yourself, Pip.\"\nStep inside the network? What's he even talking about? Dad says odd things sometimes. Pip decided not to worry about it.",
         illustration: <ScenePhoneNumber />,
       },
       body: (
@@ -420,7 +420,7 @@ export function MeetTheNetworkWalkthrough({
       section: "3. An Address of His Own",
       title: "A Number of His Own",
       story: {
-        text: "Pip: \"Whoa, there's a whole list! 'Pip's Phone — 192.168.1.10/24.' Is that... me?\"\nDad: \"Every station on a line gets a number like that. Four numbers separated by dots — an IP address.\"\nPip: \"What's the slash-24 part?\"\nDad: \"Don't worry about that bit for now — just the four numbers, for today.\"\nFour numbers separated by dots — that's an IP address, like a station number for a device on the network.",
+        text: "Pip: \"Whoa, there's a whole list! 'Pip's Phone — 192.168.1.10/24.' Is that... me?\"\nDad: \"Every station on a line gets a number like that. Four numbers separated by dots — an IP address.\"\nFour numbers separated by dots — that's an IP address, like a station number for a device on the network.",
         illustration: <ScenePhoneNumber />,
       },
       body: (
@@ -487,7 +487,7 @@ export function MeetTheNetworkWalkthrough({
       section: "4. A Strange Dream",
       title: "Waking at a Station",
       story: {
-        text: "A heavy metallic clatter rings out — clank, clank...\nPip: \"That sound...\"\nAnnouncement: \"Now arriving — Pip's Phone. Please mind your step.\"\nPip: \"Huh?\"\nPip opens his eyes. The scene is unfamiliar.\nHe was just in his room a moment ago...\nHe looks around — a train sits stopped nearby, a ticket gate right across from it.\nOn the wall beside it, painted in clear letters: \"PIP'S PHONE STATION.\"",
+        text: "Pip: \"Why am I at a station, again?\"\nRails stretch out in both directions, further than he can see.\nPip: \"I remember getting into bed, but...\"\nHe tries to recall what happened last night. Right, after talking by the Wi-Fi router...\nPip: \"Oh right, I was supposed to send Dad the cheese photo.\"\nHe reaches for his pants pocket.\nPip: \"It's not here.\"\nIt's nowhere to be found.\nAnnouncement: \"Now arriving — Pip's Phone. Please mind your step.\"\nPip: \"Huh?\"",
         illustration: <SceneWakingAtStation />,
       },
       body: (
@@ -545,7 +545,7 @@ export function MeetTheNetworkWalkthrough({
       section: "Wrap-up",
       title: "What You Learned",
       story: {
-        text: "Pip: \"This is... Phone Station?\"\nRails stretch out in both directions, further than he can see, hopping between little stations that look — oddly — like Dad's PC, and that blinking box in the hallway.\nPip: \"...this is what Dad's been talking about, isn't it? Except it's not a picture in my head anymore. I'm actually standing in it.\"\nSomewhere out past the edge of the platform, an enormous network of rails hums quietly, carrying countless trips he can't yet see the end of.\nTo be continued.",
+        text: "A train seems to have arrived. There's no point just standing here. Maybe I should get on this train? No, wait, more importantly than that...\n\"Pip's Phone.\" That's what it sounded like.\nHe remembered what Dad had said: \"You'll understand once you step inside the network too, Pip.\"\nPip: \"Pip's Phone?\"\nPip: \"Wait — is this... the world inside the network?\"\nPip stood there, frozen in place.",
         illustration: <SceneWakingAtStation />,
       },
       body: (

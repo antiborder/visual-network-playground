@@ -1,0 +1,148 @@
+# CI/CD for the static Next.js export in frontend/, hosted on Firebase Hosting.
+#
+#   pull_request -> check -> deploy to a per-PR preview channel (URL posted on the PR)
+#   push develop -> check -> deploy to the "staging" preview channel
+#   push main    -> check -> deploy to the live channel
+#
+# Deploys only run after `check` passes, and reuse the exact `out/` that `check` built.
+name: CI
+
+on:
+  pull_request:
+    branches: [main, develop]
+  push:
+    branches: [main, develop]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  # One run per branch/PR; a newer push cancels an older in-flight run.
+  group: ci-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+defaults:
+  run:
+    working-directory: frontend
+
+jobs:
+  check:
+    name: Lint, typecheck, test, build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: pnpm/action-setup@v6
+        with:
+          package_json_file: frontend/package.json
+          cache: true
+          cache_dependency_path: frontend/pnpm-lock.yaml
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: frontend/.nvmrc
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Typecheck
+        # next-env.d.ts and .next/types are gitignored, so generate them before tsc.
+        run: |
+          pnpm exec next typegen
+          pnpm exec tsc --noEmit
+
+      - name: Test
+        run: pnpm test
+
+      - name: Build
+        run: pnpm build
+
+      - name: Upload static export
+        uses: actions/upload-artifact@v7
+        with:
+          name: site
+          path: frontend/out
+          retention-days: 7
+          if-no-files-found: error
+
+  deploy-preview:
+    name: Deploy PR preview
+    needs: check
+    # Secrets are not available to PRs from forks, so only deploy same-repo PRs.
+    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      checks: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/download-artifact@v8
+        with:
+          name: site
+          path: frontend/out
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          entryPoint: ./frontend
+          expires: 7d
+
+  deploy-staging:
+    name: Deploy staging
+    needs: check
+    if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    concurrency:
+      group: deploy-staging
+      cancel-in-progress: false
+    environment:
+      name: staging
+      url: ${{ steps.deploy.outputs.details_url }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/download-artifact@v8
+        with:
+          name: site
+          path: frontend/out
+      - id: deploy
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          entryPoint: ./frontend
+          channelId: staging
+          # Preview channels expire after at most 30 days; every push to develop renews it.
+          expires: 30d
+
+  deploy-live:
+    name: Deploy production
+    needs: check
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    concurrency:
+      group: deploy-live
+      cancel-in-progress: false
+    environment:
+      name: production
+      url: https://networking-course-bc54c.web.app
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/download-artifact@v8
+        with:
+          name: site
+          path: frontend/out
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          entryPoint: ./frontend
+          channelId: live

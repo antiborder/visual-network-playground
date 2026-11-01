@@ -100,7 +100,14 @@ export function MeetTheNetworkWalkthrough({
       title: "The chapter at a glance",
       story: {
         text: "Pip is an ordinary mouse, living in an ordinary house. Dinner just finished, and he's back in his room for the night, trying to send a photo from his phone.\nPip: \"Ugh, so slow. Did Dad start streaming something again?\"\nHis Wi-Fi signal, it seems, is weak.",
-        illustration: <SceneHallwayBox />,
+        illustration: (
+          // eslint-disable-next-line @next/next/no-img-element -- static export (output: "export") has no image optimizer; a pre-sized WebP is served as-is.
+          <img
+            src="/images/pip/ch1-step2-bedroom.webp"
+            alt="Pip in his bedroom, looking at his phone while the router glows far down the hallway"
+            className="w-full max-w-2xl mx-auto h-auto rounded-lg"
+          />
+        ),
       },
       body: (
         <div className="space-y-2">

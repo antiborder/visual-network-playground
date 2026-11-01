@@ -16,7 +16,7 @@ const SKY = "#8aa8c8";
 
 function frame(children: ReactNode) {
   return (
-    <svg viewBox="0 0 300 130" className="w-full max-w-sm mx-auto h-auto">
+    <svg viewBox="0 0 300 130" className="w-full max-w-2xl mx-auto h-auto">
       {children}
     </svg>
   );

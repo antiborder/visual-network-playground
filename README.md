@@ -53,5 +53,6 @@ Hosting:
 | push to `main`     | production — https://networking-course-bc54c.web.app                    |
 
 Deploys authenticate with the `FIREBASE_SERVICE_ACCOUNT` repository secret (a Google Cloud
-service-account key JSON with the Firebase Hosting Admin role). The Node version is pinned in
+service-account key JSON for `github-actions-deploy`, with the Firebase Hosting Admin,
+Service Usage Viewer, and API Keys Viewer roles). The Node version is pinned in
 `frontend/.nvmrc`.

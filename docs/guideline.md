@@ -62,6 +62,12 @@ and when reviewing/fixing an existing one.
   splitting it into multiple subheading+body sections, showing it as a diagram, or rewording it
   more concisely. Never let conciseness make it harder to understand than the longer version
   would have been — clarity always wins over the character count when the two are in tension.
+- **No single sentence longer than ~20 words.** This applies within a block too, independent of
+  the ~50-word block cap above — a block can be well under 50 words overall and still contain one
+  sentence that's too long to parse comfortably. Count one sentence at a time (up to the period,
+  question mark, or exclamation point), not the paragraph as a whole. If a sentence runs past 20
+  words, split it into two or more shorter sentences, or trim it — keep the meaning unchanged,
+  just break up the sentence itself.
 - Place **one or two graphs, 3D visualizations, or diagrams** per Step.
 - **3D figures must be user-rotatable.**
 - **Graphs must label both axes** (x and y).
@@ -79,9 +85,10 @@ Where a Step has a picture-book "story" half above the technical explanation:
   dialogue connecting it to what came before, same as every earlier beat in the exchange.
 - Format dialogue as `Speaker: "quote"`, one line per utterance, separated by a line break — never
   chain multiple speakers' lines into one flowing sentence with embedded quotation marks.
-- The same ~50-word cap that applies to a prose block (see "Per-step content" above) applies to a
-  single line of dialogue too — split a longer exchange across multiple lines/turns, or trim it,
-  rather than letting one quoted line run past the limit.
+- The same ~50-word block cap and ~20-word single-sentence cap that apply to prose (see
+  "Per-step content" above) apply to dialogue too — split a longer exchange across multiple
+  lines/turns, or trim it, rather than letting one quoted line — or one sentence inside it — run
+  past either limit.
 - Render each `Speaker: "quote"` line as a white speech-bubble-style card (shared `StoryText`
   component) so dialogue visually stands out from plain narration lines, which stay unstyled
   directly on the paper background.

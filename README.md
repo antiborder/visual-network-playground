@@ -35,3 +35,24 @@ pnpm test       # vitest
 pnpm lint
 pnpm exec tsc --noEmit
 ```
+
+## Branches & CI/CD
+
+```text
+feature/* ──PR──▶ develop ──PR──▶ main
+```
+
+GitHub Actions (`.github/workflows/ci.yml`) runs lint, typecheck, tests, and a static build on
+every PR and push to `develop` / `main`. Once those pass, it deploys the built `out/` to Firebase
+Hosting:
+
+| Trigger            | Deploys to                                                              |
+| ------------------ | ----------------------------------------------------------------------- |
+| PR (same repo)     | a per-PR preview channel (URL is commented on the PR, expires in 7 days) |
+| push to `develop`  | the `staging` preview channel                                           |
+| push to `main`     | production — https://networking-course-bc54c.web.app                    |
+
+Deploys authenticate with the `FIREBASE_SERVICE_ACCOUNT` repository secret (a Google Cloud
+service-account key JSON for `github-actions-deploy`, with the Firebase Hosting Admin,
+Service Usage Viewer, and API Keys Viewer roles). The Node version is pinned in
+`frontend/.nvmrc`.

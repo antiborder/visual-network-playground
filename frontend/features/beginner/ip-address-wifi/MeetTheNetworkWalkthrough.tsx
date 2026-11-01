@@ -130,7 +130,14 @@ export function MeetTheNetworkWalkthrough({
       title: "A Weak Signal",
       story: {
         text: "His Wi-Fi signal is barely holding on, right here in his own room.\nPip: \"I wonder if Dad's in his room...\"\nPip steps out into the hallway.\nDown the dim hallway sits a small box, glowing faintly.\nPip: \"Oh, right — the Wi-Fi comes from that white box.\"\nSomewhere between his phone and that little box, something is supposed to carry his data through. Right now, it isn't.",
-        illustration: <SceneHallwayBox />,
+        illustration: (
+          // eslint-disable-next-line @next/next/no-img-element -- static export (output: "export") has no image optimizer; a pre-sized WebP is served as-is.
+          <img
+            src="/images/pip/ch1-step3-hallway.webp"
+            alt="Pip stepping into the hallway with his phone, looking toward the router glowing faintly at the far end"
+            className="w-full max-w-2xl mx-auto h-auto rounded-lg"
+          />
+        ),
       },
       body: (
         <div className="space-y-2">

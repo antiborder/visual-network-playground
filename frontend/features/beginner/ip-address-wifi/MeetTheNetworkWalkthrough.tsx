@@ -112,9 +112,9 @@ export function MeetTheNetworkWalkthrough({
       body: (
         <div className="space-y-2">
           <p>
-            This chapter builds up the pieces of a home network one at a time: how Wi-Fi carries
-            a signal, what a router and modem each do, and how a LAN differs from the internet —
-            all explained through a railway analogy.
+            This chapter builds up the pieces of a home network, one at a time. You&rsquo;ll see
+            how Wi-Fi carries a signal, and what a router and modem each do. You&rsquo;ll also
+            see how a LAN differs from the internet — all explained through a railway analogy.
           </p>
           <p>
             It ends with every device getting its own address — the number that makes it
@@ -129,20 +129,20 @@ export function MeetTheNetworkWalkthrough({
       section: "1. Chasing the Wi-Fi",
       title: "A Weak Signal",
       story: {
-        text: "His Wi-Fi signal is barely holding on, right here in his own room.\nPip: \"I wonder if Dad's in his room...\"\nPip steps out into the hallway.\nDown the dim hallway sits a small box, glowing faintly.\nPip: \"Oh, right — the Wi-Fi comes from that white box.\"\nSomewhere between his phone and that little box, something is supposed to be carrying his data through — and right now, it isn't.",
+        text: "His Wi-Fi signal is barely holding on, right here in his own room.\nPip: \"I wonder if Dad's in his room...\"\nPip steps out into the hallway.\nDown the dim hallway sits a small box, glowing faintly.\nPip: \"Oh, right — the Wi-Fi comes from that white box.\"\nSomewhere between his phone and that little box, something is supposed to carry his data through. Right now, it isn't.",
         illustration: <SceneHallwayBox />,
       },
       body: (
         <div className="space-y-2">
           <p>
             Pip&rsquo;s phone and the router talk over radio waves — that&rsquo;s{" "}
-            <Term id="wifi">Wi-Fi</Term>. Picture it as a rail nobody can actually see: an
-            invisible track laid straight through the air, carrying data instead of trains. Like
-            any signal riding on radio waves, it fades the farther that track has to stretch.
+            <Term id="wifi">Wi-Fi</Term>. Picture it as a rail nobody can actually see — an
+            invisible track through the air, carrying data instead of trains. Like any signal
+            riding on radio waves, it fades the farther that track has to stretch.
           </p>
           <p>
             That&rsquo;s why a room at the far end of the house sits at the far end of that
-            invisible rail, and naturally gets a weaker signal than a spot standing right next to
+            invisible rail. It naturally gets a weaker signal than a spot standing right next to
             the router itself.
           </p>
         </div>
@@ -203,13 +203,13 @@ export function MeetTheNetworkWalkthrough({
         <div className="space-y-2">
           <p>
             A router can broadcast on more than one <Term id="wifi-band">Wi-Fi band</Term> at
-            once — commonly 2.4GHz and 5GHz, the two rail services Dad mentioned, both running on
-            the same invisible track between the router and every device in the house.
+            once — commonly 2.4GHz and 5GHz. These are the two rail services Dad mentioned. Both
+            run on the same invisible track to every device in the house.
           </p>
           <p>
-            Neither band wins outright: 5GHz is the express, faster up close, while 2.4GHz is the
-            local line, reaching farther and shrugging off walls better. Picking one is a straight
-            reach-versus-speed tradeoff.
+            Neither band wins outright. 5GHz is the express — faster up close. 2.4GHz is the
+            local line — reaching farther and shrugging off walls better. Picking one is a
+            straight reach-versus-speed tradeoff.
           </p>
         </div>
       ),
@@ -248,19 +248,19 @@ export function MeetTheNetworkWalkthrough({
       section: "1. Chasing the Wi-Fi",
       title: "The Router",
       story: {
-        text: "Pip: \"Oh, right — I think I saw '5GHz' and '2.4GHz' written on that white box.\"\nPip crouches down by the blinking box in the corner of the study.\nPip: \"There it is — it really does say 5GHz and 2.4GHz. Both lights are lit, so I guess both lines come out of this one box?\"\nDad: \"That's right. In my head, that box is the junction station — every device's own little station in the house connects back to it, and it's what bundles all those local trips into one connection.\"\nDad explains, clearly happy to be asked.\nThat box, bundling one connection for every device in the house, is the router.",
+        text: "Pip: \"Oh, right — I think I saw '5GHz' and '2.4GHz' written on that white box.\"\nPip crouches down by the blinking box in the corner of the study.\nPip: \"There it is — it really does say 5GHz and 2.4GHz. Both lights are lit, so I guess both lines come out of this one box?\"\nDad: \"That's right. In my head, that box is the junction station — every device's own little station connects back to it.\"\nDad: \"It's what bundles all those local trips into one connection.\"\nDad explains, clearly happy to be asked.\nThat box, bundling one connection for every device in the house, is the router.",
         illustration: <SceneRouterCloseup />,
       },
       body: (
         <div className="space-y-2">
           <p>
             A <Term id="router">router</Term> is the box that takes one internet connection and
-            spreads it to every device in the house — phones, PCs, smart devices, all through the
-            same one box.
+            spreads it to every device in the house. That&rsquo;s phones, PCs, smart devices, all
+            through the same one box.
           </p>
           <p>
-            Dad&rsquo;s way of picturing it: the router is the junction station where every
-            device&rsquo;s own little station meets, before anything heads farther out.
+            Dad&rsquo;s way of picturing it: the router is the junction station. Every
+            device&rsquo;s own little station meets there, before anything heads farther out.
           </p>
         </div>
       ),
@@ -272,19 +272,18 @@ export function MeetTheNetworkWalkthrough({
       section: "1. Chasing the Wi-Fi",
       title: "The Modem",
       story: {
-        text: "Pip: \"Oh, there's something else here too.\"\nPip notices another small box tucked behind the router.\nDad: \"Ah, that one's the modem.\"\nPip: \"Huh? What's that?\"\nDad: \"If the router's our junction station, the modem is the one platform in this whole house with a line running out to the provider's own mainline, out past our street.\"\nTwo boxes, two jobs: the modem reaches the provider's mainline, and the router bundles that connection for everyone home.",
+        text: "Pip: \"Oh, there's something else here too.\"\nPip notices another small box tucked behind the router.\nDad: \"Ah, that one's the modem.\"\nPip: \"Huh? What's that?\"\nDad: \"If the router's our junction station, the modem is the platform with a line out to the provider's mainline.\"\nDad: \"That line runs out past our street.\"\nTwo boxes, two jobs: the modem reaches the provider's mainline, and the router bundles that connection for everyone home.",
         illustration: <SceneRouterModem />,
       },
       body: (
         <div className="space-y-2">
           <p>
-            A <Term id="modem">modem</Term> has a different job: it&rsquo;s what actually
-            connects the house to the internet provider outside, over a line running out to the
-            street — in Dad&rsquo;s railway picture, the one platform with track leading out to
-            the provider&rsquo;s own mainline.
+            A <Term id="modem">modem</Term> does something different: it connects the house to
+            the internet provider, over a line to the street. In Dad&rsquo;s railway picture,
+            it&rsquo;s the one platform with track leading out to the provider&rsquo;s mainline.
           </p>
           <p>
-            Two boxes, two jobs — the modem reaches out to that outside mainline, and the router
+            Two boxes, two jobs. The modem reaches out to that outside mainline. The router
             bundles that one connection for everyone at home.
           </p>
         </div>
@@ -313,21 +312,20 @@ export function MeetTheNetworkWalkthrough({
       section: "2. The Home Network",
       title: "Everyone on the Same Team",
       story: {
-        text: "Pip looks around the study: his phone in hand, and Dad's PC humming away on the desk right there.\nPip: \"Is Dad's PC connected to the same router too?\"\nDad: \"Yep — we've only got the one junction station in this house.\"\nDad: \"It's what lets your phone and my PC ride between each other, and everything else in the house too — all on our own little line.\"\nA group of stations like this, all sharing one junction in one place, is called a LAN.",
+        text: "Pip looks around the study: his phone in hand, and Dad's PC humming away on the desk right there.\nPip: \"Is Dad's PC connected to the same router too?\"\nDad: \"Yep — we've only got the one junction station in this house.\"\nDad: \"It's what lets your phone and my PC ride between each other.\"\nDad: \"Everything else in the house rides on it too — all on our own little line.\"\nA group of stations like this, all sharing one junction in one place, is called a LAN.",
         illustration: <SceneLanDesk />,
       },
       body: (
         <div className="space-y-2">
           <p>
-            Every device that shares one router like this — Pip&rsquo;s phone, Dad&rsquo;s PC,
-            even a smart bulb plugged in down the hall — belongs to the same <Term id="lan">
-              LAN
-            </Term>
-            : our own little private line, running entirely inside this one house.
+            Every device sharing one router like this belongs to the same{" "}
+            <Term id="lan">LAN</Term>. That&rsquo;s Pip&rsquo;s phone, Dad&rsquo;s PC, even a
+            smart bulb down the hall. A LAN is our own private line, running entirely inside
+            this one house.
           </p>
           <p>
-            Nothing inside a LAN needs to go anywhere near the outside mainline to reach anything
-            else inside the same LAN — the router alone is enough to pass a trip between them.
+            Nothing inside a LAN needs to reach the outside mainline to talk to anything else
+            inside it. The router alone is enough to pass a trip between them.
           </p>
         </div>
       ),
@@ -345,13 +343,13 @@ export function MeetTheNetworkWalkthrough({
       body: (
         <div className="space-y-2">
           <p>
-            Anything past the edge of a LAN is simply the internet: every other network in the
-            world, connected together outside this one house — in railway terms, every other
-            line out there, all stitched onto the same enormous rail network.
+            Anything past the edge of a LAN is simply the internet. That&rsquo;s every other
+            network in the world, connected together outside this one house. In railway terms,
+            it&rsquo;s every other line out there, all stitched onto one enormous rail network.
           </p>
           <p>
-            A LAN&rsquo;s router is the one platform between the two — every trip headed beyond
-            the house passes through it first.
+            A LAN&rsquo;s router is the one platform between the two. Every trip beyond the
+            house passes through it first.
           </p>
         </div>
       ),
@@ -369,15 +367,15 @@ export function MeetTheNetworkWalkthrough({
       section: "2. The Home Network",
       title: "A World of Networks",
       story: {
-        text: "Dad: \"Not just the next town — networks all over the world are connected through the internet.\"\nPip: \"Wait, seriously? Even the other side of the earth?\"\nDad: \"Yep. Picture every home, every office, every country running its own little line — and all of them wired together into one giant network of networks. That's why it's called the 'inter' 'net.'\"\nThat's the idea baked right into the word itself: a network connecting networks, an inter-net.",
+        text: "Dad: \"Not just the next town — networks all over the world are connected through the internet.\"\nPip: \"Wait, seriously? Even the other side of the earth?\"\nDad: \"Yep. Picture every home, every office, every country running its own little line.\"\nDad: \"Now picture all of them wired together into one giant network of networks. That's why it's called the 'inter' 'net.'\"\nThat's the idea baked right into the word itself: a network connecting networks, an inter-net.",
         illustration: <SceneWorldNetworks />,
       },
       body: (
         <div className="space-y-2">
           <p>
-            The internet isn&rsquo;t one giant network — it&rsquo;s countless separate networks,
-            homes, offices, whole countries, each running its own line, all wired together into
-            one connected whole.
+            The internet isn&rsquo;t one giant network. It&rsquo;s countless separate networks —
+            homes, offices, whole countries — each running its own line. All of them are wired
+            together into one connected whole.
           </p>
           <p>
             That&rsquo;s exactly the idea baked into the name: a network of networks, an{" "}
@@ -397,12 +395,12 @@ export function MeetTheNetworkWalkthrough({
       body: (
         <div className="space-y-2">
           <p>
-            A Wi-Fi password is a lock at the network&rsquo;s front platform: only someone who
-            knows it can board, so a stranger walking by outside can&rsquo;t quietly hop on.
+            A Wi-Fi password is a lock at the network&rsquo;s front platform. Only someone who
+            knows it can board. A stranger walking by outside can&rsquo;t quietly hop on.
           </p>
           <p>
-            It&rsquo;s one of several layers of security protecting a home network — the easiest
-            one to see, since it&rsquo;s the one every device has to type in.
+            It&rsquo;s one of several layers of security protecting a home network. It&rsquo;s
+            the easiest one to see, since it&rsquo;s the one every device has to type in.
           </p>
         </div>
       ),
@@ -417,8 +415,8 @@ export function MeetTheNetworkWalkthrough({
       },
       body: (
         <p>
-          Dad&rsquo;s router keeps a running list of every device connected to the network, and
-          the number each one is currently using.
+          Dad&rsquo;s router keeps a running list of every device connected to the network. It
+          also shows the number each one is currently using.
         </p>
       ),
       visual: <LanMap devices={DEFAULT_DEVICES} conflictIds={new Set()} packet={null} showIp showCidr />,
@@ -433,14 +431,14 @@ export function MeetTheNetworkWalkthrough({
       body: (
         <div className="space-y-2">
           <p>
-            Every device on a network gets its own <Term id="ip-address">IP address</Term> —
-            four numbers separated by dots, like 192.168.1.10, Pip&rsquo;s own phone. In
-            Dad&rsquo;s railway picture, it&rsquo;s the number stenciled on a device&rsquo;s own
-            little station.
+            Every device on a network gets its own <Term id="ip-address">IP address</Term>.
+            It&rsquo;s four numbers separated by dots, like 192.168.1.10, Pip&rsquo;s own phone.
+            In Dad&rsquo;s railway picture, it&rsquo;s the number stenciled on a device&rsquo;s
+            own little station.
           </p>
           <p>
-            It works the same way a station number would: it&rsquo;s how the router knows
-            exactly which station — which device — a trip is meant for.
+            It works the same way a station number would. It&rsquo;s how the router knows
+            exactly which device a trip is meant for.
           </p>
         </div>
       ),
@@ -449,26 +447,26 @@ export function MeetTheNetworkWalkthrough({
       section: "3. An Address of His Own",
       title: "Just a Room Number",
       story: {
-        text: "Pip: \"So my address is 192.168.1.10? It's kind of amazing I've had an address this whole time without even knowing it.\"\nDad: \"Well, to be precise, that's not the whole address. It's the number of a little local stop, not the ID that means anything out on the mainline.\"\nPip: \"Huh? So even if I told everyone '192.168.1.10,' a letter still wouldn't reach me from outside?\"\nDad: \"Exactly. That number only means something inside our own line. Out on the mainline, our whole house needs a completely different number — one that actually means something out there.\"\nA station number like that only makes sense inside its own little line — reaching the wider world will need something more.",
+        text: "Pip: \"So my address is 192.168.1.10? It's kind of amazing I've had an address this whole time without even knowing it.\"\nDad: \"Well, to be precise, that's not the whole address. It's the number of a little local stop, not the ID that means anything out on the mainline.\"\nPip: \"Huh? So even if I told everyone '192.168.1.10,' a letter still wouldn't reach me from outside?\"\nDad: \"Exactly. That number only means something inside our own line. Out on the mainline, our whole house needs a completely different number — one that actually means something out there.\"\nA station number like that only makes sense inside its own little line. Reaching the wider world will need something more.",
         illustration: <ScenePhoneNumber />,
       },
       body: (
         <div className="space-y-2">
           <p>
-            Line it up against a full postal address and the gap is obvious: 192.168.1.10 only
+            Line it up against a full postal address, and the gap is obvious. 192.168.1.10 only
             fills in the &ldquo;room number&rdquo; level. Which building, which city, which
-            country it&rsquo;s even in — that&rsquo;s all one job, done by a single{" "}
+            country it&rsquo;s in — that&rsquo;s one single job, done by a{" "}
             <Term id="global-ip">global IP address</Term>.
           </p>
           <p>
             That&rsquo;s exactly what makes 192.168.1.10 a{" "}
-            <Term id="private-ip">private address</Term> instead: reused by countless other
-            homes&rsquo; routers, and meaningless on its own without a global address to say
-            which house it&rsquo;s in.
+            <Term id="private-ip">private address</Term> instead. It&rsquo;s reused by countless
+            other homes&rsquo; routers. On its own, it&rsquo;s meaningless without a global
+            address to say which house it&rsquo;s in.
           </p>
           <p>
             In Dad&rsquo;s railway terms, it&rsquo;s a number that only means something on our
-            own little line — the mainline needs its own, separate numbering entirely.
+            own little line. The mainline needs its own, separate numbering entirely.
           </p>
         </div>
       ),
@@ -484,9 +482,9 @@ export function MeetTheNetworkWalkthrough({
       },
       body: (
         <p>
-          Two trips are about to begin: a short one to Dad&rsquo;s PC, right here on the home
-          network, and a much longer one out to the internet, to the Cheese-Lovers&rsquo; Board.
-          The chapters ahead follow both.
+          Two trips are about to begin. One is short — to Dad&rsquo;s PC, right here on the
+          home network. The other is much longer — out to the internet, to the
+          Cheese-Lovers&rsquo; Board. The chapters ahead follow both.
         </p>
       ),
     },
@@ -541,7 +539,7 @@ export function MeetTheNetworkWalkthrough({
             </table>
           </div>
           <p>
-            Join Pip, lost in the world of the network — the rest of this story follows him
+            Join Pip, lost in the world of the network. The rest of this story follows him
             through it, one station at a time.
           </p>
         </div>
@@ -560,27 +558,27 @@ export function MeetTheNetworkWalkthrough({
           <p>Here&rsquo;s what this chapter actually covered:</p>
           <ul className="list-disc pl-5 space-y-2">
             <li>
-              Wi-Fi signal strength fades with distance and <Term id="interference">interference</Term>{" "}
-              like walls; a router can broadcast more than one{" "}
-              <Term id="wifi-band">Wi-Fi band</Term> — 2.4GHz reaches farther, 5GHz is faster up
-              close — trading reach for speed.
+              Wi-Fi signal strength fades with distance and <Term id="interference">interference</Term>,{" "}
+              like walls. A router can broadcast more than one{" "}
+              <Term id="wifi-band">Wi-Fi band</Term>. 2.4GHz reaches farther; 5GHz is faster up
+              close, trading reach for speed.
             </li>
             <li>
-              A <Term id="router">router</Term> spreads one internet connection to every device in
-              the house, forming a <Term id="lan">LAN</Term>; a <Term id="modem">modem</Term> is
-              the separate box that actually connects that house out to the internet provider.
+              A <Term id="router">router</Term> spreads one internet connection to every device
+              in the house, forming a <Term id="lan">LAN</Term>. A <Term id="modem">modem</Term>{" "}
+              is the separate box that connects that house to the internet provider.
               Anything beyond the LAN is simply the internet — a network of networks.
             </li>
             <li>
-              A Wi-Fi password locks a LAN to the people who know it, and every device gets its
-              own <Term id="ip-address">IP address</Term> to be reachable — a{" "}
-              <Term id="private-ip">private</Term> one that only means something at home, and a{" "}
-              <Term id="global-ip">global</Term> one needed to be reached from the internet.
+              A Wi-Fi password locks a LAN to the people who know it. Every device also gets its
+              own <Term id="ip-address">IP address</Term> to be reachable. A{" "}
+              <Term id="private-ip">private</Term> one only means something at home; a{" "}
+              <Term id="global-ip">global</Term> one is needed to be reached from the internet.
             </li>
             <li>
               Dad explains all of it as a railway system — devices as stations, Wi-Fi as an
-              invisible rail — and by the end of the chapter, Pip wakes up standing right inside
-              it, no longer just an analogy.
+              invisible rail. By the end of the chapter, Pip wakes up standing right inside it,
+              no longer just an analogy.
             </li>
           </ul>
         </div>
@@ -590,15 +588,15 @@ export function MeetTheNetworkWalkthrough({
       section: "Wrap-up",
       title: "Try It Yourself",
       story: {
-        text: "Pip, it turns out, has wandered right into the world of the network itself.\nHow did the story treat you so far?\nIn the chapters ahead, Pip meets all sorts of characters along the way — some he'll part ways with just as quickly — experiencing the network firsthand, and building up from the basics to the more advanced, one station at a time.\nLook forward to what comes next.",
+        text: "Pip, it turns out, has wandered right into the world of the network itself.\nHow did the story treat you so far?\nIn the chapters ahead, Pip meets all sorts of characters along the way. Some he'll part ways with just as quickly. He experiences the network firsthand, building up from the basics to the more advanced, one station at a time.\nLook forward to what comes next.",
         illustration: <SceneWakingAtStation />,
       },
       body: (
         <p>
           Right below this walkthrough, Pip&rsquo;s whole home line is waiting as a little
-          interactive railway map — every station, the Router, the Modem, all of it. Send a train
-          from any station and watch exactly where it goes. Give it a try, then click Next
-          Chapter whenever you&rsquo;re ready to continue Pip&rsquo;s story.
+          interactive railway map. That includes every station, the Router, the Modem, all of
+          it. Send a train from any station and watch where it goes. Give it a try, then click
+          Next Chapter when you&rsquo;re ready.
         </p>
       ),
     },

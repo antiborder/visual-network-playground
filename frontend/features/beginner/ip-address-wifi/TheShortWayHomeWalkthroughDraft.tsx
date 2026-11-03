@@ -38,8 +38,9 @@ import {
  * hands here; he's standing inside "Phone Station" itself. A station clerk
  * (who turns out, much later, to be the stub resolver — see the DNS
  * chapter's own clerk once it's converted) helps him work out how to get
- * the photo to "Dad's PC Station." Bodies are carried over as-is for the
- * two steps ported unchanged (ARP, the switch); every other step now has
+ * the photo to "Dad's PC Station." (The ARP and switch steps began as
+ * ports of earlier copy; both were revised in the 2026-11-03 pass below.)
+ * Every other step now has
  * its own body too — kept strictly to the minimum needed for the same-line
  * determination per the user's explicit scoping call, with network/
  * broadcast/host-address math and CIDR block sizing deferred to a later
@@ -57,7 +58,21 @@ import {
  * Chapter 2's beginner-level scope; "Nothing Broken?" deliberately doesn't
  * say what happens if the check fails, for the same reason. Bodies for
  * these six new steps are left PENDING, matching this app's usual
- * story-then-body phased workflow. */
+ * story-then-body phased workflow.
+ *
+ * 2026-11-03 story pass (accuracy fixes, beginner scope kept): the
+ * switch step's story now shows the switch's real move — looking the
+ * destination's station name up in its list and throwing the points —
+ * instead of the switch deciding between NAT and direct delivery (that
+ * decision is the sender's, made in §3); the same step's departure
+ * beat adds the sender's own name plate and a check tag whose number
+ * is worked out from the crate's contents, so the arrival-side
+ * "Nothing Broken?" check compares against something the sender
+ * actually attached; the ride now shows both legs explicitly
+ * (invisible Wi-Fi rails to the Router, solid track on to Dad's PC);
+ * and the ARP step ends with the Clerk noting the answer in a
+ * notebook (the ARP cache). The switch step's body and the Wrap-up
+ * bullet were adjusted to match. */
 export function TheShortWayHomeWalkthroughDraft({
   onComplete,
   onNavigatePrevious,
@@ -385,7 +400,7 @@ export function TheShortWayHomeWalkthroughDraft({
       section: "4. The Short Way Home",
       title: "Find the Physical Address",
       story: {
-        text: "Clerk: \"Knowing it's in our group still doesn't tell us which physical platform to send this to. Time for an announcement.\"\nStation announcement: \"Attention — does anyone have address 192.168.1.15? Please reply with your station name!\"\nDad's PC Station (over the speaker): \"That's me! My station name is AA:BB:CC:11:22:33.\"\nClerk: \"That broadcast-and-reply, hunting down a station's own fixed name, is called ARP.\"",
+        text: "Clerk: \"Knowing it's in our group still doesn't tell us which physical platform to send this to. Time for an announcement.\"\nStation announcement: \"Attention — does anyone have address 192.168.1.15? Please reply with your station name!\"\nDad's PC Station (over the speaker): \"That's me! My station name is AA:BB:CC:11:22:33.\"\nClerk: \"That broadcast-and-reply, hunting down a station's own fixed name, is called ARP.\"\nThe Clerk pulls a worn notebook from his pocket and scribbles the answer down.\nPip: \"You write it down?\"\nClerk: \"Every time. Next time a train leaves for that address, I check my notebook first — no need to shout the question down the whole line again.\"\nPip: \"And if the notebook's wrong?\"\nClerk: \"Then the reply that comes back sets it right. The notebook is only a memory — not the truth itself.\"",
         illustration: <SceneStationAnnouncement />,
       },
       body: (
@@ -406,6 +421,11 @@ export function TheShortWayHomeWalkthroughDraft({
             That&rsquo;s exactly why Pip&rsquo;s phone can&rsquo;t just guess it; it has to ask.
             This broadcast-and-reply exchange is <Term id="arp">ARP</Term>.
           </p>
+          <p>
+            The answer is worth keeping: the phone stores it in a small list of its own (its ARP
+            cache — the Clerk&rsquo;s notebook), and the next send to the same address looks it up
+            there first instead of broadcasting the question all over again.
+          </p>
         </div>
       ),
       controls: (
@@ -424,14 +444,17 @@ export function TheShortWayHomeWalkthroughDraft({
       section: "4. The Short Way Home",
       title: "The Switch's Quick Decision",
       story: {
-        text: "Down at the junction, a lever creaks into place.\nJunction operator: \"Headed out to the mainline? That's the long way — off to the provider's own tracks, with an address swap along the route.\"\nJunction operator: \"But Dad's PC's own station name? That's platform 2, right over there. No mainline, no swap, straight there.\"\nSomewhere inside every home station, a small junction like this one is the one actually making this call.\nWith the route settled, a locomotive rolls up and hitches onto Pip's waiting cart. It's freshly labeled AA:BB:CC:11:22:33, the station name ARP just found.",
+        text: "The Clerk walks Pip down to the junction, where the lines divide.\nJunction operator: \"Name on the engine, please.\"\nClerk: \"AA:BB:CC:11:22:33.\"\nThe operator runs a finger down a big, worn list pinned beside the levers — station names on the left, track numbers on the right.\nJunction operator: \"There it is. That name rides the house line, track 2. Points are set.\"\nPip: \"So you decide where every train goes?\"\nJunction operator: \"Not the deciding — that happened back at your station, when you worked out the address was one of ours. My list only tells me which way to throw the points, so a train with that name on it reaches the right platform.\"\nWith the route settled, a locomotive rolls up and hitches onto Pip's waiting cart. Bolted to its front is the name ARP just found: AA:BB:CC:11:22:33. And at the back, smaller, is a second plate — the name of the station it set out from. Pip's own.\nBefore it can leave, a porter fixes a small tag beside the crate's clasp, its face stamped with a number.\nPorter: \"That number is worked out from everything inside the crate — always by the same recipe. At the far end, they'll work it out again from whatever actually arrives.\"\nPip: \"And if the numbers don't match?\"\nPorter: \"Then something changed on the way — and they'll know. That's a longer story, for another day.\"",
         illustration: <SceneJunctionSwitch />,
       },
       body: (
         <p>
           Every device&rsquo;s traffic actually passes through a small switch built into the
-          router. It decides between <Term id="nat">NAT</Term>/the wider internet and a direct
-          local delivery. How the switch actually learns which port each device is on gets its
+          router. The decision about where the photo is going was already made by the sender,
+          back in §3 — what the switch adds is the delivery itself: it keeps a list of which of
+          its ports each <Term id="mac-address">MAC address</Term> is reached by, looks the
+          destination&rsquo;s address up, and forwards the frame out that port, straight to
+          Dad&rsquo;s PC. How the switch actually learns which port each device is on gets its
           own full chapter later in this app.
         </p>
       ),
@@ -495,7 +518,7 @@ export function TheShortWayHomeWalkthroughDraft({
       section: "5. All Aboard",
       title: "Riding the Rails",
       story: {
-        text: "The train pulls away from the platform, rattling gently along the short line toward Dad's PC Station.\nPip: \"It's so quick — we're not even leaving the house, are we?\"\nA passing voice: \"Nope — straight through the Router, no detours.\"",
+        text: "The train pulls away from Phone Station — and underneath it, there is no track at all.\nPip: \"We're floating?!\"\nA porter's voice calls after them from the platform: \"Invisible rails! Same as always — that's the stretch from your station to the Router. Nothing under you but air.\"\nThe train glides down the invisible line and slips into the Router's junction shed — where the points, already set, click it onto a solid track without its slowing down at all.\nPip: \"Rails again.\"\nSolid rails this time, humming quietly through the walls of the house, on the last stretch of line.\nPorter: \"One more station. Dad's PC Station, coming up.\"",
         illustration: <ScenePipOnTrain />,
       },
       body: (
@@ -519,7 +542,7 @@ export function TheShortWayHomeWalkthroughDraft({
       section: "5. All Aboard",
       title: "Nothing Broken?",
       story: {
-        text: "Satisfied, the porter moves down the line of crates, giving each one a firm knock and a once-over.\nPorter: \"Mm-hm... mm-hm... good.\"\nPip: \"What are you checking now?\"\nPorter: \"Making sure nothing got torn open or banged up on the way over. A quick check, every time, before anyone touches what's inside.\"\nPip: \"And if something did happen to it?\"\nPorter: \"Let's just say — that's a story for another day.\"\nHe winks and moves on.",
+        text: "Satisfied, the porter moves to the tag fixed beside the crate's clasp. He reads the number stamped on it, then works quietly through the crate's contents on his clipboard, counting under his breath.\nPorter: \"Tag says one number. What arrived works out to the same. Nothing torn open, nothing changed on the way over.\"\nPip: \"You check that for every single crate?\"\nPorter: \"Every one. Before anyone touches what's inside.\"\nPip: \"And if the numbers hadn't matched?\"\nPorter: \"Let's just say — that's a story for another day.\"\nHe winks and moves on.",
         illustration: <SceneArrivalAtDadStation />,
       },
       body: PENDING,
@@ -587,7 +610,7 @@ export function TheShortWayHomeWalkthroughDraft({
             <li>Before sending anything, a device slices data into small, labeled <Term id="packet">packets</Term>. Each one is only as big as the local line can carry in one go.</li>
             <li>Every address secretly has two parts: which line-group a station is on, and which station within it. A subnet mask (like /24) marks exactly where that boundary falls.</li>
             <li>Comparing the line-group part of two addresses tells you whether a destination is a neighbor on the same line. No mainline is required if it is.</li>
-            <li>A <Term id="mac-address">MAC address</Term> is a fixed, factory-burned ID — unlike an IP address, which the network assigns. <Term id="arp">ARP</Term> finds a device&rsquo;s MAC address by broadcasting the question. The router&rsquo;s switch then decides whether traffic needs to leave the house at all.</li>
+            <li>A <Term id="mac-address">MAC address</Term> is a fixed, factory-burned ID — unlike an IP address, which the network assigns. <Term id="arp">ARP</Term> finds a device&rsquo;s MAC address by broadcasting the question, and the answer is remembered, so the next send can look it up instead of asking again. The router&rsquo;s switch then looks that MAC address up in its own list and forwards the frame out the right port.</li>
           </ul>
           <p>
             With Dad&rsquo;s copy safely saved, Pip&rsquo;s ready to finish the real plan.

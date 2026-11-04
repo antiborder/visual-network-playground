@@ -60,19 +60,22 @@ import {
  * these six new steps are left PENDING, matching this app's usual
  * story-then-body phased workflow.
  *
- * 2026-11-03 story pass (accuracy fixes, beginner scope kept): the
- * switch step's story now shows the switch's real move — looking the
- * destination's station name up in its list and throwing the points —
- * instead of the switch deciding between NAT and direct delivery (that
- * decision is the sender's, made in §3); the same step's departure
- * beat adds the sender's own name plate and a check tag whose number
- * is worked out from the crate's contents, so the arrival-side
- * "Nothing Broken?" check compares against something the sender
- * actually attached; the ride now shows both legs explicitly
- * (invisible Wi-Fi rails to the Router, solid track on to Dad's PC);
- * and the ARP step ends with the Clerk noting the answer in a
- * notebook (the ARP cache). The switch step's body and the Wrap-up
- * bullet were adjusted to match. */
+ * 2026-11-03 story pass (accuracy fixes, beginner scope kept): the old
+ * switch step claimed the switch decides between NAT and direct
+ * delivery; that decision is the sender's, made in §3, so it was
+ * removed from the switch entirely. What §4's second step now shows is
+ * the sender-side framing beat ("Plates and a Seal"): the destination
+ * name plate ARP found, the sender's own name plate, and a check tag
+ * whose number is worked out from the crate's contents — so the
+ * arrival-side "Nothing Broken?" check compares against something the
+ * sender actually attached. The switch's own real move — looking the
+ * frame's destination name up in its list and forwarding it out the
+ * matching track — is dramatized at its actual moment, mid-journey
+ * inside "Riding the Rails", whose story also shows both legs
+ * explicitly (invisible Wi-Fi rails to the Router, solid track on to
+ * Dad's PC); the switch explanation lives in that step's body. The
+ * ARP step now ends with the Clerk noting the answer in a notebook
+ * (the ARP cache), and the Wrap-up bullet matches all of the above. */
 export function TheShortWayHomeWalkthroughDraft({
   onComplete,
   onNavigatePrevious,
@@ -442,20 +445,19 @@ export function TheShortWayHomeWalkthroughDraft({
     },
     {
       section: "4. The Short Way Home",
-      title: "The Switch's Quick Decision",
+      title: "Plates and a Seal",
       story: {
-        text: "The Clerk walks Pip down to the junction, where the lines divide.\nJunction operator: \"Name on the engine, please.\"\nClerk: \"AA:BB:CC:11:22:33.\"\nThe operator runs a finger down a big, worn list pinned beside the levers — station names on the left, track numbers on the right.\nJunction operator: \"There it is. That name rides the house line, track 2. Points are set.\"\nPip: \"So you decide where every train goes?\"\nJunction operator: \"Not the deciding — that happened back at your station, when you worked out the address was one of ours. My list only tells me which way to throw the points, so a train with that name on it reaches the right platform.\"\nWith the route settled, a locomotive rolls up and hitches onto Pip's waiting cart. Bolted to its front is the name ARP just found: AA:BB:CC:11:22:33. And at the back, smaller, is a second plate — the name of the station it set out from. Pip's own.\nBefore it can leave, a porter fixes a small tag beside the crate's clasp, its face stamped with a number.\nPorter: \"That number is worked out from everything inside the crate — always by the same recipe. At the far end, they'll work it out again from whatever actually arrives.\"\nPip: \"And if the numbers don't match?\"\nPorter: \"Then something changed on the way — and they'll know. That's a longer story, for another day.\"",
+        text: "Back at Pip's waiting cart, a small locomotive is backing up to hitch on.\nClerk: \"First, the name ARP just found goes on the front. That's who this delivery is for.\"\nHe bolts a plate to the front of the engine: AA:BB:CC:11:22:33.\nPip: \"And the smaller plate at the back?\"\nClerk: \"Your own station's name — so anyone can see where it set out from.\"\nAt the crate's clasp, a porter fixes a small tag, its face stamped with a number.\nPorter: \"That number is worked out from everything inside the crate — always by the same recipe. At the far end, they'll work it out again from whatever actually arrives, and compare the two.\"\nPip: \"And if the numbers don't match?\"\nPorter: \"Then something changed on the way — and they'll know. That's a longer story, for another day.\"",
         illustration: <SceneJunctionSwitch />,
       },
       body: (
         <p>
-          Every device&rsquo;s traffic actually passes through a small switch built into the
-          router. The decision about where the photo is going was already made by the sender,
-          back in §3 — what the switch adds is the delivery itself: it keeps a list of which of
-          its ports each <Term id="mac-address">MAC address</Term> is reached by, looks the
-          destination&rsquo;s address up, and forwards the frame out that port, straight to
-          Dad&rsquo;s PC. How the switch actually learns which port each device is on gets its
-          own full chapter later in this app.
+          This wrapping-up step has a name of its own: <strong>framing</strong>. Before the
+          packet can ride the local line, the phone&rsquo;s network hardware wraps it into a
+          frame — the destination&rsquo;s <Term id="mac-address">MAC address</Term> at the
+          front, its own MAC address as the sender, and a short check number worked out from
+          the whole contents, attached so the far end can confirm nothing changed on the way.
+          Everything so far — the slicing, the labels, ARP — was preparation for this moment.
         </p>
       ),
       visual: <LanMap devices={arpDevices} conflictIds={new Set()} packet={null} showMac />,
@@ -518,15 +520,26 @@ export function TheShortWayHomeWalkthroughDraft({
       section: "5. All Aboard",
       title: "Riding the Rails",
       story: {
-        text: "The train pulls away from Phone Station — and underneath it, there is no track at all.\nPip: \"We're floating?!\"\nA porter's voice calls after them from the platform: \"Invisible rails! Same as always — that's the stretch from your station to the Router. Nothing under you but air.\"\nThe train glides down the invisible line and slips into the Router's junction shed — where the points, already set, click it onto a solid track without its slowing down at all.\nPip: \"Rails again.\"\nSolid rails this time, humming quietly through the walls of the house, on the last stretch of line.\nPorter: \"One more station. Dad's PC Station, coming up.\"",
+        text: "The train pulls away from Phone Station — and underneath it, there is no track at all.\nPip: \"We're floating?!\"\nA porter's voice calls after them from the platform: \"Invisible rails! Same as always — that's the stretch from your station to the Router. Nothing under you but air.\"\nThe train glides down the invisible line and slips into the Router's junction shed.\nInside, the junction operator leans out as they roll in, reading the plate on the front of the engine.\nJunction operator: \"AA:BB:CC:11:22:33... let me check my list.\"\nHe runs a finger down the big, worn list pinned beside the levers — station names on the left, track numbers on the right.\nJunction operator: \"There it is — track 2!\" The points clatter over. \"Straight through!\"\nPip: \"You knew where to send us just from the name?\"\nJunction operator: \"That's all I ever look at — the name on the engine, and my list.\"\nOut of the shed, the train settles onto solid rails, humming quietly through the walls of the house, on the last stretch of line.\nPorter: \"One more station. Dad's PC Station, coming up.\"",
         illustration: <ScenePipOnTrain />,
       },
       body: (
-        <p>
-          No provider, no address-swapping, no long detour. A same-line delivery like this one
-          only ever passes through the router. That&rsquo;s the same router Pip met back in
-          Meet the Network.
-        </p>
+        <div className="space-y-2">
+          <p>
+            No provider, no address-swapping, no long detour. A same-line delivery like this one
+            only ever passes through the router. That&rsquo;s the same router Pip met back in
+            Meet the Network.
+          </p>
+          <p>
+            The junction moment in the middle is the <strong>switch</strong> at work — a small
+            switch built into the router. The instant a frame arrives, it reads the destination{" "}
+            <Term id="mac-address">MAC address</Term>, looks it up in its list of which of its
+            ports each address is reached by, and forwards the frame out that port. It
+            doesn&rsquo;t decide inside versus outside — that was the sender&rsquo;s call, back
+            in §3, already written into the frame&rsquo;s address before it left. How the switch
+            learns and keeps its list up to date is its own topic, with its own chapter later on.
+          </p>
+        </div>
       ),
     },
     {

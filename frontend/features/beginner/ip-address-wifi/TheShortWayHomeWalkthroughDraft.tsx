@@ -22,8 +22,10 @@ import {
 /** DRAFT — Chapter 2 "The Short Way Home", fully rewritten (story half only)
  * to follow the actual technical send sequence in order, granularly, one
  * idea per step — see the chat that requested this rewrite for the
- * accurate order it's built on: (1) slice into packets, (2) label each
- * with the sender's own address, (3) compare the destination's address
+ * accurate order it's built on: (1) slice into packets, (2) stamp each
+ * with its sequence number, then label each with the sender's own
+ * address (the number rides inside, the address outside — the real
+ * wrapping order), (3) compare the destination's address
  * against the subnet mask to tell same-line from elsewhere, (4) learn it's
  * a neighbor, (5) ARP for the physical address once "local" is confirmed,
  * (6) load the packets onto a train and send it — with Pip riding along
@@ -268,6 +270,21 @@ export function TheShortWayHomeWalkthroughDraft({
     },
     {
       section: "2. Getting Ready to Send",
+      title: "Numbered",
+      story: {
+        text: "The Clerk pulls out a stamp and taps a number onto the corner of each crate as it rolls by. 1, 2, 3, and so on, down the line.\nPip: \"What's that for?\"\nClerk: \"So whoever unpacks these knows what order they go in.\"\nPip: \"Don't they just arrive in the order we send them?\"\nClerk: \"Not always — some might take a hair longer than others down the line. The number's how the other end sorts it out, no matter what order they show up in.\"",
+        illustration: <SceneCargoSlicing />,
+      },
+      body: (
+        <p>
+          Every packet carries a sequence number stamped on as it&rsquo;s created. It&rsquo;s a
+          small tag saying where it belongs in the original order. It travels along with the
+          packet the whole way, from departure to arrival.
+        </p>
+      ),
+    },
+    {
+      section: "2. Getting Ready to Send",
       title: "Labeled for Delivery",
       story: {
         text: "Before long, they arrive at the platform.\nClerk: \"Looks like the cheese has already arrived.\"\nOn the tracks ahead, a large block sits loaded on a cart.\nClerk: \"Is this the right destination?\"\nHe unfolds a piece of paper. Written on it: \"192.168.1.15\"\nThat should be right — Dad's PC's IP address.\nPip: \"Yeah, that's it.\"\nClerk: \"Then let's stick the destination address on.\"\nHe presses the paper onto the train stopped on the tracks.",
@@ -286,22 +303,12 @@ export function TheShortWayHomeWalkthroughDraft({
             That&rsquo;s so whoever receives it knows exactly where to send a reply. Both
             addresses ride along on every single packet, not just the first one.
           </p>
+          <p>
+            And notice the order things were added: the sequence number was stamped on each
+            piece first, and this address label wraps around the outside of it. The real
+            wrapping works the same way — each layer encloses the one that came before it.
+          </p>
         </div>
-      ),
-    },
-    {
-      section: "2. Getting Ready to Send",
-      title: "Numbered, Too",
-      story: {
-        text: "The Clerk pulls out a stamp and taps a number onto the corner of each crate as it rolls by. 1, 2, 3, and so on, down the line.\nPip: \"What's that for?\"\nClerk: \"So whoever unpacks these knows what order they go in.\"\nPip: \"Don't they just arrive in the order we send them?\"\nClerk: \"Not always — some might take a hair longer than others down the line. The number's how the other end sorts it out, no matter what order they show up in.\"",
-        illustration: <SceneCargoSlicing />,
-      },
-      body: (
-        <p>
-          Every packet carries a sequence number stamped on as it&rsquo;s created. It&rsquo;s a
-          small tag saying where it belongs in the original order. It travels along with the
-          packet the whole way, from departure to arrival.
-        </p>
       ),
     },
     // -------------------- 3. Same Line or Not? -------------------

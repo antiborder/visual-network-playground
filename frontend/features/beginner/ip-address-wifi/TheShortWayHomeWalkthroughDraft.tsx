@@ -75,7 +75,10 @@ import {
  * matching track — is dramatized at its actual moment, mid-journey
  * inside "Riding the Rails", whose story also shows both legs
  * explicitly (invisible Wi-Fi rails to the Router, solid track on to
- * Dad's PC); the switch explanation lives in that step's body. The
+ * Dad's PC) and swaps the engine inside the shed — the packet comes
+ * out of its wireless frame and into a fresh wired one, plates copied
+ * unchanged — because the two stretches really do use different
+ * frames; the switch explanation lives in that step's body. The
  * ARP step now ends with the Clerk noting the answer in a notebook
  * (the ARP cache), and the Wrap-up bullet matches all of the above. */
 export function TheShortWayHomeWalkthroughDraft({
@@ -474,21 +477,30 @@ export function TheShortWayHomeWalkthroughDraft({
       section: "5. All Aboard",
       title: "Why Not All at Once?",
       story: {
-        text: "Down the tracks, Pip can see cart after cart, each one now hitched to its own locomotive, just like his.\nPip: \"That many...\"\nClerk: \"This time, the data came out to about 4,649 packets.\"\nPip: \"Why not hook all the trains together and send them off in one go?\"\nClerk: \"If we connected them into one shipment, this line would carry nothing but your cheese the whole time.\"\nClerk: \"Sending each one separately means it can go the moment it's ready. It won't hold up everyone else waiting to use the same line.\"",
+        text: "Down the tracks, Pip can see cart after cart, each one now hitched to its own locomotive, just like his.\nPip: \"That many...\"\nClerk: \"This time, the data came out to about 4,649 packets.\"\nPip: \"Why not hook all the trains together and send them off in one go?\"\nClerk: \"Because this line isn't ours alone. Every station in the house shares it — and on the invisible stretch in particular, only one train can be on it at a time.\"\nClerk: \"Imagine one single train carrying all 4,649 crates. While it passes, everyone else simply waits — your dad's PC, every other station, all of them held up behind your cheese.\"\nClerk: \"Small trains change that. One of yours slips out, then someone else's, then another of yours. The line keeps changing hands, so nobody is stuck waiting long. And each crate can leave the moment it's ready, instead of waiting until the whole photo is packed.\"",
         illustration: <SceneCargoSlicing />,
       },
       body: (
         <div className="space-y-2">
           <p>
-            Connecting every packet into one long train would tie up the line for as long as
-            that whole shipment takes. Nobody else&rsquo;s data could get through until it
-            finished. Keeping each packet independent lets it depart the moment it&rsquo;s ready.
+            The line belongs to the whole house, not to Pip. Every device shares it — and on
+            the Wi-Fi stretch especially, only one transmission can use it at a time. So the
+            real question is: when several devices want the line at once, how long does each
+            one have to wait for the others?
           </p>
           <p>
-            This is exactly why small, separate packets work so well on a shared line. Many
-            devices can interleave their traffic — a bit of Pip&rsquo;s cheese here, a bit of
-            someone else&rsquo;s data there. That beats one giant transfer hogging the line for
-            everyone else.
+            Small packets keep every turn short. If Pip&rsquo;s photo travelled as one giant
+            shipment, it would hold the line for the whole transfer, and every other device
+            would have to wait until it finished. Sent as separate packets, the line changes
+            hands between one packet and the next: a packet of Pip&rsquo;s cheese, a packet of
+            someone else&rsquo;s data, then another of Pip&rsquo;s. A device that&rsquo;s
+            waiting only ever waits for a single small packet to pass.
+          </p>
+          <p>
+            There&rsquo;s a second benefit, too: each packet can leave the moment it&rsquo;s
+            ready. The first pieces of the photo are already on their way while the rest are
+            still being packed — nothing has to wait for the whole shipment to be finished
+            first.
           </p>
         </div>
       ),
@@ -527,7 +539,7 @@ export function TheShortWayHomeWalkthroughDraft({
       section: "5. All Aboard",
       title: "Riding the Rails",
       story: {
-        text: "The train pulls away from Phone Station — and underneath it, there is no track at all.\nPip: \"We're floating?!\"\nA porter's voice calls after them from the platform: \"Invisible rails! Same as always — that's the stretch from your station to the Router. Nothing under you but air.\"\nThe train glides down the invisible line and slips into the Router's junction shed.\nInside, the junction operator leans out as they roll in, reading the plate on the front of the engine.\nJunction operator: \"AA:BB:CC:11:22:33... let me check my list.\"\nHe runs a finger down the big, worn list pinned beside the levers — station names on the left, track numbers on the right.\nJunction operator: \"There it is — track 2!\" The points clatter over. \"Straight through!\"\nPip: \"You knew where to send us just from the name?\"\nJunction operator: \"That's all I ever look at — the name on the engine, and my list.\"\nOut of the shed, the train settles onto solid rails, humming quietly through the walls of the house, on the last stretch of line.\nPorter: \"One more station. Dad's PC Station, coming up.\"",
+        text: "The train pulls away from Phone Station — and underneath it, there is no track at all.\nPip: \"We're floating?!\"\nA porter's voice calls after them from the platform: \"Invisible rails! Same as always — that's the stretch from your station to the Router. Nothing under you but air.\"\nThe train glides down the invisible line and slips into the Router's junction shed.\nInside, porters are already unhitching the engine that floated them here, and backing a different one in — heavier, built for solid rails.\nPip: \"We're changing engines?\"\nPorter: \"The engine that carries a crate over the air can't run on solid track. But look — the crate itself never changes. Same label, same number, same tag. Even the name plates are copied onto the new engine, just as they were. Only the engine is new.\"\nAt the front of the shed, the junction operator leans out, reading the plate on the new engine.\nJunction operator: \"AA:BB:CC:11:22:33... let me check my list.\"\nHe runs a finger down the big, worn list pinned beside the levers — station names on the left, track numbers on the right.\nJunction operator: \"There it is — track 2!\" The points clatter over. \"Straight through!\"\nPip: \"You knew where to send us just from the name?\"\nJunction operator: \"That's all I ever look at — the name on the engine, and my list.\"\nOut of the shed, the train settles onto solid rails, humming quietly through the walls of the house, on the last stretch of line.\nPorter: \"One more station. Dad's PC Station, coming up.\"",
         illustration: <ScenePipOnTrain />,
       },
       body: (
@@ -536,6 +548,13 @@ export function TheShortWayHomeWalkthroughDraft({
             No provider, no address-swapping, no long detour. A same-line delivery like this one
             only ever passes through the router. That&rsquo;s the same router Pip met back in
             Meet the Network.
+          </p>
+          <p>
+            Did you catch the change of engines inside the shed? The frame that carried the
+            packet over Wi-Fi can&rsquo;t travel the wired stretch, so inside the router the
+            packet comes out of its wireless frame and goes into a fresh wired one. The packet
+            itself — its IP label, its sequence number, its check tag — is never touched, and
+            even the MAC name plates are copied across unchanged. Only the wrapper is new.
           </p>
           <p>
             The junction moment in the middle is the <strong>switch</strong> at work — a small

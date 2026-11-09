@@ -98,7 +98,13 @@ import {
  * old 14-step §5 "All Aboard" split into §5 "All Aboard" (why packets
  * travel separately + departure), §6 "Through the Router" (the ride),
  * §7 "At Dad's PC Station" (arrival checks and unwrapping), and
- * §8 "Back Together" (reordering, reassembly, delivery). */
+ * §8 "Back Together" (reordering, reassembly, delivery).
+ *
+ * 2026-11-09 guideline pass: the whole chapter (story and bodies)
+ * was audited against docs/guideline.md — no sentence over ~20 words,
+ * no unbroken prose block over ~50 words. Long sentences were split
+ * and long paragraphs broken into separate <p>s, meaning unchanged;
+ * the audit now reports zero violations. */
 export function TheShortWayHomeWalkthroughDraft({
   onComplete,
   onNavigatePrevious,
@@ -225,13 +231,17 @@ export function TheShortWayHomeWalkthroughDraft({
         illustration: <SceneCargoSlicing />,
       },
       body: (
-        <p>
-          Before anything gets packed, one thing has to be pinned down: where it&rsquo;s
-          going. Pip worked out this address at the start of the chapter — 192.168.1.15,
-          Dad&rsquo;s PC — and
-          every step from here on depends on it. In the dream, the photo itself is standing
-          right here in the station, so this is where the sending really begins.
-        </p>
+        <div className="space-y-2">
+          <p>
+            Before anything gets packed, one thing has to be pinned down: where it&rsquo;s
+            going. Pip worked out this address at the start of the chapter: 192.168.1.15,
+            Dad&rsquo;s PC. Every step from here on depends on it.
+          </p>
+          <p>
+            In the dream, the photo itself is standing right here in the station. So this is
+            where the sending really begins.
+          </p>
+        </div>
       ),
     },
     {
@@ -342,9 +352,9 @@ export function TheShortWayHomeWalkthroughDraft({
             addresses ride along on every single packet, not just the first one.
           </p>
           <p>
-            And notice the order things were added: the sequence number was stamped on each
-            piece first, and this address label wraps around the outside of it. The real
-            wrapping works the same way — each layer encloses the one that came before it.
+            And notice the order things were added. The sequence number was stamped on each
+            piece first. This address label wraps around the outside of it. The real wrapping
+            works the same way — each layer encloses the one that came before it.
           </p>
         </div>
       ),
@@ -381,14 +391,18 @@ export function TheShortWayHomeWalkthroughDraft({
         illustration: <SceneStationMap />,
       },
       body: (
-        <p>
-          An <Term id="ip-address">IP address</Term> like 192.168.1.15 is doing two jobs at
-          once. One part names the group — the line this station belongs to. The other part
-          names the station itself, inside that group. It&rsquo;s the same shape as a postal
-          address: the town gets the letter to the right area, and the house number picks
-          out the exact door. To tell whether two stations share a line, only the first
-          part has to match.
-        </p>
+        <div className="space-y-2">
+          <p>
+            An <Term id="ip-address">IP address</Term> like 192.168.1.15 is doing two jobs at
+            once. One part names the group — the line this station belongs to. The other part
+            names the station itself, inside that group.
+          </p>
+          <p>
+            It&rsquo;s the same shape as a postal address. The town gets the letter to the
+            right area. The house number picks out the exact door. To tell whether two
+            stations share a line, only the first part has to match.
+          </p>
+        </div>
       ),
     },
     {
@@ -399,13 +413,17 @@ export function TheShortWayHomeWalkthroughDraft({
         illustration: <SceneStationMap />,
       },
       body: (
-        <p>
-          A subnet mask is written as a prefix, like /24. It marks exactly how many of an
-          address&rsquo;s bits belong to the line-group part. Everything before that boundary has
-          to match for two stations to share a line. Everything after it is free to differ.
-          The same boundary is sometimes written the long way, as a mask — 255.255.255.0 says
-          exactly what /24 says.
-        </p>
+        <div className="space-y-2">
+          <p>
+            A subnet mask is written as a prefix, like /24. It marks exactly how many of an
+            address&rsquo;s bits belong to the line-group part.
+          </p>
+          <p>
+            Everything before that boundary has to match, for two stations to share a line.
+            Everything after it is free to differ. The same boundary is sometimes written the
+            long way, as a mask. And 255.255.255.0 says exactly what /24 says.
+          </p>
+        </div>
       ),
     },
     {
@@ -476,9 +494,11 @@ export function TheShortWayHomeWalkthroughDraft({
           <p>
             Knowing Dad&rsquo;s PC is on the same subnet still doesn&rsquo;t tell Pip&rsquo;s
             phone how to physically reach it. Delivery on a LAN happens by{" "}
-            <Term id="mac-address">MAC address</Term>, not IP address. In the station picture,
-            it&rsquo;s a station&rsquo;s own fixed name, not the line-group number it happens to
-            be using today.
+            <Term id="mac-address">MAC address</Term>, not IP address.
+          </p>
+          <p>
+            In the station picture, it&rsquo;s a station&rsquo;s own fixed name. It is not the
+            line-group number it happens to be using today.
           </p>
           <p>
             An IP address is assigned by the network, and can change if a device joins a
@@ -507,20 +527,20 @@ export function TheShortWayHomeWalkthroughDraft({
       section: "4. Names and Seals",
       title: "The Clerk's Notebook",
       story: {
-        text: "The Clerk pulls a worn notebook from his pocket and scribbles the answer down.\nPip: \"You write it down?\"\nClerk: \"Every time. Next time a train leaves for that address, I check my notebook first — no need to shout the question down the whole line again.\"\nPip: \"And if the notebook's wrong?\"\nClerk: \"Then the reply that comes back sets it right. The notebook is only a memory — not the truth itself.\"",
+        text: "The Clerk pulls a worn notebook from his pocket and scribbles the answer down.\nPip: \"You write it down?\"\nClerk: \"Every time. Next time a train leaves for that address, I check my notebook first. No need to shout the question down the whole line again.\"\nPip: \"And if the notebook's wrong?\"\nClerk: \"Then the reply that comes back sets it right. The notebook is only a memory — not the truth itself.\"",
         illustration: <SceneStationAnnouncement />,
       },
       body: (
         <div className="space-y-2">
           <p>
-            The answer is worth keeping: the phone stores it in a small list of its own (its ARP
-            cache — the Clerk&rsquo;s notebook), and the next send to the same address looks it up
-            there first instead of broadcasting the question all over again.
+            The answer is worth keeping. The phone stores it in a small list of its own. That
+            list is its ARP cache — the Clerk&rsquo;s notebook. The next send to the same
+            address looks it up there first. No need to broadcast the question all over again.
           </p>
           <p>
-            A notebook is a memory, not the truth. Entries are kept only for a while, and if an
-            answer ever stops working — a device replaced, an address moved — the phone simply
-            asks again and writes down the fresh reply.
+            A notebook is a memory, not the truth. Entries are kept only for a while. And if an
+            answer ever stops working, the phone simply asks again. That can happen when a
+            device is replaced, or an address moves. The fresh reply gets written down instead.
           </p>
         </div>
       ),
@@ -538,12 +558,13 @@ export function TheShortWayHomeWalkthroughDraft({
           <p>
             This wrapping-up step has a name of its own: <strong>framing</strong>. Before the
             packet can ride the local line, the phone&rsquo;s network hardware wraps it into a
-            frame, and the frame carries the destination&rsquo;s{" "}
-            <Term id="mac-address">MAC address</Term> at the front — the name ARP just found.
+            frame. The frame carries the destination&rsquo;s{" "}
+            <Term id="mac-address">MAC address</Term> at the front. That is the name ARP just
+            found.
           </p>
           <p>
             The frame names where it came from, too: the sender&rsquo;s own MAC address rides
-            along as well. So every frame on the line says both ends of its journey — and when
+            along as well. So every frame on the line says both ends of its journey. And when
             Dad&rsquo;s PC sends a frame back, the two names simply swap places.
           </p>
         </div>
@@ -558,14 +579,19 @@ export function TheShortWayHomeWalkthroughDraft({
         illustration: <SceneCargoSlicing />,
       },
       body: (
-        <p>
-          One last thing goes on, at the very end of the frame: a check value — a short number
-          worked out from everything in the frame, by a fixed recipe. It&rsquo;s the tag on the
-          crate&rsquo;s clasp. The receiver will work out the same number from whatever actually
-          arrives and compare the two — a check that gets its own step once the train pulls in.
-          Everything so far — the slicing, the labels, ARP, the plates — was preparation for
-          departure.
-        </p>
+        <div className="space-y-2">
+          <p>
+            One last thing goes on, at the very end of the frame: a check value. It is a short
+            number, worked out from everything in the frame. The recipe is always the same.
+            It&rsquo;s the tag on the crate&rsquo;s clasp.
+          </p>
+          <p>
+            The receiver will work out the same number from whatever actually arrives. Then it
+            compares the two. That comparison gets its own step, once the train pulls in.
+            Everything so far was preparation for departure — the slicing, the labels, ARP, the
+            plates.
+          </p>
+        </div>
       ),
       visual: <LanMap devices={arpDevices} conflictIds={new Set()} packet={null} showMac />,
     },
@@ -574,24 +600,29 @@ export function TheShortWayHomeWalkthroughDraft({
       section: "5. All Aboard",
       title: "Why Not All at Once?",
       story: {
-        text: "Down the tracks, Pip can see cart after cart, each one now hitched to its own locomotive, just like his.\nPip: \"That many...\"\nClerk: \"This time, the data came out to about 4,649 packets.\"\nPip: \"Why not hook all the trains together and send them off in one go?\"\nClerk: \"Because this line isn't ours alone. Every station in the house shares it — and on the invisible stretch in particular, only one train can be on it at a time.\"\nClerk: \"Imagine one single train carrying all 4,649 crates. While it passes, everyone else simply waits — your dad's PC, every other station, all of them held up behind your cheese.\"",
+        text: "Down the tracks, Pip can see cart after cart, each one now hitched to its own locomotive, just like his.\nPip: \"That many...\"\nClerk: \"This time, the data came out to about 4,649 packets.\"\nPip: \"Why not hook all the trains together and send them off in one go?\"\nClerk: \"Because this line isn't ours alone. Every station in the house shares it. And on the invisible stretch especially, only one train can be on it at a time.\"\nClerk: \"Imagine one single train carrying all 4,649 crates. While it passes, everyone else simply waits. Your dad's PC, every other station — all held up behind your cheese.\"",
         illustration: <SceneCargoSlicing />,
       },
       body: (
         <div className="space-y-2">
           <p>
-            The line belongs to the whole house, not to Pip. Every device shares it — and on
-            the Wi-Fi stretch especially, only one transmission can use it at a time. So the
-            real question is: when several devices want the line at once, how long does each
-            one have to wait for the others?
+            The line belongs to the whole house, not to Pip. Every device shares it. And on
+            the Wi-Fi stretch especially, only one transmission can use it at a time.
           </p>
           <p>
-            Small packets keep every turn short. If Pip&rsquo;s photo travelled as one giant
-            shipment, it would hold the line for the whole transfer, and every other device
-            would have to wait until it finished. Sent as separate packets, the line changes
-            hands between one packet and the next: a packet of Pip&rsquo;s cheese, a packet of
-            someone else&rsquo;s data, then another of Pip&rsquo;s. A device that&rsquo;s
-            waiting only ever waits for a single small packet to pass.
+            So the real question is a simple one. When several devices want the line at once,
+            how long does each one have to wait for the others? Small packets keep every turn
+            short.
+          </p>
+          <p>
+            If Pip&rsquo;s photo travelled as one giant shipment, it would hold the line for
+            the whole transfer. Every other device would have to wait until it finished.
+          </p>
+          <p>
+            Sent as separate packets, the line changes hands between one packet and the next.
+            A packet of Pip&rsquo;s cheese, a packet of someone else&rsquo;s data, then
+            another of Pip&rsquo;s. A device that&rsquo;s waiting only ever waits for a
+            single small packet to pass.
           </p>
         </div>
       ),
@@ -600,17 +631,22 @@ export function TheShortWayHomeWalkthroughDraft({
       section: "5. All Aboard",
       title: "Leaves When Ready",
       story: {
-        text: "Clerk: \"Small trains have one more trick. One of yours slips out, then someone else's, then another of yours — the line keeps changing hands, so nobody waits long.\"\nPip: \"And mine don't have to wait for each other, either?\"\nClerk: \"Right. Each crate leaves the moment it's ready. The first pieces are already rolling while the rest are still being packed — nothing waits for the whole photo.\"",
+        text: "Clerk: \"Small trains have one more trick. One of yours slips out. Then someone else's, then another of yours. The line keeps changing hands, so nobody waits long.\"\nPip: \"And mine don't have to wait for each other, either?\"\nClerk: \"Right. Each crate leaves the moment it's ready. The first pieces are already rolling while the rest are still being packed — nothing waits for the whole photo.\"",
         illustration: <SceneCargoSlicing />,
       },
       body: (
-        <p>
-          There&rsquo;s a second benefit to sending pieces separately: each packet can leave
-          the moment it&rsquo;s ready. The first pieces of the photo are already on their way
-          while the later ones are still being sliced and labeled — sending and packing
-          overlap. If everything had to travel as one shipment, nothing could move until the
-          very last piece was ready.
-        </p>
+        <div className="space-y-2">
+          <p>
+            There&rsquo;s a second benefit to sending pieces separately. Each packet can leave
+            the moment it&rsquo;s ready.
+          </p>
+          <p>
+            The first pieces of the photo are already on their way. Meanwhile, the later ones
+            are still being sliced and labeled. Sending and packing overlap. If everything had
+            to travel as one shipment, nothing could move. Not until the very last piece was
+            ready.
+          </p>
+        </div>
       ),
     },
     {
@@ -651,48 +687,63 @@ export function TheShortWayHomeWalkthroughDraft({
         illustration: <ScenePipOnTrain />,
       },
       body: (
-        <p>
-          This first stretch of the journey is the Wi-Fi hop: the frame travels from
-          Pip&rsquo;s phone to the router as radio waves, through the air. In Chapter 1 the
-          invisible rails were how every device in the house reaches the router — and this
-          delivery, short as it is, still starts with that same hop.
-        </p>
+        <div className="space-y-2">
+          <p>
+            This first stretch of the journey is the Wi-Fi hop. The frame travels from
+            Pip&rsquo;s phone to the router as radio waves, through the air.
+          </p>
+          <p>
+            In Chapter 1, the invisible rails were how every device in the house reaches the
+            router. This delivery is short, but it still starts with that same hop.
+          </p>
+        </div>
       ),
     },
     {
       section: "6. Through the Router",
       title: "A Change of Engines",
       story: {
-        text: "Inside the shed, porters are already unhitching the engine that floated them here, and backing a different one in — heavier, built for solid rails.\nPip: \"We're changing engines?\"\nPorter: \"The engine that carries a crate over the air can't run on solid track. But look — the crate itself never changes. Same label, same number, same tag. Even the name plates are copied onto the new engine, just as they were. Only the engine is new.\"",
+        text: "Inside the shed, porters are already unhitching the engine that floated them here. They back a different one in — heavier, built for solid rails.\nPip: \"We're changing engines?\"\nPorter: \"The engine that carries a crate over the air can't run on solid track. But look — the crate itself never changes. Same label, same number, same tag. Even the name plates are copied onto the new engine, just as they were. Only the engine is new.\"",
         illustration: <SceneJunctionSwitch />,
       },
       body: (
-        <p>
-          Did you catch the change of engines inside the shed? The frame that carried the
-          packet over Wi-Fi can&rsquo;t travel the wired stretch, so inside the router the
-          packet comes out of its wireless frame and goes into a fresh wired one. The packet
-          itself — its IP label, its sequence number, its check tag — is never touched, and
-          even the MAC name plates are copied across unchanged. Only the wrapper is new.
-        </p>
+        <div className="space-y-2">
+          <p>
+            Did you catch the change of engines inside the shed? The frame that carried the
+            packet over Wi-Fi can&rsquo;t travel the wired stretch. So inside the router, the
+            packet comes out of its wireless frame. It goes into a fresh wired one.
+          </p>
+          <p>
+            The packet itself is never touched. Not its IP label, not its sequence number,
+            not its check tag. Even the MAC name plates are copied across unchanged. Only the
+            wrapper is new.
+          </p>
+        </div>
       ),
     },
     {
       section: "6. Through the Router",
       title: "The Junction Operator's List",
       story: {
-        text: "At the front of the shed, the junction operator leans out, reading the plate on the new engine.\nJunction operator: \"AA:BB:CC:11:22:33... let me check my list.\"\nHe runs a finger down the big, worn list pinned beside the levers — station names on the left, track numbers on the right.\nJunction operator: \"There it is — track 2!\" The points clatter over. \"Straight through!\"\nPip: \"You knew where to send us just from the name?\"\nJunction operator: \"That's all I ever look at — the name on the engine, and my list.\"\nOut of the shed, the train settles onto solid rails, humming quietly through the walls of the house, on the last stretch of line.\nPorter: \"One more station. Dad's PC Station, coming up.\"",
+        text: "At the front of the shed, the junction operator leans out, reading the plate on the new engine.\nJunction operator: \"AA:BB:CC:11:22:33... let me check my list.\"\nHe runs a finger down the big, worn list pinned beside the levers. Station names on the left, track numbers on the right.\nJunction operator: \"There it is — track 2!\" The points clatter over. \"Straight through!\"\nPip: \"You knew where to send us just from the name?\"\nJunction operator: \"That's all I ever look at — the name on the engine, and my list.\"\nOut of the shed, the train settles onto solid rails. It hums quietly through the walls of the house, on the last stretch of line.\nPorter: \"One more station. Dad's PC Station, coming up.\"",
         illustration: <ScenePipOnTrain />,
       },
       body: (
         <div className="space-y-2">
           <p>
-            The junction moment is the <strong>switch</strong> at work — a small switch built
-            into the router. The instant a frame arrives, it reads the destination{" "}
-            <Term id="mac-address">MAC address</Term>, looks it up in its list of which of its
-            ports each address is reached by, and forwards the frame out that port. It
-            doesn&rsquo;t decide inside versus outside — that was the sender&rsquo;s call, back
-            in §3, already written into the frame&rsquo;s address before it left. How the switch
-            learns and keeps its list up to date is its own topic, with its own chapter later on.
+            The junction moment is the <strong>switch</strong> at work. It is a small switch,
+            built into the router.
+          </p>
+          <p>
+            The instant a frame arrives, the switch reads the destination{" "}
+            <Term id="mac-address">MAC address</Term>. It looks that address up in its list.
+            The list says which of its ports each address is reached by. Then it forwards the
+            frame out that port.
+          </p>
+          <p>
+            It doesn&rsquo;t decide inside versus outside. That was the sender&rsquo;s call,
+            back in §3. It was written into the frame&rsquo;s address before the frame left.
+            How the switch learns its list is its own topic. It gets its own chapter later on.
           </p>
           <p>
             No provider, no address-swapping, no long detour. A same-line delivery like this one
@@ -715,7 +766,7 @@ export function TheShortWayHomeWalkthroughDraft({
       section: "7. At Dad's PC Station",
       title: "Nothing Broken?",
       story: {
-        text: "Satisfied, the porter moves to the tag fixed beside the crate's clasp. He reads the number stamped on it, then works quietly through the crate's contents on his clipboard, counting under his breath.\nPorter: \"Tag says one number. What arrived works out to the same. Nothing torn open, nothing changed on the way over.\"\nPip: \"You check that for every single crate?\"\nPorter: \"Every one. Before anyone touches what's inside.\"\nPip: \"And if the numbers hadn't matched?\"\nPorter: \"Let's just say — that's a story for another day.\"\nHe winks and moves on.",
+        text: "Satisfied, the porter moves to the tag fixed beside the crate's clasp. He reads the number stamped on it. Then he works through the crate's contents on his clipboard, counting quietly under his breath.\nPorter: \"Tag says one number. What arrived works out to the same. Nothing torn open, nothing changed on the way over.\"\nPip: \"You check that for every single crate?\"\nPorter: \"Every one. Before anyone touches what's inside.\"\nPip: \"And if the numbers hadn't matched?\"\nPorter: \"Let's just say — that's a story for another day.\"\nHe winks and moves on.",
         illustration: <SceneArrivalAtDadStation />,
       },
       body: PENDING,
@@ -783,7 +834,8 @@ export function TheShortWayHomeWalkthroughDraft({
             <li>Before sending anything, a device slices data into small, labeled <Term id="packet">packets</Term>. Each one is only as big as the local line can carry in one go.</li>
             <li>Every address secretly has two parts: which line-group a station is on, and which station within it. A subnet mask (like /24) marks exactly where that boundary falls.</li>
             <li>Comparing the line-group part of two addresses tells you whether a destination is a neighbor on the same line. No mainline is required if it is.</li>
-            <li>A <Term id="mac-address">MAC address</Term> is a fixed, factory-burned ID — unlike an IP address, which the network assigns. <Term id="arp">ARP</Term> finds a device&rsquo;s MAC address by broadcasting the question, and the answer is remembered, so the next send can look it up instead of asking again. The router&rsquo;s switch then looks that MAC address up in its own list and forwards the frame out the right port.</li>
+            <li>A <Term id="mac-address">MAC address</Term> is a fixed, factory-burned ID — unlike an IP address, which the network assigns. <Term id="arp">ARP</Term> finds a device&rsquo;s MAC address by broadcasting the question. The answer is remembered, so the next send can look it up instead of asking again.</li>
+            <li>The router&rsquo;s switch looks that MAC address up in its own list. It forwards the frame out the right port.</li>
           </ul>
           <p>
             With Dad&rsquo;s copy safely saved, Pip&rsquo;s ready to finish the real plan.

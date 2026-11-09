@@ -371,3 +371,111 @@ export function ClientServerDiagram() {
     </svg>
   );
 }
+
+/** Chapter 2: one IP packet, drawn as the story's labeled crate. The two
+ * addresses ride on the packet itself; inside it sits the transport
+ * wrapper carrying the sequence number, wrapped around the data piece.
+ * Matches the wrapping order taught in §2: number inside, address
+ * outside. */
+export function PacketDiagram() {
+  return (
+    <svg
+      viewBox="0 0 640 188"
+      className="w-full"
+      role="img"
+      aria-label="Diagram: an IP packet addressed to 192.168.1.15 from 192.168.1.10, containing a sequence number and a piece of the photo"
+    >
+      <rect x={10} y={34} width={620} height={118} rx={10} fill={CARD} stroke={LINE} strokeWidth={2} />
+      <text x={26} y={58} fontSize={13} fontWeight={600} fill={SUBTLE}>
+        IP PACKET
+      </text>
+      <rect x={150} y={40} width={196} height={30} rx={6} fill={ACCENT_FILL} stroke={ACCENT} strokeWidth={1.5} />
+      <text x={248} y={60} textAnchor="middle" fontSize={14} fontWeight={600} fill={INK}>
+        To: 192.168.1.15
+      </text>
+      <rect x={358} y={40} width={196} height={30} rx={6} fill={ACCENT_FILL} stroke={ACCENT} strokeWidth={1.5} />
+      <text x={456} y={60} textAnchor="middle" fontSize={14} fontWeight={600} fill={INK}>
+        From: 192.168.1.10
+      </text>
+      <rect x={30} y={84} width={270} height={52} rx={8} fill="#fff" stroke={LINE} strokeWidth={1.5} />
+      <text x={165} y={106} textAnchor="middle" fontSize={14} fontWeight={600} fill={INK}>
+        Sequence number: 3
+      </text>
+      <text x={165} y={126} textAnchor="middle" fontSize={13} fill={SUBTLE}>
+        the transport wrapper
+      </text>
+      <rect x={316} y={84} width={294} height={52} rx={8} fill="#fff" stroke={LINE} strokeWidth={1.5} />
+      <text x={463} y={106} textAnchor="middle" fontSize={14} fontWeight={600} fill={INK}>
+        A piece of the photo
+      </text>
+      <text x={463} y={126} textAnchor="middle" fontSize={13} fill={SUBTLE}>
+        the data itself
+      </text>
+      <text x={320} y={176} textAnchor="middle" fontSize={14} fill={SUBTLE}>
+        The addresses ride on the outside. The number rides inside.
+      </text>
+    </svg>
+  );
+}
+
+/** Chapter 2: one frame, drawn as the story's locomotive and crate. The
+ * frame names both ends (the two MAC plates), carries the whole IP
+ * packet untouched, and ends with the check number. `highlight` picks
+ * which part the current step is about. */
+export function FrameDiagram({ highlight }: { highlight: "plates" | "fcs" }) {
+  const seg = (active: boolean) => ({
+    fill: active ? ACCENT_FILL : "#fff",
+    stroke: active ? ACCENT : LINE,
+    sw: active ? 2 : 1.5,
+  });
+  const plates = seg(highlight === "plates");
+  const fcs = seg(highlight === "fcs");
+  return (
+    <svg
+      viewBox="0 0 640 178"
+      className="w-full"
+      role="img"
+      aria-label="Diagram: a frame with the destination and sender MAC addresses, the IP packet inside, and a check number at the end"
+    >
+      <text x={10} y={22} fontSize={13} fontWeight={600} fill={SUBTLE}>
+        ONE FRAME, FRONT TO BACK
+      </text>
+      <rect x={10} y={36} width={168} height={76} rx={8} fill={plates.fill} stroke={plates.stroke} strokeWidth={plates.sw} />
+      <text x={94} y={66} textAnchor="middle" fontSize={13} fill={SUBTLE}>
+        TO (MAC)
+      </text>
+      <text x={94} y={90} textAnchor="middle" fontSize={14} fontWeight={600} fill={INK}>
+        AA:BB:CC:11:22:33
+      </text>
+      <rect x={186} y={36} width={132} height={76} rx={8} fill={plates.fill} stroke={plates.stroke} strokeWidth={plates.sw} />
+      <text x={252} y={66} textAnchor="middle" fontSize={13} fill={SUBTLE}>
+        FROM (MAC)
+      </text>
+      <text x={252} y={90} textAnchor="middle" fontSize={14} fontWeight={600} fill={INK}>
+        Pip&rsquo;s phone
+      </text>
+      <rect x={326} y={36} width={176} height={76} rx={8} fill={CARD} stroke={LINE} strokeWidth={1.5} />
+      <text x={414} y={66} textAnchor="middle" fontSize={13} fill={SUBTLE}>
+        INSIDE
+      </text>
+      <text x={414} y={90} textAnchor="middle" fontSize={14} fontWeight={600} fill={INK}>
+        The whole IP packet
+      </text>
+      <rect x={510} y={36} width={120} height={76} rx={8} fill={fcs.fill} stroke={fcs.stroke} strokeWidth={fcs.sw} />
+      <text x={570} y={66} textAnchor="middle" fontSize={13} fill={SUBTLE}>
+        AT THE END
+      </text>
+      <text x={570} y={90} textAnchor="middle" fontSize={14} fontWeight={600} fill={INK}>
+        Check number
+      </text>
+      <text x={320} y={142} textAnchor="middle" fontSize={14} fill={SUBTLE}>
+        {highlight === "plates"
+          ? "The frame names both ends of the journey."
+          : "The check number is worked out from everything before it."}
+      </text>
+      <text x={320} y={164} textAnchor="middle" fontSize={13} fill={SUBTLE}>
+        Same packet inside, whichever stretch of line the frame was built for.
+      </text>
+    </svg>
+  );
+}

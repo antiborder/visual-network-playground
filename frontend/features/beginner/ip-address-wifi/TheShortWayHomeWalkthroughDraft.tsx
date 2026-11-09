@@ -5,6 +5,7 @@ import { Term } from "@/components/Term";
 import { SegmentedProgressBar } from "@/components/SegmentedProgressBar";
 import { StoryText } from "@/components/StoryText";
 import { LanMap } from "./LanMap";
+import { FrameDiagram, PacketDiagram } from "./NetworkDiagrams";
 import { usePacketSend } from "./usePacketSend";
 import { DEFAULT_DEVICES, formatIp, type Device } from "./network";
 import {
@@ -104,7 +105,14 @@ import {
  * was audited against docs/guideline.md — no sentence over ~20 words,
  * no unbroken prose block over ~50 words. Long sentences were split
  * and long paragraphs broken into separate <p>s, meaning unchanged;
- * the audit now reports zero violations. */
+ * the audit now reports zero violations.
+ *
+ * 2026-11-09 readability pass: the explanation halves lean on
+ * figures, tables and lists wherever a structure beats prose —
+ * PacketDiagram/FrameDiagram (NetworkDiagrams.tsx) for the wrapping
+ * steps, tables for sizes / address anatomy / the two mask writings /
+ * the giant-train comparison, and lists for the ARP exchange, the
+ * switch's three actions, and the engine-change untouched items. */
 export function TheShortWayHomeWalkthroughDraft({
   onComplete,
   onNavigatePrevious,
@@ -254,9 +262,9 @@ export function TheShortWayHomeWalkthroughDraft({
       body: (
         <div className="space-y-2">
           <p>
-            Every file has a size, measured in bytes — and photos, especially high-resolution
-            ones, add up fast. A byte is the smallest practical unit. Roughly 1,000 bytes make a
-            kilobyte (KB), and 1,000 KB make a megabyte (MB). 1,000 MB make a gigabyte (GB).
+            Every file has a size, measured in bytes. And photos, especially high-resolution
+            ones, add up fast. A byte is the smallest practical unit. The table below shows how
+            the bigger units stack up from it.
           </p>
           <p>
             A typical photo shared online usually runs a few hundred KB to a few MB. That&rsquo;s
@@ -264,6 +272,41 @@ export function TheShortWayHomeWalkthroughDraft({
             default. That&rsquo;s why the cheese towers over Pip in this dream: its size mirrors
             the data behind it.
           </p>
+        </div>
+      ),
+      visual: (
+        <div className="w-full max-w-xl overflow-x-auto rounded-lg border border-neutral-200 bg-white">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="border-b border-neutral-200 text-left text-xs text-neutral-500">
+                <th className="p-2 font-medium">Unit</th>
+                <th className="p-2 font-medium">How big?</th>
+                <th className="p-2 font-medium">Roughly</th>
+              </tr>
+            </thead>
+            <tbody className="text-neutral-700">
+              <tr className="border-b border-neutral-100">
+                <td className="p-2 font-medium">Byte (B)</td>
+                <td className="p-2">the smallest unit</td>
+                <td className="p-2">one character of text</td>
+              </tr>
+              <tr className="border-b border-neutral-100">
+                <td className="p-2 font-medium">Kilobyte (KB)</td>
+                <td className="p-2">about 1,000 bytes</td>
+                <td className="p-2">a short email</td>
+              </tr>
+              <tr className="border-b border-neutral-100">
+                <td className="p-2 font-medium">Megabyte (MB)</td>
+                <td className="p-2">about 1,000 KB</td>
+                <td className="p-2">one photo</td>
+              </tr>
+              <tr>
+                <td className="p-2 font-medium">Gigabyte (GB)</td>
+                <td className="p-2">about 1,000 MB</td>
+                <td className="p-2">a short video</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       ),
     },
@@ -303,16 +346,17 @@ export function TheShortWayHomeWalkthroughDraft({
             Splitting something up doesn&rsquo;t lose or damage any of it. Once every piece
             arrives, it goes back together exactly as it was.
           </p>
-          <p>
-            Only the destination does that reassembling — not any station along the way. Routers
-            just forward each packet toward the next hop. Putting the pieces back in order happens
-            once, right at the very end.
-          </p>
-          <p>
-            Pieces don&rsquo;t always arrive in the order they were sent. So each one carries a
-            sequence number — a little tag saying where it belongs in line. That&rsquo;s how the
-            destination knows how to stack them back up correctly.
-          </p>
+          <ul className="list-disc space-y-1 pl-5">
+            <li>
+              <strong>Reassembly happens once, at the end.</strong> Only the destination puts
+              the pieces back together. Stations along the way just forward each packet on.
+            </li>
+            <li>
+              <strong>Each piece carries a sequence number.</strong> Pieces don&rsquo;t always
+              arrive in the order they were sent. The number says where each piece belongs in
+              line.
+            </li>
+          </ul>
         </div>
       ),
     },
@@ -358,6 +402,7 @@ export function TheShortWayHomeWalkthroughDraft({
           </p>
         </div>
       ),
+      visual: <PacketDiagram />,
     },
     // -------------------- 3. Same Line or Not? -------------------
     {
@@ -375,11 +420,15 @@ export function TheShortWayHomeWalkthroughDraft({
             that line. A <Term id="global-ip">public network</Term> (the wider internet) is
             everyone else, reachable only through a router.
           </p>
-          <p>
-            That&rsquo;s the real reason a device checks before sending anything. The same private
-            network means a short, direct hop. Anywhere else means routing out through the
-            gateway first.
-          </p>
+          <p>That&rsquo;s the real reason a device checks before sending anything:</p>
+          <ul className="list-disc space-y-1 pl-5">
+            <li>
+              <strong>Same private network:</strong> a short, direct hop, station to station.
+            </li>
+            <li>
+              <strong>Anywhere else:</strong> out through the router first, toward the mainline.
+            </li>
+          </ul>
         </div>
       ),
     },
@@ -404,6 +453,31 @@ export function TheShortWayHomeWalkthroughDraft({
           </p>
         </div>
       ),
+      visual: (
+        <div className="w-full max-w-xl overflow-x-auto rounded-lg border border-neutral-200 bg-white">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="border-b border-neutral-200 text-left text-xs text-neutral-500">
+                <th className="p-2 font-medium">192.168.1.15</th>
+                <th className="p-2 font-medium">Names</th>
+                <th className="p-2 font-medium">Like a postal address</th>
+              </tr>
+            </thead>
+            <tbody className="text-neutral-700">
+              <tr className="border-b border-neutral-100">
+                <td className="p-2 font-mono text-[15px] font-semibold text-cyan-800">192.168.1</td>
+                <td className="p-2">the line-group</td>
+                <td className="p-2">the town</td>
+              </tr>
+              <tr>
+                <td className="p-2 font-mono text-[15px] font-semibold text-cyan-800">.15</td>
+                <td className="p-2">the station itself</td>
+                <td className="p-2">the house number</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      ),
     },
     {
       section: "3. Same Line or Not?",
@@ -423,6 +497,31 @@ export function TheShortWayHomeWalkthroughDraft({
             Everything after it is free to differ. The same boundary is sometimes written the
             long way, as a mask. And 255.255.255.0 says exactly what /24 says.
           </p>
+        </div>
+      ),
+      visual: (
+        <div className="w-full max-w-xl overflow-x-auto rounded-lg border border-neutral-200 bg-white">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="border-b border-neutral-200 text-left text-xs text-neutral-500">
+                <th className="p-2 font-medium">Written as</th>
+                <th className="p-2 font-medium">Looks like</th>
+                <th className="p-2 font-medium">Means</th>
+              </tr>
+            </thead>
+            <tbody className="text-neutral-700">
+              <tr className="border-b border-neutral-100">
+                <td className="p-2">a prefix (short)</td>
+                <td className="p-2 font-mono text-[15px]">192.168.1.15/24</td>
+                <td className="p-2">first 24 bits name the group</td>
+              </tr>
+              <tr>
+                <td className="p-2">a mask (long)</td>
+                <td className="p-2 font-mono text-[15px]">255.255.255.0</td>
+                <td className="p-2">exactly the same boundary</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       ),
     },
@@ -507,7 +606,20 @@ export function TheShortWayHomeWalkthroughDraft({
           </p>
           <p>
             That&rsquo;s exactly why Pip&rsquo;s phone can&rsquo;t just guess it; it has to ask.
-            This broadcast-and-reply exchange is <Term id="arp">ARP</Term>.
+            This broadcast-and-reply exchange is <Term id="arp">ARP</Term>. It runs in three
+            steps:
+          </p>
+          <ol className="list-decimal space-y-1 pl-5">
+            <li>
+              The phone broadcasts one question to every station on the line: &ldquo;Who has
+              192.168.1.15? Tell 192.168.1.10.&rdquo;
+            </li>
+            <li>Every station hears the question. Only the station with that address replies.</li>
+            <li>The reply gives that station&rsquo;s MAC address: AA:BB:CC:11:22:33.</li>
+          </ol>
+          <p>
+            Try it yourself with the button below. Watch the question go out to everyone, and
+            the answer come back.
           </p>
         </div>
       ),
@@ -569,7 +681,7 @@ export function TheShortWayHomeWalkthroughDraft({
           </p>
         </div>
       ),
-      visual: <LanMap devices={arpDevices} conflictIds={new Set()} packet={null} showMac />,
+      visual: <FrameDiagram highlight="plates" />,
     },
     {
       section: "4. Names and Seals",
@@ -593,7 +705,7 @@ export function TheShortWayHomeWalkthroughDraft({
           </p>
         </div>
       ),
-      visual: <LanMap devices={arpDevices} conflictIds={new Set()} packet={null} showMac />,
+      visual: <FrameDiagram highlight="fcs" />,
     },
     // -------------------- 5. All Aboard -------------------
     {
@@ -624,6 +736,31 @@ export function TheShortWayHomeWalkthroughDraft({
             another of Pip&rsquo;s. A device that&rsquo;s waiting only ever waits for a
             single small packet to pass.
           </p>
+        </div>
+      ),
+      visual: (
+        <div className="w-full max-w-xl overflow-x-auto rounded-lg border border-neutral-200 bg-white">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="border-b border-neutral-200 text-left text-xs text-neutral-500">
+                <th className="p-2 font-medium"> </th>
+                <th className="p-2 font-medium">One giant train</th>
+                <th className="p-2 font-medium">Separate packets</th>
+              </tr>
+            </thead>
+            <tbody className="text-neutral-700">
+              <tr className="border-b border-neutral-100">
+                <td className="p-2 text-neutral-500">The line is held for</td>
+                <td className="p-2">the whole photo, start to finish</td>
+                <td className="p-2">one small packet at a time</td>
+              </tr>
+              <tr>
+                <td className="p-2 text-neutral-500">Everyone else waits</td>
+                <td className="p-2">until all 4,649 crates have passed</td>
+                <td className="p-2">only for the packet in front of them</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       ),
     },
@@ -713,11 +850,14 @@ export function TheShortWayHomeWalkthroughDraft({
             packet over Wi-Fi can&rsquo;t travel the wired stretch. So inside the router, the
             packet comes out of its wireless frame. It goes into a fresh wired one.
           </p>
-          <p>
-            The packet itself is never touched. Not its IP label, not its sequence number,
-            not its check tag. Even the MAC name plates are copied across unchanged. Only the
-            wrapper is new.
-          </p>
+          <p>The packet itself is never touched:</p>
+          <ul className="list-disc space-y-1 pl-5">
+            <li>Its IP label — unchanged.</li>
+            <li>Its sequence number — unchanged.</li>
+            <li>Its check tag — unchanged.</li>
+            <li>Even the MAC name plates are copied across, just as they were.</li>
+          </ul>
+          <p>Only the wrapper is new.</p>
         </div>
       ),
     },
@@ -734,12 +874,14 @@ export function TheShortWayHomeWalkthroughDraft({
             The junction moment is the <strong>switch</strong> at work. It is a small switch,
             built into the router.
           </p>
-          <p>
-            The instant a frame arrives, the switch reads the destination{" "}
-            <Term id="mac-address">MAC address</Term>. It looks that address up in its list.
-            The list says which of its ports each address is reached by. Then it forwards the
-            frame out that port.
-          </p>
+          <p>The instant a frame arrives, the switch does three things:</p>
+          <ol className="list-decimal space-y-1 pl-5">
+            <li>
+              It reads the frame&rsquo;s destination <Term id="mac-address">MAC address</Term>.
+            </li>
+            <li>It looks that address up in its list of ports.</li>
+            <li>It forwards the frame out the port the list names.</li>
+          </ol>
           <p>
             It doesn&rsquo;t decide inside versus outside. That was the sender&rsquo;s call,
             back in §3. It was written into the frame&rsquo;s address before the frame left.

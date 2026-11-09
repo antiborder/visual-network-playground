@@ -65,8 +65,8 @@ import {
  * 2026-11-03 story pass (accuracy fixes, beginner scope kept): the old
  * switch step claimed the switch decides between NAT and direct
  * delivery; that decision is the sender's, made in §3, so it was
- * removed from the switch entirely. What §4's second step now shows is
- * the sender-side framing beat ("Plates and a Seal"): the destination
+ * removed from the switch entirely. What the §4 framing steps show is
+ * the sender-side framing beat (the former "Plates and a Seal"): the destination
  * name plate ARP found, the sender's own name plate, and a check tag
  * whose number is worked out from the crate's contents — so the
  * arrival-side "Nothing Broken?" check compares against something the
@@ -90,7 +90,15 @@ import {
  * ARP (announcement / the Clerk's notebook), "Plates and a Seal"
  * (name plates / check tag), "Why Not All at Once?" (sharing / leaves
  * when ready), and "Riding the Rails" (invisible rails / change of
- * engines / the junction operator's list). 26 steps became 33. */
+ * engines / the junction operator's list). 26 steps became 33.
+ *
+ * 2026-11-09 section pass: sections re-cut by journey phase (sizes
+ * were 1-14 steps; now 2-5). "Confirming the Address" moved into §1;
+ * §4 renamed from the chapter's own title to "Names and Seals"; the
+ * old 14-step §5 "All Aboard" split into §5 "All Aboard" (why packets
+ * travel separately + departure), §6 "Through the Router" (the ride),
+ * §7 "At Dad's PC Station" (arrival checks and unwrapping), and
+ * §8 "Back Together" (reordering, reassembly, delivery). */
 export function TheShortWayHomeWalkthroughDraft({
   onComplete,
   onNavigatePrevious,
@@ -210,7 +218,7 @@ export function TheShortWayHomeWalkthroughDraft({
     },
     // -------------------- 2. Getting Ready to Send -------------------
     {
-      section: "2. Getting Ready to Send",
+      section: "1. Lost at Phone Station",
       title: "Confirming the Address",
       story: {
         text: "Pip: \"The IP address? Oh — that's the number I saw on Dad's phone earlier.\"\nPip: \"Um... 192.168.1.15.\"\nClerk: \"192.168.1.15, got it. This way, then.\"\nPip: \"But, um, I don't have the cheese photo. I couldn't find my phone...\"",
@@ -219,7 +227,8 @@ export function TheShortWayHomeWalkthroughDraft({
       body: (
         <p>
           Before anything gets packed, one thing has to be pinned down: where it&rsquo;s
-          going. Pip worked out this address back in §1 — 192.168.1.15, Dad&rsquo;s PC — and
+          going. Pip worked out this address at the start of the chapter — 192.168.1.15,
+          Dad&rsquo;s PC — and
           every step from here on depends on it. In the dream, the photo itself is standing
           right here in the station, so this is where the sending really begins.
         </p>
@@ -456,7 +465,7 @@ export function TheShortWayHomeWalkthroughDraft({
     },
     // -------------------- 4. The Short Way Home -------------------
     {
-      section: "4. The Short Way Home",
+      section: "4. Names and Seals",
       title: "Who Has This Address?",
       story: {
         text: "Clerk: \"Knowing it's in our group still doesn't tell us which physical platform to send this to. Time for an announcement.\"\nStation announcement: \"Attention — does anyone have address 192.168.1.15? Please reply with your station name!\"\nDad's PC Station (over the speaker): \"That's me! My station name is AA:BB:CC:11:22:33.\"\nClerk: \"That broadcast-and-reply, hunting down a station's own fixed name, is called ARP.\"",
@@ -495,7 +504,7 @@ export function TheShortWayHomeWalkthroughDraft({
       resetAction: arpPacket.reset,
     },
     {
-      section: "4. The Short Way Home",
+      section: "4. Names and Seals",
       title: "The Clerk's Notebook",
       story: {
         text: "The Clerk pulls a worn notebook from his pocket and scribbles the answer down.\nPip: \"You write it down?\"\nClerk: \"Every time. Next time a train leaves for that address, I check my notebook first — no need to shout the question down the whole line again.\"\nPip: \"And if the notebook's wrong?\"\nClerk: \"Then the reply that comes back sets it right. The notebook is only a memory — not the truth itself.\"",
@@ -518,7 +527,7 @@ export function TheShortWayHomeWalkthroughDraft({
       visual: <LanMap devices={arpDevices} conflictIds={new Set()} packet={null} showMac />,
     },
     {
-      section: "4. The Short Way Home",
+      section: "4. Names and Seals",
       title: "A Name at Both Ends",
       story: {
         text: "Back at Pip's waiting cart, a small locomotive is backing up to hitch on.\nClerk: \"First, the name ARP just found goes on the front. That's who this delivery is for.\"\nHe bolts a plate to the front of the engine: AA:BB:CC:11:22:33.\nPip: \"And the smaller plate at the back?\"\nClerk: \"Your own station's name — so anyone can see where it set out from.\"",
@@ -542,7 +551,7 @@ export function TheShortWayHomeWalkthroughDraft({
       visual: <LanMap devices={arpDevices} conflictIds={new Set()} packet={null} showMac />,
     },
     {
-      section: "4. The Short Way Home",
+      section: "4. Names and Seals",
       title: "The Check Tag",
       story: {
         text: "At the crate's clasp, a porter fixes a small tag, its face stamped with a number.\nPorter: \"That number is worked out from everything inside the crate — always by the same recipe. At the far end, they'll work it out again from whatever actually arrives, and compare the two.\"\nPip: \"And if the numbers don't match?\"\nPorter: \"Then something changed on the way — and they'll know. That's a longer story, for another day.\"",
@@ -635,7 +644,7 @@ export function TheShortWayHomeWalkthroughDraft({
       ),
     },
     {
-      section: "5. All Aboard",
+      section: "6. Through the Router",
       title: "Invisible Rails",
       story: {
         text: "The train pulls away from Phone Station — and underneath it, there is no track at all.\nPip: \"We're floating?!\"\nA porter's voice calls after them from the platform: \"Invisible rails! Same as always — that's the stretch from your station to the Router. Nothing under you but air.\"\nThe train glides down the invisible line and slips into the Router's junction shed.",
@@ -651,7 +660,7 @@ export function TheShortWayHomeWalkthroughDraft({
       ),
     },
     {
-      section: "5. All Aboard",
+      section: "6. Through the Router",
       title: "A Change of Engines",
       story: {
         text: "Inside the shed, porters are already unhitching the engine that floated them here, and backing a different one in — heavier, built for solid rails.\nPip: \"We're changing engines?\"\nPorter: \"The engine that carries a crate over the air can't run on solid track. But look — the crate itself never changes. Same label, same number, same tag. Even the name plates are copied onto the new engine, just as they were. Only the engine is new.\"",
@@ -668,7 +677,7 @@ export function TheShortWayHomeWalkthroughDraft({
       ),
     },
     {
-      section: "5. All Aboard",
+      section: "6. Through the Router",
       title: "The Junction Operator's List",
       story: {
         text: "At the front of the shed, the junction operator leans out, reading the plate on the new engine.\nJunction operator: \"AA:BB:CC:11:22:33... let me check my list.\"\nHe runs a finger down the big, worn list pinned beside the levers — station names on the left, track numbers on the right.\nJunction operator: \"There it is — track 2!\" The points clatter over. \"Straight through!\"\nPip: \"You knew where to send us just from the name?\"\nJunction operator: \"That's all I ever look at — the name on the engine, and my list.\"\nOut of the shed, the train settles onto solid rails, humming quietly through the walls of the house, on the last stretch of line.\nPorter: \"One more station. Dad's PC Station, coming up.\"",
@@ -694,7 +703,7 @@ export function TheShortWayHomeWalkthroughDraft({
       ),
     },
     {
-      section: "5. All Aboard",
+      section: "7. At Dad's PC Station",
       title: "Checking In",
       story: {
         text: "The train rolls into the platform at Dad's PC Station.\nA porter steps out, clipboard in hand, and walks straight to the locomotive.\nPorter: \"Let's see here...\"\nHe reads the little nameplate bolted to its front: AA:BB:CC:11:22:33.\nPorter: \"Yep. That's us, alright. This one's really come to the right station.\"\nPip: \"You check that for every single train?\"\nPorter: \"Every one. Doesn't matter how many pull in.\"\nPorter: \"If the name on the engine doesn't match ours, it's not for us. We don't touch it.\"",
@@ -703,7 +712,7 @@ export function TheShortWayHomeWalkthroughDraft({
       body: PENDING,
     },
     {
-      section: "5. All Aboard",
+      section: "7. At Dad's PC Station",
       title: "Nothing Broken?",
       story: {
         text: "Satisfied, the porter moves to the tag fixed beside the crate's clasp. He reads the number stamped on it, then works quietly through the crate's contents on his clipboard, counting under his breath.\nPorter: \"Tag says one number. What arrived works out to the same. Nothing torn open, nothing changed on the way over.\"\nPip: \"You check that for every single crate?\"\nPorter: \"Every one. Before anyone touches what's inside.\"\nPip: \"And if the numbers hadn't matched?\"\nPorter: \"Let's just say — that's a story for another day.\"\nHe winks and moves on.",
@@ -712,7 +721,7 @@ export function TheShortWayHomeWalkthroughDraft({
       body: PENDING,
     },
     {
-      section: "5. All Aboard",
+      section: "7. At Dad's PC Station",
       title: "Unhitching",
       story: {
         text: "With both checks done, the porter unclips the locomotive from the crate.\nPorter: \"Alright, you're off duty.\"\nHe waves it toward a side track, where it rolls away on its own.\nPip: \"Where's it going?\"\nPorter: \"Back out — it was only ever here to get this one crate the last stretch of the way. Its job's done the moment we've got the crate in hand.\"",
@@ -721,7 +730,7 @@ export function TheShortWayHomeWalkthroughDraft({
       body: PENDING,
     },
     {
-      section: "5. All Aboard",
+      section: "7. At Dad's PC Station",
       title: "One Last Address Check",
       story: {
         text: "The porter turns his attention to the crate itself now, alone on the platform without its engine.\nHe peels back a corner and checks the label glued underneath: 192.168.1.15.\nPorter: \"This address is ours, too. Matches the station name and the label both — no mix-ups.\"\nPip: \"Wait, didn't you already check the engine's name? Why check the crate too?\"\nPorter: \"Different question, really. The engine told us we're the right station.\"\nPorter: \"The label tells us this particular crate is really meant for us. It's not, say, a neighbor sharing our platform.\"",
@@ -730,7 +739,7 @@ export function TheShortWayHomeWalkthroughDraft({
       body: PENDING,
     },
     {
-      section: "5. All Aboard",
+      section: "8. Back Together",
       title: "Out of Order",
       story: {
         text: "More trains keep rolling in, one after another — but not in the order they left.\nPip: \"Wait, that one says 12 on it. Didn't we just see number 4?\"\nPorter: \"Happens all the time. No two trains take exactly the same amount of time down the line.\"\nPip: \"So... is that a problem?\"\nPorter: \"Not even a little. Watch.\"",
@@ -739,7 +748,7 @@ export function TheShortWayHomeWalkthroughDraft({
       body: PENDING,
     },
     {
-      section: "5. All Aboard",
+      section: "8. Back Together",
       title: "Back Together",
       story: {
         text: "The porter checks the little number stamped on each crate as it arrives.\nHe lines them up on the platform in the order the numbers say: 1, 2, 3.\nThat's not the order they showed up in.\nAs each one clicks into place beside the last, the blocks melt seamlessly back together.\nPip: \"It's — it's whole again!\"\nPorter: \"As long as we know the order, it doesn't matter which one shows up first.\"",
@@ -748,7 +757,7 @@ export function TheShortWayHomeWalkthroughDraft({
       body: PENDING,
     },
     {
-      section: "5. All Aboard",
+      section: "8. Back Together",
       title: "Delivered — the Short Way",
       story: {
         text: "A satisfying clunk, and the crates finish unloading — Pip right behind them.\nA porter at Dad's PC Station stamps the delivery log.\nPorter: \"Delivered — straight into the shared folder, right where it belongs.\"\nPip: \"That's the short way home. Didn't even need to go anywhere near the mainline for this one.\"",

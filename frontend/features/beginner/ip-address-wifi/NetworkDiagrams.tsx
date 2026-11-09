@@ -582,3 +582,74 @@ export function SubnetRangeLine({
     </div>
   );
 }
+
+/** Chapter 2: the life of Pip's photo, end to end — one big file, sliced
+ * into packets, sent piece by piece, and put back together at the far
+ * end. Shown at the slicing step as the map the rest of the chapter
+ * zooms into. The packet's contents are never transformed on the way;
+ * the only rebuild is the frame around it, at the router (its own
+ * step in §6). */
+export function PacketLifeDiagram() {
+  const stages = [
+    { title: "One photo", sub: "too big to send whole", accent: false },
+    { title: "Sliced", sub: "4,649 packets", accent: true },
+    { title: "Travels", sub: "one packet at a time", accent: false },
+    { title: "Back together", sub: "the photo, at Dad's PC", accent: false },
+  ];
+  const boxW = 138;
+  const gap = 26;
+  return (
+    <svg
+      viewBox="0 0 640 158"
+      className="w-full"
+      role="img"
+      aria-label="Diagram: a photo is sliced into 4,649 packets, the packets travel one at a time, and the photo is put back together at Dad's PC"
+    >
+      <text x={10} y={20} fontSize={13} fontWeight={600} fill={SUBTLE}>
+        THE LIFE OF THE PHOTO
+      </text>
+      {stages.map((s, i) => {
+        const x = 6 + i * (boxW + gap);
+        return (
+          <g key={s.title}>
+            <rect
+              x={x}
+              y={36}
+              width={boxW}
+              height={66}
+              rx={8}
+              fill={s.accent ? ACCENT_FILL : "#fff"}
+              stroke={s.accent ? ACCENT : LINE}
+              strokeWidth={s.accent ? 2 : 1.5}
+            />
+            <text x={x + boxW / 2} y={66} textAnchor="middle" fontSize={14} fontWeight={600} fill={INK}>
+              {s.title}
+            </text>
+            <text x={x + boxW / 2} y={88} textAnchor="middle" fontSize={12} fill={SUBTLE}>
+              {s.sub}
+            </text>
+            {i < stages.length - 1 && (
+              <path
+                d={`M ${x + boxW + 4} 69 L ${x + boxW + gap - 4} 69`}
+                stroke={ACCENT}
+                strokeWidth={2}
+                markerEnd="url(#packet-life-arrow)"
+              />
+            )}
+          </g>
+        );
+      })}
+      <defs>
+        <marker id="packet-life-arrow" markerWidth={8} markerHeight={8} refX={6} refY={4} orient="auto">
+          <path d="M0,0 L8,4 L0,8 Z" fill={ACCENT} />
+        </marker>
+      </defs>
+      <text x={320} y={130} textAnchor="middle" fontSize={14} fill={SUBTLE}>
+        The next steps zoom into the middle of this trip, one packet at a time.
+      </text>
+      <text x={320} y={150} textAnchor="middle" fontSize={13} fill={SUBTLE}>
+        Nothing is added to or changed inside the packets along the way.
+      </text>
+    </svg>
+  );
+}

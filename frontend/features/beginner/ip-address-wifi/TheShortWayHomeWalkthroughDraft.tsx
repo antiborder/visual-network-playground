@@ -2,6 +2,7 @@
 
 import { useState, type ReactNode } from "react";
 import { Term } from "@/components/Term";
+import { Equation } from "@/components/Equation";
 import { SegmentedProgressBar } from "@/components/SegmentedProgressBar";
 import { StoryText } from "@/components/StoryText";
 import { LanMap } from "./LanMap";
@@ -9,6 +10,7 @@ import {
   CidrBitStripDiagram,
   FrameDiagram,
   PacketDiagram,
+  PacketLifeDiagram,
   SubnetRangeLine,
 } from "./NetworkDiagrams";
 import { usePacketSend } from "./usePacketSend";
@@ -282,10 +284,16 @@ export function TheShortWayHomeWalkthroughDraft({
             default. That&rsquo;s why the cheese towers over Pip in this dream: its size mirrors
             the data behind it.
           </p>
+          <p>
+            Pip&rsquo;s photo is a big one: 6,973,500 bytes, about 7 MB. One packet on the home
+            line can carry about 1,500 bytes. Divide the photo by one packet&rsquo;s load, and
+            you get the packet count. The equation below works it out: 4,649 packets.
+          </p>
         </div>
       ),
       visual: (
-        <div className="w-full max-w-xl overflow-x-auto rounded-lg border border-neutral-200 bg-white">
+        <div className="space-y-3">
+          <div className="w-full max-w-xl overflow-x-auto rounded-lg border border-neutral-200 bg-white">
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-neutral-200 text-left text-xs text-neutral-500">
@@ -317,6 +325,12 @@ export function TheShortWayHomeWalkthroughDraft({
               </tr>
             </tbody>
           </table>
+          </div>
+          <div className="w-full max-w-xl rounded-lg border border-neutral-200 bg-white p-4">
+            <div className="mb-1 text-xs text-neutral-500">How many packets does the photo become?</div>
+            <Equation tex={"\\dfrac{\\text{data size}}{\\text{packet size}} = \\text{number of packets}"} />
+            <Equation tex={"\\dfrac{6{,}973{,}500\\ \\text{bytes}}{1{,}500\\ \\text{bytes}} = 4{,}649\\ \\text{packets}"} />
+          </div>
         </div>
       ),
     },
@@ -338,8 +352,13 @@ export function TheShortWayHomeWalkthroughDraft({
             bigger file just means more pieces to send, not any single piece growing bigger than
             the line allows.
           </p>
+          <p>
+            The diagram below shows the whole life of the photo&rsquo;s data, end to end. This
+            chapter follows that trip stage by stage.
+          </p>
         </div>
       ),
+      visual: <PacketLifeDiagram />,
     },
     {
       section: "2. Getting Ready to Send",

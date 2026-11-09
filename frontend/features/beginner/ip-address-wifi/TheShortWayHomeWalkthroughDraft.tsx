@@ -16,7 +16,6 @@ import {
 import { usePacketSend } from "./usePacketSend";
 import { DEFAULT_DEVICES, formatIp, type Device } from "./network";
 import {
-  SceneAtPhoneStation,
   SceneStationMap,
   SceneCargoSlicing,
   SceneCheckingSameLine,
@@ -185,7 +184,14 @@ export function TheShortWayHomeWalkthroughDraft({
       title: "The chapter at a glance",
       story: {
         text: "Pip: \"...huh?\"\nHe blinks.\nA sign overhead reads: PIP'S PHONE STATION.\nPip: \"Wait... why am I at a station? I can't remember...\"\nHe closes his eyes, trying to think it through.\nPip: \"Eh, whatever. I just need to send Dad that cheese photo.\"\nPip: \"...oh. I don't have my phone.\"\nPip: \"Great. Now what do I do?\"",
-        illustration: <SceneAtPhoneStation />,
+        illustration: (
+          // eslint-disable-next-line @next/next/no-img-element -- static export (output: "export") has no image optimizer; a pre-sized WebP is served as-is.
+          <img
+            src="/images/pip/ch2-step2-glance.webp"
+            alt="Pip at Phone Station in the morning, rubbing his eye as he looks down the empty tracks"
+            className="w-full max-w-2xl mx-auto h-auto rounded-lg"
+          />
+        ),
       },
       body: (
         <p>
@@ -203,7 +209,14 @@ export function TheShortWayHomeWalkthroughDraft({
       title: "What's the Address?",
       story: {
         text: "A small booth by the platform slides open.\nClerk: \"Lost, are you?\"\nPip: \"Ah— !?\"\nClerk: \"Happens sometimes — kids wandering in like this. Can you tell me the destination?\"\nPip: \"(Oh — you scared me.) Um, I need to get a cheese photo to Dad's PC.\"\nClerk: \"Dad's PC? And where's that?\"\nPip: \"In his room.\"\nClerk: \"Room... no — do you happen to know its IP address?\"",
-        illustration: <SceneAtPhoneStation />,
+        illustration: (
+          // eslint-disable-next-line @next/next/no-img-element -- static export (output: "export") has no image optimizer; a pre-sized WebP is served as-is.
+          <img
+            src="/images/pip/ch2-step3-clerk-booth.webp"
+            alt="The station clerk greets a startled Pip from the station window"
+            className="w-full max-w-2xl mx-auto h-auto rounded-lg"
+          />
+        ),
       },
       body: (
         <div className="space-y-2">
@@ -248,7 +261,14 @@ export function TheShortWayHomeWalkthroughDraft({
       title: "Confirming the Address",
       story: {
         text: "Pip: \"The IP address? Oh — that's the number I saw on Dad's phone earlier.\"\nPip: \"Um... 192.168.1.15.\"\nClerk: \"192.168.1.15, got it. This way, then.\"\nPip: \"But, um, I don't have the cheese photo. I couldn't find my phone...\"",
-        illustration: <SceneCargoSlicing />,
+        illustration: (
+          // eslint-disable-next-line @next/next/no-img-element -- static export (output: "export") has no image optimizer; a pre-sized WebP is served as-is.
+          <img
+            src="/images/pip/ch2-step4-remembering.webp"
+            alt="Pip thinks hard, trying to remember the address, while the clerk waits at the window"
+            className="w-full max-w-2xl mx-auto h-auto rounded-lg"
+          />
+        ),
       },
       body: (
         <div className="space-y-2">

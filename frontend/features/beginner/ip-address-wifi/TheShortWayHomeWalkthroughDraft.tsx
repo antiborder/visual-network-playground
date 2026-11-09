@@ -5,7 +5,7 @@ import { Term } from "@/components/Term";
 import { SegmentedProgressBar } from "@/components/SegmentedProgressBar";
 import { StoryText } from "@/components/StoryText";
 import { LanMap } from "./LanMap";
-import { FrameDiagram, PacketDiagram } from "./NetworkDiagrams";
+import { CidrBitStripDiagram, FrameDiagram, PacketDiagram } from "./NetworkDiagrams";
 import { usePacketSend } from "./usePacketSend";
 import { DEFAULT_DEVICES, formatIp, type Device } from "./network";
 import {
@@ -500,7 +500,9 @@ export function TheShortWayHomeWalkthroughDraft({
         </div>
       ),
       visual: (
-        <div className="w-full max-w-xl overflow-x-auto rounded-lg border border-neutral-200 bg-white">
+        <div className="space-y-3">
+          <CidrBitStripDiagram rows={[{ label: "192.168.1.10", octets: [192, 168, 1, 10] }]} />
+          <div className="w-full max-w-xl overflow-x-auto rounded-lg border border-neutral-200 bg-white">
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-neutral-200 text-left text-xs text-neutral-500">
@@ -522,6 +524,7 @@ export function TheShortWayHomeWalkthroughDraft({
               </tr>
             </tbody>
           </table>
+          </div>
         </div>
       ),
     },

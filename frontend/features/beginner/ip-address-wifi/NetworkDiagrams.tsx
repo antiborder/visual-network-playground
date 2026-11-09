@@ -1,3 +1,5 @@
+import { toBits } from "./network";
+
 /** Small hand-rolled SVG diagrams for the "Meet the Network" chapter's
  * technical explanation halves — kept separate from StorybookScenes.tsx,
  * which is reserved for the picture-book story illustrations above the
@@ -477,5 +479,63 @@ export function FrameDiagram({ highlight }: { highlight: "plates" | "fcs" }) {
         Same packet inside, whichever stretch of line the frame was built for.
       </text>
     </svg>
+  );
+}
+
+/** Chapter 2: an address as 32 bit boxes, split at the prefix length —
+ * the CIDR figure from the older Short Way Home walkthrough ("Reading a
+ * subnet mask"), extracted so the story draft's §3 can use it too. Bits
+ * before the boundary are the network part (cyan); bits after it are
+ * the host part (emerald). Pass two rows to compare two addresses:
+ * their network parts line up identically when they share a line. */
+export function CidrBitStripDiagram({
+  rows,
+  prefix = 24,
+}: {
+  rows: { label: string; octets: [number, number, number, number] }[];
+  prefix?: number;
+}) {
+  return (
+    <div className="w-full max-w-xl space-y-3 overflow-x-auto rounded-lg border border-neutral-200 bg-white p-4">
+      {rows.map((row) => (
+        <div key={row.label} className="space-y-1">
+          <div className="text-xs text-neutral-500">
+            {row.label} /{prefix}
+          </div>
+          <div className="flex w-max gap-2">
+            {row.octets.map((n, octetIdx) => (
+              <div key={octetIdx} className="flex gap-0.5">
+                {toBits(n).map((bit, bitIdx) => {
+                  const bitNumber = octetIdx * 8 + bitIdx;
+                  const isNetwork = bitNumber < prefix;
+                  return (
+                    <div
+                      key={bitIdx}
+                      className={`flex h-7 w-5 items-center justify-center rounded-sm font-mono text-xs font-semibold ${
+                        isNetwork
+                          ? "border border-cyan-300 bg-cyan-100 text-cyan-800"
+                          : "border border-emerald-300 bg-emerald-100 text-emerald-800"
+                      }`}
+                    >
+                      {bit}
+                    </div>
+                  );
+                })}
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+      <div className="flex gap-4 text-xs text-neutral-500">
+        <span className="flex items-center gap-1.5">
+          <span className="inline-block h-2.5 w-2.5 rounded-sm border border-cyan-300 bg-cyan-100" />
+          network (first {prefix} bits)
+        </span>
+        <span className="flex items-center gap-1.5">
+          <span className="inline-block h-2.5 w-2.5 rounded-sm border border-emerald-300 bg-emerald-100" />
+          host (last {32 - prefix} bits)
+        </span>
+      </div>
+    </div>
   );
 }

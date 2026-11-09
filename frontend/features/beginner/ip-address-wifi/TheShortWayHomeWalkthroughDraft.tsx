@@ -356,17 +356,11 @@ export function TheShortWayHomeWalkthroughDraft({
             Splitting something up doesn&rsquo;t lose or damage any of it. Once every piece
             arrives, it goes back together exactly as it was.
           </p>
-          <ul className="list-disc space-y-1 pl-5">
-            <li>
-              <strong>Reassembly happens once, at the end.</strong> Only the destination puts
-              the pieces back together. Stations along the way just forward each packet on.
-            </li>
-            <li>
-              <strong>Each piece carries a sequence number.</strong> Pieces don&rsquo;t always
-              arrive in the order they were sent. The number says where each piece belongs in
-              line.
-            </li>
-          </ul>
+          <p>
+            Only the destination does that reassembling — not any station along the way.
+            Stations just forward each packet toward the next hop. Putting the pieces back
+            together happens once, right at the very end.
+          </p>
         </div>
       ),
     },

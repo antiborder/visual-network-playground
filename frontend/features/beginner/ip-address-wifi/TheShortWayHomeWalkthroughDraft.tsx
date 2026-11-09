@@ -117,7 +117,12 @@ import {
  * PacketDiagram/FrameDiagram (NetworkDiagrams.tsx) for the wrapping
  * steps, tables for sizes / address anatomy / the two mask writings /
  * the giant-train comparison, and lists for the ARP exchange, the
- * switch's three actions, and the engine-change untouched items. */
+ * switch's three actions, and the engine-change untouched items.
+ * Old-chapter figures carried over the same day: the CIDR bit strip
+ * (Slash Number), SubnetRangeLine adapted from SubnetExplorer's
+ * number line (Same Group!), and the LanMap at the switch step —
+ * while AddressRangeStrip and the explorer's slider stayed behind
+ * with the subnet-sizing material this chapter defers. */
 export function TheShortWayHomeWalkthroughDraft({
   onComplete,
   onNavigatePrevious,

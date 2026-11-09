@@ -5,7 +5,12 @@ import { Term } from "@/components/Term";
 import { SegmentedProgressBar } from "@/components/SegmentedProgressBar";
 import { StoryText } from "@/components/StoryText";
 import { LanMap } from "./LanMap";
-import { CidrBitStripDiagram, FrameDiagram, PacketDiagram } from "./NetworkDiagrams";
+import {
+  CidrBitStripDiagram,
+  FrameDiagram,
+  PacketDiagram,
+  SubnetRangeLine,
+} from "./NetworkDiagrams";
 import { usePacketSend } from "./usePacketSend";
 import { DEFAULT_DEVICES, formatIp, type Device } from "./network";
 import {
@@ -576,14 +581,25 @@ export function TheShortWayHomeWalkthroughDraft({
         illustration: <SceneCheckingSameLine />,
       },
       body: (
-        <p>
-          Matching line-group parts mean the two stations share a line. A device only needs to
-          reach out through the router when a destination&rsquo;s line-group differs from its own.
-          That&rsquo;s exactly why Dad&rsquo;s PC doesn&rsquo;t need the mainline at all.
-        </p>
+        <div className="space-y-2">
+          <p>
+            Matching line-group parts mean the two stations share a line. A device only needs to
+            reach out through the router when a destination&rsquo;s line-group differs from its own.
+            That&rsquo;s exactly why Dad&rsquo;s PC doesn&rsquo;t need the mainline at all.
+          </p>
+          <p>The figure below shows the whole line, with both stations inside it.</p>
+        </div>
+      ),
+      visual: (
+        <SubnetRangeLine
+          devices={[
+            { label: "Pip's phone", lastOctet: 10 },
+            { label: "Dad's PC", lastOctet: 15 },
+          ]}
+        />
       ),
     },
-    // -------------------- 4. The Short Way Home -------------------
+    // -------------------- 4. Names and Seals -------------------
     {
       section: "4. Names and Seals",
       title: "Who Has This Address?",
@@ -897,6 +913,7 @@ export function TheShortWayHomeWalkthroughDraft({
           </p>
         </div>
       ),
+      visual: <LanMap devices={arpDevices} conflictIds={new Set()} packet={null} showMac />,
     },
     {
       section: "7. At Dad's PC Station",

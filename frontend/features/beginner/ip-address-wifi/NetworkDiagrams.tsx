@@ -539,3 +539,46 @@ export function CidrBitStripDiagram({
     </div>
   );
 }
+
+/** Chapter 2: the whole /24 line as one bar, with the chapter's two
+ * stations plotted inside it. Adapted from SubnetExplorer's number
+ * line (old Short Way Home walkthrough) — that component's stat boxes
+ * teach network/broadcast addresses, which this chapter defers, so
+ * only the range line is carried over, endpoints unlabeled. */
+export function SubnetRangeLine({
+  devices,
+}: {
+  devices: { label: string; lastOctet: number }[];
+}) {
+  const pct = (octet: number) => (octet / 255) * 100;
+  return (
+    <div className="w-full max-w-xl space-y-2 rounded-lg border border-neutral-200 bg-white p-4">
+      <div className="text-xs text-neutral-500">
+        The whole 192.168.1 line, from .0 to .255 — one line-group
+      </div>
+      <div className="relative h-8 rounded-full bg-neutral-100">
+        <div className="absolute top-0 h-full w-full rounded-full bg-cyan-200" />
+        {devices.map((d) => (
+          <div
+            key={d.label}
+            title={`${d.label}: 192.168.1.${d.lastOctet}`}
+            className="absolute top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white bg-emerald-500"
+            style={{ left: `${pct(d.lastOctet)}%` }}
+          />
+        ))}
+      </div>
+      <div className="flex justify-between font-mono text-xs text-neutral-400">
+        <span>.0</span>
+        <span>.255</span>
+      </div>
+      <div className="space-y-1 text-sm text-neutral-700">
+        {devices.map((d) => (
+          <div key={d.label} className="flex items-center gap-2">
+            <span className="inline-block h-3 w-3 rounded-full border-2 border-white bg-emerald-500" />
+            {d.label} — 192.168.1.{d.lastOctet}, inside the block
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}

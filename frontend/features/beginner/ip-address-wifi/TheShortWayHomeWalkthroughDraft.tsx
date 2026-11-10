@@ -7,10 +7,13 @@ import { SegmentedProgressBar } from "@/components/SegmentedProgressBar";
 import { StoryText } from "@/components/StoryText";
 import { LanMap } from "./LanMap";
 import {
+  ArrivalOrderDiagram,
+  CheckTagDiagram,
   CidrBitStripDiagram,
   FrameDiagram,
   PacketDiagram,
   PacketLifeDiagram,
+  ReassemblyDiagram,
   SubnetRangeLine,
 } from "./NetworkDiagrams";
 import { usePacketSend } from "./usePacketSend";
@@ -66,8 +69,9 @@ import {
  * `tcp-handshake` is advanced — see docs/curriculum.md), not part of
  * Chapter 2's beginner-level scope; "Nothing Broken?" deliberately doesn't
  * say what happens if the check fails, for the same reason. Bodies for
- * these six new steps are left PENDING, matching this app's usual
- * story-then-body phased workflow.
+ * these six steps were left PENDING at first, matching this app's usual
+ * story-then-body phased workflow; they were written in the 2026-11-10
+ * pass below.
  *
  * 2026-11-03 story pass (accuracy fixes, beginner scope kept): the old
  * switch step claimed the switch decides between NAT and direct
@@ -123,7 +127,15 @@ import {
  * (Slash Number), SubnetRangeLine adapted from SubnetExplorer's
  * number line (Same Group!), and the LanMap at the switch step —
  * while AddressRangeStrip and the explorer's slider stayed behind
- * with the subnet-sizing material this chapter defers. */
+ * with the subnet-sizing material this chapter defers.
+ *
+ * 2026-11-10 arrival-bodies pass: the six arrival steps (§7-§8) got
+ * their bodies and visuals, figure/table-first per the readability
+ * pass's own rule — FrameDiagram (plates) for "Checking In", a new
+ * CheckTagDiagram for "Nothing Broken?", go/stays and two-check
+ * tables for "Unhitching" and "One Last Address Check", and new
+ * ArrivalOrderDiagram / ReassemblyDiagram for §8. Bodies are bullet
+ * lists with at most one lead sentence; no sentence over ~20 words. */
 export function TheShortWayHomeWalkthroughDraft({
   onComplete,
   onNavigatePrevious,
@@ -150,10 +162,6 @@ export function TheShortWayHomeWalkthroughDraft({
     controls?: ReactNode;
     resetAction?: () => void;
   }
-
-  const PENDING = (
-    <p className="text-storybook-ink/40 italic">(Technical explanation — not yet written.)</p>
-  );
 
   const steps: Step[] = [
     // ----------------------------- Welcome ---------------------------
@@ -960,7 +968,21 @@ export function TheShortWayHomeWalkthroughDraft({
         text: "The train rolls into the platform at Dad's PC Station.\nA porter steps out, clipboard in hand, and walks straight to the locomotive.\nPorter: \"Let's see here...\"\nHe reads the little nameplate bolted to its front: AA:BB:CC:11:22:33.\nPorter: \"Yep. That's us, alright. This one's really come to the right station.\"\nPip: \"You check that for every single train?\"\nPorter: \"Every one. Doesn't matter how many pull in.\"\nPorter: \"If the name on the engine doesn't match ours, it's not for us. We don't touch it.\"",
         illustration: <SceneArrivalAtDadStation />,
       },
-      body: PENDING,
+      body: (
+        <div className="space-y-3">
+          <p>First, the PC checks who the frame is for.</p>
+          <ul className="list-disc space-y-1 pl-5">
+            <li>
+              It reads the destination <Term id="mac-address">MAC address</Term> at the
+              frame&rsquo;s front.
+            </li>
+            <li>It compares that address with its own burned-in address.</li>
+            <li>The same? The frame is taken in.</li>
+            <li>Different? The frame is left alone — it belongs to another station.</li>
+          </ul>
+        </div>
+      ),
+      visual: <FrameDiagram highlight="plates" />,
     },
     {
       section: "7. At Dad's PC Station",
@@ -969,7 +991,15 @@ export function TheShortWayHomeWalkthroughDraft({
         text: "Satisfied, the porter moves to the tag fixed beside the crate's clasp. He reads the number stamped on it. Then he works through the crate's contents on his clipboard, counting quietly under his breath.\nPorter: \"Tag says one number. What arrived works out to the same. Nothing torn open, nothing changed on the way over.\"\nPip: \"You check that for every single crate?\"\nPorter: \"Every one. Before anyone touches what's inside.\"\nPip: \"And if the numbers hadn't matched?\"\nPorter: \"Let's just say — that's a story for another day.\"\nHe winks and moves on.",
         illustration: <SceneArrivalAtDadStation />,
       },
-      body: PENDING,
+      body: (
+        <ul className="list-disc space-y-1 pl-5">
+          <li>Before leaving, the sender works out a number from the whole frame.</li>
+          <li>That number rides at the end of the frame, as the check tag.</li>
+          <li>Here, the same recipe runs over what actually arrived.</li>
+          <li>The two numbers match — so nothing changed on the way.</li>
+        </ul>
+      ),
+      visual: <CheckTagDiagram />,
     },
     {
       section: "7. At Dad's PC Station",
@@ -978,7 +1008,41 @@ export function TheShortWayHomeWalkthroughDraft({
         text: "With both checks done, the porter unclips the locomotive from the crate.\nPorter: \"Alright, you're off duty.\"\nHe waves it toward a side track, where it rolls away on its own.\nPip: \"Where's it going?\"\nPorter: \"Back out — it was only ever here to get this one crate the last stretch of the way. Its job's done the moment we've got the crate in hand.\"",
         illustration: <SceneArrivalAtDadStation />,
       },
-      body: PENDING,
+      body: (
+        <div className="space-y-3">
+          <p>Both checks passed. The frame&rsquo;s job is done.</p>
+          <ul className="list-disc space-y-1 pl-5">
+            <li>The locomotive is unhitched and sent away.</li>
+            <li>
+              What stays is the crate: the <Term id="packet">IP packet</Term> itself.
+            </li>
+            <li>Its own label and number were never touched.</li>
+            <li>From here, the delivery continues as a packet — one layer up.</li>
+          </ul>
+        </div>
+      ),
+      visual: (
+        <div className="w-full max-w-xl overflow-x-auto rounded-lg border border-neutral-200 bg-white">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="border-b border-neutral-200 text-left text-xs text-neutral-500">
+                <th className="p-2 font-medium">Unhitched and sent away</th>
+                <th className="p-2 font-medium">Stays with the delivery</th>
+              </tr>
+            </thead>
+            <tbody className="text-neutral-700">
+              <tr className="border-b border-neutral-100">
+                <td className="p-2">The frame&rsquo;s front and back — the name plates</td>
+                <td className="p-2">The IP packet</td>
+              </tr>
+              <tr>
+                <td className="p-2">The check tag at the end</td>
+                <td className="p-2">The packet&rsquo;s own label and number</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      ),
     },
     {
       section: "7. At Dad's PC Station",
@@ -987,7 +1051,44 @@ export function TheShortWayHomeWalkthroughDraft({
         text: "The porter turns his attention to the crate itself now, alone on the platform without its engine.\nHe peels back a corner and checks the label glued underneath: 192.168.1.15.\nPorter: \"This address is ours, too. Matches the station name and the label both — no mix-ups.\"\nPip: \"Wait, didn't you already check the engine's name? Why check the crate too?\"\nPorter: \"Different question, really. The engine told us we're the right station.\"\nPorter: \"The label tells us this particular crate is really meant for us. It's not, say, a neighbor sharing our platform.\"",
         illustration: <SceneArrivalAtDadStation />,
       },
-      body: PENDING,
+      body: (
+        <div className="space-y-3">
+          <p>One check remains — on the crate, not the engine.</p>
+          <ul className="list-disc space-y-1 pl-5">
+            <li>
+              The porter reads the destination <Term id="ip-address">IP address</Term> on
+              the packet: 192.168.1.15.
+            </li>
+            <li>It matches this PC&rsquo;s own address.</li>
+            <li>Only now does the packet go any further.</li>
+          </ul>
+        </div>
+      ),
+      visual: (
+        <div className="w-full max-w-xl overflow-x-auto rounded-lg border border-neutral-200 bg-white">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="border-b border-neutral-200 text-left text-xs text-neutral-500">
+                <th className="p-2 font-medium"> </th>
+                <th className="p-2 font-medium">Check 1: the engine&rsquo;s plate</th>
+                <th className="p-2 font-medium">Check 2: the crate&rsquo;s label</th>
+              </tr>
+            </thead>
+            <tbody className="text-neutral-700">
+              <tr className="border-b border-neutral-100">
+                <td className="p-2 text-neutral-500">Looks at</td>
+                <td className="p-2">The MAC address</td>
+                <td className="p-2">The IP address</td>
+              </tr>
+              <tr>
+                <td className="p-2 text-neutral-500">Answers</td>
+                <td className="p-2">Is this the right station on this line?</td>
+                <td className="p-2">Is this packet really for this machine?</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      ),
     },
     {
       section: "8. Back Together",
@@ -996,7 +1097,16 @@ export function TheShortWayHomeWalkthroughDraft({
         text: "More trains keep rolling in, one after another — but not in the order they left.\nPip: \"Wait, that one says 12 on it. Didn't we just see number 4?\"\nPorter: \"Happens all the time. No two trains take exactly the same amount of time down the line.\"\nPip: \"So... is that a problem?\"\nPorter: \"Not even a little. Watch.\"",
         illustration: <SceneArrivalAtDadStation />,
       },
-      body: PENDING,
+      body: (
+        <ul className="list-disc space-y-1 pl-5">
+          <li>Packets do not arrive in the order they left.</li>
+          <li>One train is held up. The next one sails through.</li>
+          <li>So number 12 can pull in before number 4.</li>
+          <li>That is normal — not a fault.</li>
+          <li>Each crate still carries its stamped number.</li>
+        </ul>
+      ),
+      visual: <ArrivalOrderDiagram />,
     },
     {
       section: "8. Back Together",
@@ -1005,7 +1115,15 @@ export function TheShortWayHomeWalkthroughDraft({
         text: "The porter checks the little number stamped on each crate as it arrives.\nHe lines them up on the platform in the order the numbers say: 1, 2, 3.\nThat's not the order they showed up in.\nAs each one clicks into place beside the last, the blocks melt seamlessly back together.\nPip: \"It's — it's whole again!\"\nPorter: \"As long as we know the order, it doesn't matter which one shows up first.\"",
         illustration: <SceneArrivalAtDadStation />,
       },
-      body: PENDING,
+      body: (
+        <ul className="list-disc space-y-1 pl-5">
+          <li>The porter lines the crates up by their stamped numbers: 1, 2, 3.</li>
+          <li>Not by the order they arrived in.</li>
+          <li>In number order, the pieces join back into the whole photo.</li>
+          <li>The original data is whole again — ready to hand over.</li>
+        </ul>
+      ),
+      visual: <ReassemblyDiagram />,
     },
     {
       section: "8. Back Together",

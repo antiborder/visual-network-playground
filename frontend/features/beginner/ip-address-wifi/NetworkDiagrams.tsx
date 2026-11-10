@@ -653,3 +653,150 @@ export function PacketLifeDiagram() {
     </svg>
   );
 }
+
+/** Chapter 2, arrival side ("Nothing Broken?"): the check tag is one number
+ * worked out twice — once by the sender from the whole frame, once by the
+ * receiver from whatever actually arrived. The two boxes carry the same
+ * illustrative value by construction; the point is the match, not the
+ * number. */
+export function CheckTagDiagram() {
+  const box = (x: number, label: string) => (
+    <g>
+      <rect x={x} y={40} width={200} height={70} rx={8} fill={ACCENT_FILL} stroke={ACCENT} strokeWidth={2} />
+      <text x={x + 100} y={66} textAnchor="middle" fontSize={12} fill={SUBTLE}>
+        {label}
+      </text>
+      <text x={x + 100} y={96} textAnchor="middle" fontSize={22} fontWeight={700} fill={INK}>
+        4826
+      </text>
+    </g>
+  );
+  return (
+    <svg
+      viewBox="0 0 640 168"
+      className="w-full"
+      role="img"
+      aria-label="Diagram: the check tag that arrived on the frame and the number worked out again at the receiver are the same"
+    >
+      <text x={10} y={22} fontSize={13} fontWeight={600} fill={SUBTLE}>
+        THE CHECK TAG, WORKED OUT TWICE
+      </text>
+      {box(60, "TAG THAT ARRIVED")}
+      <text x={320} y={86} textAnchor="middle" fontSize={28} fontWeight={700} fill={ACCENT}>
+        =
+      </text>
+      {box(380, "WORKED OUT AGAIN HERE")}
+      <text x={320} y={140} textAnchor="middle" fontSize={14} fill={SUBTLE}>
+        Same number both ways — so nothing changed on the way.
+      </text>
+    </svg>
+  );
+}
+
+/** Chapter 2, arrival side ("Out of Order"): crates pull in out of order.
+ * The stamped sequence numbers are the only order that matters; the row
+ * shows one scrambled arrival (12, 4, 7, 1 — the pair the story names). */
+export function ArrivalOrderDiagram() {
+  const arrived = [12, 4, 7, 1];
+  const boxW = 130;
+  const gap = 20;
+  return (
+    <svg
+      viewBox="0 0 640 168"
+      className="w-full"
+      role="img"
+      aria-label="Diagram: four crates arriving out of order, stamped 12, 4, 7 and 1"
+    >
+      <text x={10} y={22} fontSize={13} fontWeight={600} fill={SUBTLE}>
+        AS THE CRATES PULLED IN
+      </text>
+      <path d="M 30 34 L 606 34" stroke={ACCENT} strokeWidth={2} markerEnd="url(#arrival-order-arrow)" />
+      {arrived.map((n, i) => {
+        const x = 30 + i * (boxW + gap);
+        return (
+          <g key={n}>
+            <rect x={x} y={48} width={boxW} height={64} rx={8} fill="#fff" stroke={LINE} strokeWidth={1.5} />
+            <text x={x + boxW / 2} y={72} textAnchor="middle" fontSize={11} fill={SUBTLE}>
+              CRATE
+            </text>
+            <text x={x + boxW / 2} y={100} textAnchor="middle" fontSize={22} fontWeight={700} fill={INK}>
+              {n}
+            </text>
+          </g>
+        );
+      })}
+      <defs>
+        <marker id="arrival-order-arrow" markerWidth={8} markerHeight={8} refX={6} refY={4} orient="auto">
+          <path d="M0,0 L8,4 L0,8 Z" fill={ACCENT} />
+        </marker>
+      </defs>
+      <text x={320} y={140} textAnchor="middle" fontSize={14} fill={SUBTLE}>
+        Arrival order is luck. The stamped numbers are not.
+      </text>
+    </svg>
+  );
+}
+
+/** Chapter 2, arrival side ("Back Together"): the same three crates, first
+ * in arrival order, then lined up by their stamped numbers, then joined
+ * back into the whole photo. Same box language as PacketLifeDiagram. */
+export function ReassemblyDiagram() {
+  const stages = [
+    { title: "As they arrived", sub: "3 · 1 · 2", accent: false },
+    { title: "Lined up by number", sub: "1 · 2 · 3", accent: true },
+    { title: "Back together", sub: "the whole photo", accent: false },
+  ];
+  const boxW = 170;
+  const gap = 45;
+  return (
+    <svg
+      viewBox="0 0 640 158"
+      className="w-full"
+      role="img"
+      aria-label="Diagram: crates that arrived as 3, 1, 2 are lined up as 1, 2, 3 and joined back into the whole photo"
+    >
+      <text x={10} y={20} fontSize={13} fontWeight={600} fill={SUBTLE}>
+        PUTTING THE PHOTO BACK TOGETHER
+      </text>
+      {stages.map((s, i) => {
+        const x = 6 + i * (boxW + gap);
+        return (
+          <g key={s.title}>
+            <rect
+              x={x}
+              y={36}
+              width={boxW}
+              height={66}
+              rx={8}
+              fill={s.accent ? ACCENT_FILL : "#fff"}
+              stroke={s.accent ? ACCENT : LINE}
+              strokeWidth={s.accent ? 2 : 1.5}
+            />
+            <text x={x + boxW / 2} y={66} textAnchor="middle" fontSize={14} fontWeight={600} fill={INK}>
+              {s.title}
+            </text>
+            <text x={x + boxW / 2} y={88} textAnchor="middle" fontSize={12} fill={SUBTLE}>
+              {s.sub}
+            </text>
+            {i < stages.length - 1 && (
+              <path
+                d={`M ${x + boxW + 4} 69 L ${x + boxW + gap - 4} 69`}
+                stroke={ACCENT}
+                strokeWidth={2}
+                markerEnd="url(#reassembly-arrow)"
+              />
+            )}
+          </g>
+        );
+      })}
+      <defs>
+        <marker id="reassembly-arrow" markerWidth={8} markerHeight={8} refX={6} refY={4} orient="auto">
+          <path d="M0,0 L8,4 L0,8 Z" fill={ACCENT} />
+        </marker>
+      </defs>
+      <text x={320} y={130} textAnchor="middle" fontSize={14} fill={SUBTLE}>
+        The numbers, not the arrival order, say how the pieces join.
+      </text>
+    </svg>
+  );
+}

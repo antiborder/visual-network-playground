@@ -1,3 +1,5 @@
+import { toBits } from "./network";
+
 /** Small hand-rolled SVG diagrams for the "Meet the Network" chapter's
  * technical explanation halves — kept separate from StorybookScenes.tsx,
  * which is reserved for the picture-book story illustrations above the
@@ -367,6 +369,433 @@ export function ClientServerDiagram() {
       </text>
       <text x={serverX} y={y + 46} textAnchor="middle" fontSize={14} fill={SUBTLE}>
         Cheese-Lovers&rsquo; Board
+      </text>
+    </svg>
+  );
+}
+
+/** Chapter 2: one IP packet, drawn as the story's labeled crate. The two
+ * addresses ride on the packet itself; inside it sits the transport
+ * wrapper carrying the sequence number, wrapped around the data piece.
+ * Matches the wrapping order taught in §2: number inside, address
+ * outside. */
+export function PacketDiagram() {
+  return (
+    <svg
+      viewBox="0 0 640 188"
+      className="w-full"
+      role="img"
+      aria-label="Diagram: an IP packet addressed to 192.168.1.15 from 192.168.1.10, containing a sequence number and a piece of the photo"
+    >
+      <rect x={10} y={34} width={620} height={118} rx={10} fill={CARD} stroke={LINE} strokeWidth={2} />
+      <text x={26} y={58} fontSize={13} fontWeight={600} fill={SUBTLE}>
+        IP PACKET
+      </text>
+      <rect x={150} y={40} width={196} height={30} rx={6} fill={ACCENT_FILL} stroke={ACCENT} strokeWidth={1.5} />
+      <text x={248} y={60} textAnchor="middle" fontSize={14} fontWeight={600} fill={INK}>
+        To: 192.168.1.15
+      </text>
+      <rect x={358} y={40} width={196} height={30} rx={6} fill={ACCENT_FILL} stroke={ACCENT} strokeWidth={1.5} />
+      <text x={456} y={60} textAnchor="middle" fontSize={14} fontWeight={600} fill={INK}>
+        From: 192.168.1.10
+      </text>
+      <rect x={30} y={84} width={270} height={52} rx={8} fill="#fff" stroke={LINE} strokeWidth={1.5} />
+      <text x={165} y={106} textAnchor="middle" fontSize={14} fontWeight={600} fill={INK}>
+        Sequence number: 3
+      </text>
+      <text x={165} y={126} textAnchor="middle" fontSize={13} fill={SUBTLE}>
+        the transport wrapper
+      </text>
+      <rect x={316} y={84} width={294} height={52} rx={8} fill="#fff" stroke={LINE} strokeWidth={1.5} />
+      <text x={463} y={106} textAnchor="middle" fontSize={14} fontWeight={600} fill={INK}>
+        A piece of the photo
+      </text>
+      <text x={463} y={126} textAnchor="middle" fontSize={13} fill={SUBTLE}>
+        the data itself
+      </text>
+      <text x={320} y={176} textAnchor="middle" fontSize={14} fill={SUBTLE}>
+        The addresses ride on the outside. The number rides inside.
+      </text>
+    </svg>
+  );
+}
+
+/** Chapter 2: one frame, drawn as the story's locomotive and crate. The
+ * frame names both ends (the two MAC plates), carries the whole IP
+ * packet untouched, and ends with the check number. `highlight` picks
+ * which part the current step is about. */
+export function FrameDiagram({ highlight }: { highlight: "plates" | "fcs" }) {
+  const seg = (active: boolean) => ({
+    fill: active ? ACCENT_FILL : "#fff",
+    stroke: active ? ACCENT : LINE,
+    sw: active ? 2 : 1.5,
+  });
+  const plates = seg(highlight === "plates");
+  const fcs = seg(highlight === "fcs");
+  return (
+    <svg
+      viewBox="0 0 640 178"
+      className="w-full"
+      role="img"
+      aria-label="Diagram: a frame with the destination and sender MAC addresses, the IP packet inside, and a check number at the end"
+    >
+      <text x={10} y={22} fontSize={13} fontWeight={600} fill={SUBTLE}>
+        ONE FRAME, FRONT TO BACK
+      </text>
+      <rect x={10} y={36} width={168} height={76} rx={8} fill={plates.fill} stroke={plates.stroke} strokeWidth={plates.sw} />
+      <text x={94} y={66} textAnchor="middle" fontSize={13} fill={SUBTLE}>
+        TO (MAC)
+      </text>
+      <text x={94} y={90} textAnchor="middle" fontSize={14} fontWeight={600} fill={INK}>
+        AA:BB:CC:11:22:33
+      </text>
+      <rect x={186} y={36} width={132} height={76} rx={8} fill={plates.fill} stroke={plates.stroke} strokeWidth={plates.sw} />
+      <text x={252} y={66} textAnchor="middle" fontSize={13} fill={SUBTLE}>
+        FROM (MAC)
+      </text>
+      <text x={252} y={90} textAnchor="middle" fontSize={14} fontWeight={600} fill={INK}>
+        Pip&rsquo;s phone
+      </text>
+      <rect x={326} y={36} width={176} height={76} rx={8} fill={CARD} stroke={LINE} strokeWidth={1.5} />
+      <text x={414} y={66} textAnchor="middle" fontSize={13} fill={SUBTLE}>
+        INSIDE
+      </text>
+      <text x={414} y={90} textAnchor="middle" fontSize={14} fontWeight={600} fill={INK}>
+        The whole IP packet
+      </text>
+      <rect x={510} y={36} width={120} height={76} rx={8} fill={fcs.fill} stroke={fcs.stroke} strokeWidth={fcs.sw} />
+      <text x={570} y={66} textAnchor="middle" fontSize={13} fill={SUBTLE}>
+        AT THE END
+      </text>
+      <text x={570} y={90} textAnchor="middle" fontSize={14} fontWeight={600} fill={INK}>
+        Check number
+      </text>
+      <text x={320} y={142} textAnchor="middle" fontSize={14} fill={SUBTLE}>
+        {highlight === "plates"
+          ? "The frame names both ends of the journey."
+          : "The check number is worked out from everything before it."}
+      </text>
+      <text x={320} y={164} textAnchor="middle" fontSize={13} fill={SUBTLE}>
+        Same packet inside, whichever stretch of line the frame was built for.
+      </text>
+    </svg>
+  );
+}
+
+/** Chapter 2: an address as 32 bit boxes, split at the prefix length —
+ * the CIDR figure from the older Short Way Home walkthrough ("Reading a
+ * subnet mask"), extracted so the story draft's §3 can use it too. Bits
+ * before the boundary are the network part (cyan); bits after it are
+ * the host part (emerald). Pass two rows to compare two addresses:
+ * their network parts line up identically when they share a line. */
+export function CidrBitStripDiagram({
+  rows,
+  prefix = 24,
+}: {
+  rows: { label: string; octets: [number, number, number, number] }[];
+  prefix?: number;
+}) {
+  return (
+    <div className="w-full max-w-xl space-y-3 overflow-x-auto rounded-lg border border-neutral-200 bg-white p-4">
+      {rows.map((row) => (
+        <div key={row.label} className="space-y-1">
+          <div className="text-xs text-neutral-500">
+            {row.label} /{prefix}
+          </div>
+          <div className="flex w-max gap-2">
+            {row.octets.map((n, octetIdx) => (
+              <div key={octetIdx} className="flex gap-0.5">
+                {toBits(n).map((bit, bitIdx) => {
+                  const bitNumber = octetIdx * 8 + bitIdx;
+                  const isNetwork = bitNumber < prefix;
+                  return (
+                    <div
+                      key={bitIdx}
+                      className={`flex h-7 w-5 items-center justify-center rounded-sm font-mono text-xs font-semibold ${
+                        isNetwork
+                          ? "border border-cyan-300 bg-cyan-100 text-cyan-800"
+                          : "border border-emerald-300 bg-emerald-100 text-emerald-800"
+                      }`}
+                    >
+                      {bit}
+                    </div>
+                  );
+                })}
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+      <div className="flex gap-4 text-xs text-neutral-500">
+        <span className="flex items-center gap-1.5">
+          <span className="inline-block h-2.5 w-2.5 rounded-sm border border-cyan-300 bg-cyan-100" />
+          network (first {prefix} bits)
+        </span>
+        <span className="flex items-center gap-1.5">
+          <span className="inline-block h-2.5 w-2.5 rounded-sm border border-emerald-300 bg-emerald-100" />
+          host (last {32 - prefix} bits)
+        </span>
+      </div>
+    </div>
+  );
+}
+
+/** Chapter 2: the whole /24 line as one bar, with the chapter's two
+ * stations plotted inside it. Adapted from SubnetExplorer's number
+ * line (old Short Way Home walkthrough) — that component's stat boxes
+ * teach network/broadcast addresses, which this chapter defers, so
+ * only the range line is carried over, endpoints unlabeled. */
+export function SubnetRangeLine({
+  devices,
+}: {
+  devices: { label: string; lastOctet: number }[];
+}) {
+  const pct = (octet: number) => (octet / 255) * 100;
+  return (
+    <div className="w-full max-w-xl space-y-2 rounded-lg border border-neutral-200 bg-white p-4">
+      <div className="text-xs text-neutral-500">
+        The whole 192.168.1 line, from .0 to .255 — one line-group
+      </div>
+      <div className="relative h-8 rounded-full bg-neutral-100">
+        <div className="absolute top-0 h-full w-full rounded-full bg-cyan-200" />
+        {devices.map((d) => (
+          <div
+            key={d.label}
+            title={`${d.label}: 192.168.1.${d.lastOctet}`}
+            className="absolute top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white bg-emerald-500"
+            style={{ left: `${pct(d.lastOctet)}%` }}
+          />
+        ))}
+      </div>
+      <div className="flex justify-between font-mono text-xs text-neutral-400">
+        <span>.0</span>
+        <span>.255</span>
+      </div>
+      <div className="space-y-1 text-sm text-neutral-700">
+        {devices.map((d) => (
+          <div key={d.label} className="flex items-center gap-2">
+            <span className="inline-block h-3 w-3 rounded-full border-2 border-white bg-emerald-500" />
+            {d.label} — 192.168.1.{d.lastOctet}, inside the block
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/** Chapter 2: the life of Pip's photo, end to end — one big file, sliced
+ * into packets, sent piece by piece, and put back together at the far
+ * end. Shown at the slicing step as the map the rest of the chapter
+ * zooms into. The packet's contents are never transformed on the way;
+ * the only rebuild is the frame around it, at the router (its own
+ * step in §6). */
+export function PacketLifeDiagram() {
+  const stages = [
+    { title: "One photo", sub: "too big to send whole", accent: false },
+    { title: "Sliced", sub: "4,649 packets", accent: true },
+    { title: "Travels", sub: "one packet at a time", accent: false },
+    { title: "Back together", sub: "the photo, at Dad's PC", accent: false },
+  ];
+  const boxW = 138;
+  const gap = 26;
+  return (
+    <svg
+      viewBox="0 0 640 158"
+      className="w-full"
+      role="img"
+      aria-label="Diagram: a photo is sliced into 4,649 packets, the packets travel one at a time, and the photo is put back together at Dad's PC"
+    >
+      <text x={10} y={20} fontSize={13} fontWeight={600} fill={SUBTLE}>
+        THE LIFE OF THE PHOTO
+      </text>
+      {stages.map((s, i) => {
+        const x = 6 + i * (boxW + gap);
+        return (
+          <g key={s.title}>
+            <rect
+              x={x}
+              y={36}
+              width={boxW}
+              height={66}
+              rx={8}
+              fill={s.accent ? ACCENT_FILL : "#fff"}
+              stroke={s.accent ? ACCENT : LINE}
+              strokeWidth={s.accent ? 2 : 1.5}
+            />
+            <text x={x + boxW / 2} y={66} textAnchor="middle" fontSize={14} fontWeight={600} fill={INK}>
+              {s.title}
+            </text>
+            <text x={x + boxW / 2} y={88} textAnchor="middle" fontSize={12} fill={SUBTLE}>
+              {s.sub}
+            </text>
+            {i < stages.length - 1 && (
+              <path
+                d={`M ${x + boxW + 4} 69 L ${x + boxW + gap - 4} 69`}
+                stroke={ACCENT}
+                strokeWidth={2}
+                markerEnd="url(#packet-life-arrow)"
+              />
+            )}
+          </g>
+        );
+      })}
+      <defs>
+        <marker id="packet-life-arrow" markerWidth={8} markerHeight={8} refX={6} refY={4} orient="auto">
+          <path d="M0,0 L8,4 L0,8 Z" fill={ACCENT} />
+        </marker>
+      </defs>
+      <text x={320} y={130} textAnchor="middle" fontSize={14} fill={SUBTLE}>
+        The next steps zoom into the middle of this trip, one packet at a time.
+      </text>
+      <text x={320} y={150} textAnchor="middle" fontSize={13} fill={SUBTLE}>
+        Nothing is added to or changed inside the packets along the way.
+      </text>
+    </svg>
+  );
+}
+
+/** Chapter 2, arrival side ("Nothing Broken?"): the check tag is one number
+ * worked out twice — once by the sender from the whole frame, once by the
+ * receiver from whatever actually arrived. The two boxes carry the same
+ * illustrative value by construction; the point is the match, not the
+ * number. */
+export function CheckTagDiagram() {
+  const box = (x: number, label: string) => (
+    <g>
+      <rect x={x} y={40} width={200} height={70} rx={8} fill={ACCENT_FILL} stroke={ACCENT} strokeWidth={2} />
+      <text x={x + 100} y={66} textAnchor="middle" fontSize={12} fill={SUBTLE}>
+        {label}
+      </text>
+      <text x={x + 100} y={96} textAnchor="middle" fontSize={22} fontWeight={700} fill={INK}>
+        4826
+      </text>
+    </g>
+  );
+  return (
+    <svg
+      viewBox="0 0 640 168"
+      className="w-full"
+      role="img"
+      aria-label="Diagram: the check tag that arrived on the frame and the number worked out again at the receiver are the same"
+    >
+      <text x={10} y={22} fontSize={13} fontWeight={600} fill={SUBTLE}>
+        THE CHECK TAG, WORKED OUT TWICE
+      </text>
+      {box(60, "TAG THAT ARRIVED")}
+      <text x={320} y={86} textAnchor="middle" fontSize={28} fontWeight={700} fill={ACCENT}>
+        =
+      </text>
+      {box(380, "WORKED OUT AGAIN HERE")}
+      <text x={320} y={140} textAnchor="middle" fontSize={14} fill={SUBTLE}>
+        Same number both ways — so nothing changed on the way.
+      </text>
+    </svg>
+  );
+}
+
+/** Chapter 2, arrival side ("Out of Order"): crates pull in out of order.
+ * The stamped sequence numbers are the only order that matters; the row
+ * shows one scrambled arrival (12, 4, 7, 1 — the pair the story names). */
+export function ArrivalOrderDiagram() {
+  const arrived = [12, 4, 7, 1];
+  const boxW = 130;
+  const gap = 20;
+  return (
+    <svg
+      viewBox="0 0 640 168"
+      className="w-full"
+      role="img"
+      aria-label="Diagram: four crates arriving out of order, stamped 12, 4, 7 and 1"
+    >
+      <text x={10} y={22} fontSize={13} fontWeight={600} fill={SUBTLE}>
+        AS THE CRATES PULLED IN
+      </text>
+      <path d="M 30 34 L 606 34" stroke={ACCENT} strokeWidth={2} markerEnd="url(#arrival-order-arrow)" />
+      {arrived.map((n, i) => {
+        const x = 30 + i * (boxW + gap);
+        return (
+          <g key={n}>
+            <rect x={x} y={48} width={boxW} height={64} rx={8} fill="#fff" stroke={LINE} strokeWidth={1.5} />
+            <text x={x + boxW / 2} y={72} textAnchor="middle" fontSize={11} fill={SUBTLE}>
+              CRATE
+            </text>
+            <text x={x + boxW / 2} y={100} textAnchor="middle" fontSize={22} fontWeight={700} fill={INK}>
+              {n}
+            </text>
+          </g>
+        );
+      })}
+      <defs>
+        <marker id="arrival-order-arrow" markerWidth={8} markerHeight={8} refX={6} refY={4} orient="auto">
+          <path d="M0,0 L8,4 L0,8 Z" fill={ACCENT} />
+        </marker>
+      </defs>
+      <text x={320} y={140} textAnchor="middle" fontSize={14} fill={SUBTLE}>
+        Arrival order is luck. The stamped numbers are not.
+      </text>
+    </svg>
+  );
+}
+
+/** Chapter 2, arrival side ("Back Together"): the same three crates, first
+ * in arrival order, then lined up by their stamped numbers, then joined
+ * back into the whole photo. Same box language as PacketLifeDiagram. */
+export function ReassemblyDiagram() {
+  const stages = [
+    { title: "As they arrived", sub: "3 · 1 · 2", accent: false },
+    { title: "Lined up by number", sub: "1 · 2 · 3", accent: true },
+    { title: "Back together", sub: "the whole photo", accent: false },
+  ];
+  const boxW = 170;
+  const gap = 45;
+  return (
+    <svg
+      viewBox="0 0 640 158"
+      className="w-full"
+      role="img"
+      aria-label="Diagram: crates that arrived as 3, 1, 2 are lined up as 1, 2, 3 and joined back into the whole photo"
+    >
+      <text x={10} y={20} fontSize={13} fontWeight={600} fill={SUBTLE}>
+        PUTTING THE PHOTO BACK TOGETHER
+      </text>
+      {stages.map((s, i) => {
+        const x = 6 + i * (boxW + gap);
+        return (
+          <g key={s.title}>
+            <rect
+              x={x}
+              y={36}
+              width={boxW}
+              height={66}
+              rx={8}
+              fill={s.accent ? ACCENT_FILL : "#fff"}
+              stroke={s.accent ? ACCENT : LINE}
+              strokeWidth={s.accent ? 2 : 1.5}
+            />
+            <text x={x + boxW / 2} y={66} textAnchor="middle" fontSize={14} fontWeight={600} fill={INK}>
+              {s.title}
+            </text>
+            <text x={x + boxW / 2} y={88} textAnchor="middle" fontSize={12} fill={SUBTLE}>
+              {s.sub}
+            </text>
+            {i < stages.length - 1 && (
+              <path
+                d={`M ${x + boxW + 4} 69 L ${x + boxW + gap - 4} 69`}
+                stroke={ACCENT}
+                strokeWidth={2}
+                markerEnd="url(#reassembly-arrow)"
+              />
+            )}
+          </g>
+        );
+      })}
+      <defs>
+        <marker id="reassembly-arrow" markerWidth={8} markerHeight={8} refX={6} refY={4} orient="auto">
+          <path d="M0,0 L8,4 L0,8 Z" fill={ACCENT} />
+        </marker>
+      </defs>
+      <text x={320} y={130} textAnchor="middle" fontSize={14} fill={SUBTLE}>
+        The numbers, not the arrival order, say how the pieces join.
       </text>
     </svg>
   );

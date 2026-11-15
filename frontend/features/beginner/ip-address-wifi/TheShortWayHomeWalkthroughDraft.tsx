@@ -436,7 +436,7 @@ export function TheShortWayHomeWalkthroughDraft({
       section: "2. Getting Ready to Send",
       title: "Numbered",
       story: {
-        text: "On the way back, the loaded crates come rolling past them, toward the platform.\nThe Clerk pulls out a stamp and taps a number onto the corner of each crate as it rolls by. 1, 2, 3, and so on, down the line.\nPip: \"What's that for?\"\nClerk: \"So whoever unpacks these knows what order they go in.\"\nPip: \"Don't they just arrive in the order we send them?\"\nClerk: \"Not always — some might take a hair longer than others down the line. The number's how the other end sorts it out, no matter what order they show up in.\"",
+        text: "Before long, they arrive at the platform.\nThe crates are already there, waiting in a row on the tracks.\nThe Clerk walks along the row with his stamp, tapping a number onto the corner of each crate. 1, 2, 3, and so on, down the line.\nPip: \"What's that for?\"\nClerk: \"So whoever unpacks these knows what order they go in.\"\nPip: \"Don't they just arrive in the order we send them?\"\nClerk: \"Not always — some might take a hair longer than others down the line. The number's how the other end sorts it out, no matter what order they show up in.\"",
         illustration: <SceneCargoSlicing />,
       },
       body: (
@@ -451,7 +451,7 @@ export function TheShortWayHomeWalkthroughDraft({
       section: "2. Getting Ready to Send",
       title: "Labeled for Delivery",
       story: {
-        text: "Before long, they arrive at the platform.\nClerk: \"Looks like the cheese has already arrived.\"\nOn the tracks ahead, the numbered crates are already waiting.\nEach block sits loaded on its own cart.\nClerk: \"Is this the right destination?\"\nHe unfolds a piece of paper. Written on it: \"192.168.1.15\"\nThat should be right — Dad's PC's IP address.\nPip: \"Yeah, that's it.\"\nClerk: \"Then let's stick the destination address on.\"\nHe presses the paper onto the first crate.",
+        text: "With every crate numbered, the Clerk pulls out a folded piece of paper.\nClerk: \"Is this the right destination?\"\nHe unfolds it. Written on it: \"192.168.1.15\"\nThat should be right — Dad's PC's IP address.\nPip: \"Yeah, that's it.\"\nClerk: \"Then let's stick the destination address on.\"\nHe presses the paper onto the first crate.",
         illustration: <SceneCargoSlicing />,
       },
       body: (

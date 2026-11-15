@@ -459,7 +459,14 @@ export function TheShortWayHomeWalkthroughDraft({
       title: "Labeled for Delivery",
       story: {
         text: "Each crate is finished one at a time — its number first, then its address.\nThe Clerk pulls out a folded piece of paper.\nClerk: \"Is this the right destination?\"\nHe unfolds it. Written on it: \"192.168.1.15\"\nThat should be right — Dad's PC's IP address.\nPip: \"Yeah, that's it.\"\nClerk: \"Then let's stick the destination address on.\"\nHe presses the paper onto the first crate.",
-        illustration: <SceneCargoSlicing />,
+        illustration: (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src="/images/pip/ch2-step9-labeled.webp"
+            alt="The Clerk presses the destination label onto the first crate while Pip watches closely"
+            className="w-full rounded-xl border border-amber-900/15"
+          />
+        ),
       },
       body: (
         <div className="space-y-2">
@@ -489,7 +496,14 @@ export function TheShortWayHomeWalkthroughDraft({
       title: "Inside or Outside?",
       story: {
         text: "Clerk: \"Before we send this off, we need to figure out something.\"\nClerk: \"Is the destination inside our own line-group, or outside it?\"\nPip: \"Huh? Why?\"\nClerk: \"If it's inside our own line-group, we can send it straight there. But if it's outside, it has to go through the router first, out toward the mainline.\"\nPip: \"So, how do you actually tell whether the destination is inside the local network or outside it?\"",
-        illustration: <SceneStationMap />,
+        illustration: (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src="/images/pip/ch2-step10-inside-outside.webp"
+            alt="The Clerk points at the destination label on the first crate and asks whether the destination is inside their own line-group or outside it"
+            className="w-full rounded-xl border border-amber-900/15"
+          />
+        ),
       },
       body: (
         <div className="space-y-2">

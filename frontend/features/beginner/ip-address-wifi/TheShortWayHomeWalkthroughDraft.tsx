@@ -437,7 +437,14 @@ export function TheShortWayHomeWalkthroughDraft({
       title: "Numbered",
       story: {
         text: "Before long, they arrive at the platform.\nThe crates are already there, waiting in a row on the tracks.\nThe Clerk stops at the first crate and stamps a number onto its corner: 1.\nPip: \"What's that for?\"\nClerk: \"So whoever unpacks these knows what order they go in.\"\nPip: \"Don't they just arrive in the order we send them?\"\nClerk: \"Not always — some might take a hair longer than others down the line. The number's how the other end sorts it out, no matter what order they show up in.\"",
-        illustration: <SceneCargoSlicing />,
+        illustration: (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src="/images/pip/ch2-step8-numbered.webp"
+            alt="The Clerk has just stamped the number 1 onto the first crate, beside a row of waiting crates"
+            className="w-full rounded-xl border border-amber-900/15"
+          />
+        ),
       },
       body: (
         <p>

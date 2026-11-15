@@ -297,7 +297,14 @@ export function TheShortWayHomeWalkthroughDraft({
       title: "Too Big to Send Whole",
       story: {
         text: "Clerk: \"Cheese? You mean... that?\"\nHe points — and there, far beyond the tracks, stands a single, magnificent wedge of Emmental cheese.\nPip: \"Oh! There it is!\"\nWait — he wanted to send a photo of the cheese. But... never mind that for now.\nPip: \"Wait, is it just me, or did this get bigger?\"\nIt's much bigger than the one he saw yesterday — bigger, even, than the school building he remembers. An undeniably splendid wedge of cheese.\nClerk: \"Well, size around here depends on the data size. Image files tend to come out like that.\"\nPip: \"No way.\"",
-        illustration: <SceneCargoSlicing />,
+        illustration: (
+          // eslint-disable-next-line @next/next/no-img-element -- static export (output: "export") has no image optimizer; a pre-sized WebP is served as-is.
+          <img
+            src="/images/pip/ch2-step5-too-big.webp"
+            alt="Seen from behind Pip: across the tracks, far away, a single wedge of Emmental cheese stands taller than a building"
+            className="w-full max-w-2xl mx-auto h-auto rounded-lg"
+          />
+        ),
       },
       body: (
         <div className="space-y-2">
@@ -367,7 +374,14 @@ export function TheShortWayHomeWalkthroughDraft({
       title: "Small Enough to Send",
       story: {
         text: "Clerk: \"Let's get this cut down to size.\"\nPip: \"Ehh? I liked it just the way it was.\"\nHe can't believe what he's hearing — cutting up such a magnificent wedge of cheese?\nClerk: \"At this size, there's no way it fits on a train.\"\nPip: \"...\"\nFair enough — no train exists that could carry something bigger than a school building. Still, what a waste.\nHe looks back at the cheese, only to find it already sliced into neat, square blocks, stacked in tidy rows.\nPip: \"That was fast!\"",
-        illustration: <SceneCargoSlicing />,
+        illustration: (
+          // eslint-disable-next-line @next/next/no-img-element -- static export (output: "export") has no image optimizer; a pre-sized WebP is served as-is.
+          <img
+            src="/images/pip/ch2-step6-small-enough.webp"
+            alt="The giant wedge is gone: neat square blocks of cheese stacked in tidy rows, and Pip raises both paws in surprise"
+            className="w-full max-w-2xl mx-auto h-auto rounded-lg"
+          />
+        ),
       },
       body: (
         <div className="space-y-2">
@@ -393,7 +407,14 @@ export function TheShortWayHomeWalkthroughDraft({
       title: "What's a Packet?",
       story: {
         text: "The Clerk leads Pip back toward the platform.\nPip: \"That huge, splendid wedge of cheese... it's just blocks now.\"\nClerk: \"To carry it by train, it has to be divided into packets.\"\nPip: \"Packets?\"\nClerk: \"Right — every train can only carry so much in one trip. Anything bigger gets cut into small, matching pieces. Each one's called a packet.\"\nPip: \"I wonder if it'll ever go back to normal.\"\nClerk: \"Once the pieces reach their destination, they get put back together.\"",
-        illustration: <SceneCargoSlicing />,
+        illustration: (
+          // eslint-disable-next-line @next/next/no-img-element -- static export (output: "export") has no image optimizer; a pre-sized WebP is served as-is.
+          <img
+            src="/images/pip/ch2-step7-packet.webp"
+            alt="The clerk leads Pip back along the path beside the tracks toward the station, explaining as they walk"
+            className="w-full max-w-2xl mx-auto h-auto rounded-lg"
+          />
+        ),
       },
       body: (
         <div className="space-y-2">

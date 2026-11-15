@@ -495,7 +495,7 @@ export function TheShortWayHomeWalkthroughDraft({
       section: "3. Same Line or Not?",
       title: "Inside or Outside?",
       story: {
-        text: "Clerk: \"Before we send this off, we need to figure out something.\"\nClerk: \"Is the destination inside our own line-group, or outside it?\"\nPip: \"Huh? Why?\"\nClerk: \"If it's inside our own line-group, we can send it straight there. But if it's outside, it has to go through the router first, out toward the mainline.\"\nPip: \"So, how do you actually tell whether the destination is inside the local network or outside it?\"",
+        text: "Clerk: \"Before we send this off, we need to figure out something.\"\nClerk: \"Is the destination inside our own line-group, or outside it?\"\nPip: \"Huh? Why?\"\nClerk: \"If it's inside our own line-group, we can send it straight there. But if it's outside, it has to go through the router first, out toward the mainline.\"\nPip: \"So, how do you actually tell whether the destination is inside the local network or outside it?\"\nClerk: \"Every station's address actually has two parts hiding inside it.\"\nPip: \"Two parts? It's just one number to me.\"\nClerk: \"One part says which line-group a station belongs to. The other says which station, inside that group. Compare just the first part, and you'll know.\"",
         illustration: (
           // eslint-disable-next-line @next/next/no-img-element
           <img
@@ -522,18 +522,6 @@ export function TheShortWayHomeWalkthroughDraft({
               <strong>Anywhere else:</strong> out through the router first, toward the mainline.
             </li>
           </ul>
-        </div>
-      ),
-    },
-    {
-      section: "3. Same Line or Not?",
-      title: "Two Parts in One Address",
-      story: {
-        text: "Clerk: \"Every station's address actually has two parts hiding inside it.\"\nPip: \"Two parts? It's just one number to me.\"\nClerk: \"One part says which line-group a station belongs to. The other says which station, inside that group. Compare just the first part, and you'll know.\"",
-        illustration: <SceneStationMap />,
-      },
-      body: (
-        <div className="space-y-2">
           <p>
             An <Term id="ip-address">IP address</Term> like 192.168.1.15 is doing two jobs at
             once. One part names the group — the line this station belongs to. The other part

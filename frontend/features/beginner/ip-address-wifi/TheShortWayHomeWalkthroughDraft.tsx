@@ -296,7 +296,7 @@ export function TheShortWayHomeWalkthroughDraft({
       section: "2. Getting Ready to Send",
       title: "Too Big to Send Whole",
       story: {
-        text: "Clerk: \"Cheese? You mean... that?\"\nHe points — there, loaded onto a cart, sits a whole, magnificent wheel of Emmental cheese.\nPip: \"Oh! There it is!\"\nWait — he wanted to send a photo of the cheese. But... never mind that for now.\nPip: \"Wait, is it just me, or did this get bigger?\"\nIt's much bigger than the one he saw yesterday — bigger, even, than the school building he remembers. An undeniably splendid wheel of cheese.\nClerk: \"Well, size around here depends on the data size. Image files tend to come out like that.\"\nPip: \"No way.\"",
+        text: "Clerk: \"Cheese? You mean... that?\"\nHe points — and there, far beyond the tracks, stands a single, magnificent wedge of Emmental cheese.\nPip: \"Oh! There it is!\"\nWait — he wanted to send a photo of the cheese. But... never mind that for now.\nPip: \"Wait, is it just me, or did this get bigger?\"\nIt's much bigger than the one he saw yesterday — bigger, even, than the school building he remembers. An undeniably splendid wedge of cheese.\nClerk: \"Well, size around here depends on the data size. Image files tend to come out like that.\"\nPip: \"No way.\"",
         illustration: <SceneCargoSlicing />,
       },
       body: (
@@ -366,7 +366,7 @@ export function TheShortWayHomeWalkthroughDraft({
       section: "2. Getting Ready to Send",
       title: "Small Enough to Send",
       story: {
-        text: "Clerk: \"Let's get this cut down to size.\"\nPip: \"Ehh? I liked it just the way it was.\"\nHe can't believe what he's hearing — cutting up such a magnificent wheel of cheese?\nClerk: \"At this size, there's no way it fits on a train.\"\nPip: \"...\"\nFair enough — no train exists that could carry something bigger than a school building. Still, what a waste.\nHe looks back at the cheese, only to find it already sliced into neat, square blocks, stacked in tidy rows.\nPip: \"That was fast!\"",
+        text: "Clerk: \"Let's get this cut down to size.\"\nPip: \"Ehh? I liked it just the way it was.\"\nHe can't believe what he's hearing — cutting up such a magnificent wedge of cheese?\nClerk: \"At this size, there's no way it fits on a train.\"\nPip: \"...\"\nFair enough — no train exists that could carry something bigger than a school building. Still, what a waste.\nHe looks back at the cheese, only to find it already sliced into neat, square blocks, stacked in tidy rows.\nPip: \"That was fast!\"",
         illustration: <SceneCargoSlicing />,
       },
       body: (
@@ -392,7 +392,7 @@ export function TheShortWayHomeWalkthroughDraft({
       section: "2. Getting Ready to Send",
       title: "What's a Packet?",
       story: {
-        text: "The Clerk leads Pip back toward the platform.\nPip: \"That huge, splendid wheel of cheese... it's just blocks now.\"\nClerk: \"To carry it by train, it has to be divided into packets.\"\nPip: \"Packets?\"\nClerk: \"Right — every train can only carry so much in one trip. Anything bigger gets cut into small, matching pieces. Each one's called a packet.\"\nPip: \"I wonder if it'll ever go back to normal.\"\nClerk: \"Once the pieces reach their destination, they get put back together.\"",
+        text: "The Clerk leads Pip back toward the platform.\nPip: \"That huge, splendid wedge of cheese... it's just blocks now.\"\nClerk: \"To carry it by train, it has to be divided into packets.\"\nPip: \"Packets?\"\nClerk: \"Right — every train can only carry so much in one trip. Anything bigger gets cut into small, matching pieces. Each one's called a packet.\"\nPip: \"I wonder if it'll ever go back to normal.\"\nClerk: \"Once the pieces reach their destination, they get put back together.\"",
         illustration: <SceneCargoSlicing />,
       },
       body: (

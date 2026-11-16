@@ -613,51 +613,16 @@ export function TheShortWayHomeWalkthroughDraft({
       section: "3. Same Line or Not?",
       title: "Checking the Match",
       story: {
-        text: "Clerk: \"Pip's own address is 192.168.1.10. Dad's PC is 192.168.1.15.\"\nClerk: \"Compare the part before the boundary — 192.168.1 — on both.\"\nPip: \"They're the same! 192.168.1 on both sides.\"",
-        illustration: <SceneStationMap />,
-      },
-      body: (
-        <p>
-          Comparing two addresses&rsquo; line-group parts is just comparing the numbers before the
-          boundary: 192.168.1.10 and 192.168.1.15 both start with 192.168.1. Only the part after
-          it — the station number — differs.
-        </p>
-      ),
-      visual: (
-        <div className="w-full max-w-md rounded-lg border border-storybook-ink/10 bg-white/70 p-4 space-y-2">
-          <div className="flex items-center gap-2 text-sm font-mono">
-            <span className="px-2 py-1 rounded bg-cyan-100 text-cyan-800 border border-cyan-300">
-              192.168.1
-            </span>
-            <span className="px-2 py-1 rounded bg-neutral-100 text-neutral-600 border border-neutral-300">
-              .10
-            </span>
-            <span className="text-xs text-storybook-ink/60">Pip&rsquo;s phone</span>
-          </div>
-          <div className="flex items-center gap-2 text-sm font-mono">
-            <span className="px-2 py-1 rounded bg-cyan-100 text-cyan-800 border border-cyan-300">
-              192.168.1
-            </span>
-            <span className="px-2 py-1 rounded bg-neutral-100 text-neutral-600 border border-neutral-300">
-              .15
-            </span>
-            <span className="text-xs text-storybook-ink/60">Dad&rsquo;s PC</span>
-          </div>
-          <p className="text-xs text-storybook-ink/60">
-            Cyan = line-group part (must match) · Gray = station part (free to differ)
-          </p>
-        </div>
-      ),
-    },
-    {
-      section: "3. Same Line or Not?",
-      title: "Same Group!",
-      story: {
-        text: "Clerk: \"Same line-group, no doubt about it — Dad's PC is a neighbor, right here on our own line.\"\nPip: \"So I don't need the mainline at all for this one?\"\nClerk: \"Not even a little. Straight there, the short way.\"",
+        text: "Clerk: \"Pip's own address is 192.168.1.10. Dad's PC is 192.168.1.15.\"\nClerk: \"Compare the part before the boundary — 192.168.1 — on both.\"\nPip: \"They're the same! 192.168.1 on both sides.\"\nClerk: \"Same line-group, no doubt about it — Dad's PC is a neighbor, right here on our own line.\"\nPip: \"So I don't need the mainline at all for this one?\"\nClerk: \"Not even a little. Straight there, the short way.\"",
         illustration: <SceneCheckingSameLine />,
       },
       body: (
         <div className="space-y-2">
+          <p>
+            Comparing two addresses&rsquo; line-group parts is just comparing the numbers before the
+            boundary: 192.168.1.10 and 192.168.1.15 both start with 192.168.1. Only the part after
+            it — the station number — differs.
+          </p>
           <p>
             Matching line-group parts mean the two stations share a line. A device only needs to
             reach out through the router when a destination&rsquo;s line-group differs from its own.
@@ -667,12 +632,37 @@ export function TheShortWayHomeWalkthroughDraft({
         </div>
       ),
       visual: (
-        <SubnetRangeLine
-          devices={[
-            { label: "Pip's phone", lastOctet: 10 },
-            { label: "Dad's PC", lastOctet: 15 },
-          ]}
-        />
+        <div className="space-y-3">
+          <div className="w-full max-w-md rounded-lg border border-storybook-ink/10 bg-white/70 p-4 space-y-2">
+            <div className="flex items-center gap-2 text-sm font-mono">
+              <span className="px-2 py-1 rounded bg-cyan-100 text-cyan-800 border border-cyan-300">
+                192.168.1
+              </span>
+              <span className="px-2 py-1 rounded bg-neutral-100 text-neutral-600 border border-neutral-300">
+                .10
+              </span>
+              <span className="text-xs text-storybook-ink/60">Pip&rsquo;s phone</span>
+            </div>
+            <div className="flex items-center gap-2 text-sm font-mono">
+              <span className="px-2 py-1 rounded bg-cyan-100 text-cyan-800 border border-cyan-300">
+                192.168.1
+              </span>
+              <span className="px-2 py-1 rounded bg-neutral-100 text-neutral-600 border border-neutral-300">
+                .15
+              </span>
+              <span className="text-xs text-storybook-ink/60">Dad&rsquo;s PC</span>
+            </div>
+            <p className="text-xs text-storybook-ink/60">
+              Cyan = line-group part (must match) · Gray = station part (free to differ)
+            </p>
+          </div>
+          <SubnetRangeLine
+            devices={[
+              { label: "Pip's phone", lastOctet: 10 },
+              { label: "Dad's PC", lastOctet: 15 },
+            ]}
+          />
+        </div>
       ),
     },
     // -------------------- 4. Names and Seals -------------------

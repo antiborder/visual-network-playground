@@ -691,8 +691,8 @@ export function TheShortWayHomeWalkthroughDraft({
           </p>
           <p>
             That&rsquo;s exactly why Pip&rsquo;s phone can&rsquo;t just guess it; it has to ask.
-            This broadcast-and-reply exchange is <Term id="arp">ARP</Term>. It runs in three
-            steps:
+            This broadcast-and-reply exchange is <Term id="arp">ARP</Term> — short for Address
+            Resolution Protocol. It runs in three steps:
           </p>
           <ol className="list-decimal space-y-1 pl-5">
             <li>

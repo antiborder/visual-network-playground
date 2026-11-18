@@ -797,7 +797,7 @@ export function TheShortWayHomeWalkthroughDraft({
       section: "5. All Aboard",
       title: "Why Not All at Once?",
       story: {
-        text: "Down the tracks, Pip can see cart after cart, each one now hitched to its own locomotive, just like his.\nPip: \"That many...\"\nClerk: \"This time, the data came out to about 4,649 packets.\"\nPip: \"Why not hook all the trains together and send them off in one go?\"\nClerk: \"Because this line isn't ours alone. Every station in the house shares it. And on the invisible stretch especially, only one train can be on it at a time.\"\nClerk: \"Imagine one single train carrying all 4,649 crates. While it passes, everyone else simply waits. Your dad's PC, every other station — all held up behind your cheese.\"",
+        text: "Down the tracks, Pip can see cart after cart, each one now hitched to its own locomotive, just like his.\nPip: \"That many...\"\nClerk: \"This time, the data came out to about 4,649 packets.\"\nPip: \"Why not hook all the trains together and send them off in one go?\"\nClerk: \"Because this line isn't ours alone. Every station in the house shares it. And on the invisible stretch especially, only one train can be on it at a time.\"\nPip: \"Only one at a time...?\"\nClerk: \"Imagine one single train carrying all 4,649 crates. While it passes, everyone else simply waits. Your dad's PC, every other station — all held up behind your cheese.\"",
         illustration: <SceneCargoSlicing />,
       },
       body: (
@@ -925,7 +925,7 @@ export function TheShortWayHomeWalkthroughDraft({
       section: "6. Through the Router",
       title: "A Change of Engines",
       story: {
-        text: "Inside the shed, porters are already unhitching the engine that floated them here. They back a different one in — heavier, built for solid rails.\nPip: \"We're changing engines?\"\nPorter: \"The engine that carries a crate over the air can't run on solid track. But look — the crate itself never changes. Same label, same number, same tag. Even the name plates are copied onto the new engine, just as they were. Only the engine is new.\"",
+        text: "Inside the shed, porters are already unhitching the engine that floated them here. They back a different one in — heavier, built for solid rails.\nPip: \"We're changing engines?\"\nPorter: \"The engine that carries a crate over the air can't run on solid track. But look — the crate itself never changes.\"\nPip: \"The crate stays exactly the same?\"\nPorter: \"Same label, same number, same tag. Even the name plates are copied onto the new engine, just as they were. Only the engine is new.\"",
         illustration: <SceneJunctionSwitch />,
       },
       body: (

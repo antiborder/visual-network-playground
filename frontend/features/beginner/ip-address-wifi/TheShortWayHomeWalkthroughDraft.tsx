@@ -875,30 +875,22 @@ export function TheShortWayHomeWalkthroughDraft({
       section: "5. All Aboard",
       title: "Time to Go",
       story: {
-        text: "Clerk: \"Alright — everything's packed, labeled, hitched up, and the route's confirmed. Time to go.\"\nPip: \"Wait, do I get to come too?\"\nClerk: \"Why not? It's your photo — climb aboard.\"",
-        illustration: <SceneCargoSlicing />,
-      },
-      body: (
-        <p>
-          Everything up to this point — slicing, labeling, checking the address — happens before a
-          single packet actually moves. Only once all of it is settled does anything leave the
-          platform.
-        </p>
-      ),
-    },
-    {
-      section: "5. All Aboard",
-      title: "All Aboard",
-      story: {
-        text: "Pip hops up onto the platform edge, right alongside the crates.\nA porter waves him toward an open door.\nPorter: \"Room for one more — hop in, we're about to head out.\"\nThe doors slide shut behind him with a soft chime.",
+        text: "Clerk: \"Alright — everything's packed, labeled, hitched up, and the route's confirmed. Time to go.\"\nPip: \"Wait, do I get to come too?\"\nClerk: \"Why not? It's your photo — climb aboard.\"\nPip hops up onto the platform edge, right alongside the crates.\nA porter waves him toward an open door.\nPorter: \"Room for one more — hop in, we're about to head out.\"\nThe doors slide shut behind him with a soft chime.",
         illustration: <ScenePipBoardsTrain />,
       },
       body: (
-        <p>
-          Pip boarding alongside the crates is the picture-book version of something real. Once a
-          packet is ready, it doesn&rsquo;t wait around. It heads out right away, along whatever
-          path was just worked out.
-        </p>
+        <div className="space-y-2">
+          <p>
+            Everything up to this point — slicing, labeling, checking the address — happens before a
+            single packet actually moves. Only once all of it is settled does anything leave the
+            platform.
+          </p>
+          <p>
+            Pip boarding alongside the crates is the picture-book version of something real. Once a
+            packet is ready, it doesn&rsquo;t wait around. It heads out right away, along whatever
+            path was just worked out.
+          </p>
+        </div>
       ),
     },
     {

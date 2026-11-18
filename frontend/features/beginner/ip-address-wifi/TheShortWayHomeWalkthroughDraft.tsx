@@ -1060,7 +1060,7 @@ export function TheShortWayHomeWalkthroughDraft({
       section: "7. At Dad's PC Station",
       title: "One Last Address Check",
       story: {
-        text: "The porter turns his attention to the crate itself now, alone on the platform without its engine.\nHe checks the paper label on the crate itself: 192.168.1.15.\nPorter: \"This address is ours, too. Matches the station name and the label both — no mix-ups.\"\nPip: \"Wait, didn't you already check the engine's name? Why check the crate too?\"\nPorter: \"Different question, really. The engine told us we're the right station.\"\nPorter: \"The label tells us this particular crate is really meant for us. It's not, say, a neighbor sharing our platform.\"",
+        text: "The porter turns his attention to the crate itself now, alone on the platform without its engine.\nHe checks the paper label on the crate itself: 192.168.1.15.\nPorter: \"This address is ours, too. Matches the station name and the label both — no mix-ups.\"\nPip: \"Wait, didn't you already check the engine's name? Why check the crate too?\"\nPorter: \"Different question, really. The engine told us we're the right station.\"\nPorter: \"The label tells us this particular crate is really meant for us — and not carried here by mistake.\"",
         illustration: <SceneArrivalAtDadStation />,
       },
       body: (

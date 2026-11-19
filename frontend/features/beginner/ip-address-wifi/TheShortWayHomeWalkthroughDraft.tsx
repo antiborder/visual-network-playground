@@ -1124,7 +1124,7 @@ export function TheShortWayHomeWalkthroughDraft({
       section: "8. Back Together",
       title: "Back Together",
       story: {
-        text: "The porter checks the little number stamped on each crate as it arrives.\nHe lines them up on the platform in the order the numbers say: 1, 2, 3.\nThat's not the order they showed up in.\nAs each one clicks into place beside the last, the blocks melt seamlessly back together.\nPip: \"It's — it's whole again!\"\nPorter: \"As long as we know the order, it doesn't matter which one shows up first.\"",
+        text: "The porter checks the little number stamped on each crate as it arrives.\nHe lines them up on the platform in the order the numbers say: 1, 2, 3.\nThat's not the order they showed up in.\nThen he opens them in that order. As each block comes out and is set down beside the last one, it melts seamlessly into it.\nPip: \"It's — it's whole again!\"\nPorter: \"As long as we know the order, it doesn't matter which one shows up first.\"",
         illustration: <SceneArrivalAtDadStation />,
       },
       body: (
@@ -1141,7 +1141,7 @@ export function TheShortWayHomeWalkthroughDraft({
       section: "8. Back Together",
       title: "Delivered — the Short Way",
       story: {
-        text: "A satisfying clunk, and the crates finish unloading — Pip right behind them.\nA porter at Dad's PC Station stamps the delivery log.\nPorter: \"Delivered — straight into the shared folder, right where it belongs.\"\nPip: \"That's the short way home. Didn't even need to go anywhere near the mainline for this one.\"",
+        text: "A porter at Dad's PC Station stamps the delivery log.\nPorter: \"Delivered — straight into the shared folder, right where it belongs.\"\nPip: \"That's the short way home. Didn't even need to go anywhere near the mainline for this one.\"",
         illustration: <SceneArrivalAtDadStation />,
       },
       body: (

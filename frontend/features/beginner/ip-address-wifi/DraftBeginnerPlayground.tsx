@@ -5,7 +5,7 @@ import { MeetTheNetworkLab } from "./MeetTheNetworkLab";
 import { FindingTheBoardWalkthrough } from "./FindingTheBoardWalkthrough";
 import { TheShortWayHomeWalkthroughDraft } from "./TheShortWayHomeWalkthroughDraft";
 import { LeavingTheHouseWalkthroughDraft } from "./LeavingTheHouseWalkthroughDraft";
-import { DhcpLab } from "./DhcpLab";
+import { MomoGetsOnlineWalkthroughDraft } from "./MomoGetsOnlineWalkthroughDraft";
 
 const CHAPTERS = [
   { id: "meet-the-network", label: "Chapter 1: Meet the Network" },
@@ -33,10 +33,9 @@ export type DraftChapterId = (typeof CHAPTERS)[number]["id"];
  * these calls. "Leaving the House" now ends on a cliffhanger once the
  * packet reaches the open internet; whether/how it actually arrives is
  * intentionally left undecided for a later chapter. "momo-gets-online"
- * still renders the old, un-storified `DhcpLab` as a stopgap — it hasn't
- * been rewritten yet into a Pip-as-observer story (see
- * docs/beginner-story-redesign.md § ③) or converted to the train analogy
- * (see docs/network-train-analogy.md § 5). "Who Goes There?", "Did It
+ * was rewritten 2026-11-19 into the story-format
+ * `MomoGetsOnlineWalkthroughDraft` (Pip leads, Momo speaks; the old
+ * `DhcpLab` remains only in the legacy Unit). "Who Goes There?", "Did It
  * Work?", and "Seeing It All at Once" still need to be written/ported in
  * too. */
 export function DraftBeginnerPlayground() {
@@ -84,7 +83,12 @@ export function DraftBeginnerPlayground() {
           }}
         />
       )}
-      {activeChapter === "momo-gets-online" && <DhcpLab />}
+      {activeChapter === "momo-gets-online" && (
+        <MomoGetsOnlineWalkthroughDraft
+          onComplete={() => {}}
+          onNavigatePrevious={() => setActiveChapter("short-way-home")}
+        />
+      )}
       {activeChapter === "finding-the-board" && <FindingTheBoardWalkthrough onComplete={() => {}} />}
       {activeChapter === "leaving-the-house" && <LeavingTheHouseWalkthroughDraft onComplete={() => {}} />}
     </div>

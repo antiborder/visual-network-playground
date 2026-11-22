@@ -197,7 +197,7 @@ export function MomoGetsOnlineWalkthroughDraft({
       section: "2. Asking for a Number",
       title: "An Answer from the Junction",
       story: {
-        text: "At the junction station, an old clerk opens a big ledger.\nHe runs a claw down the written numbers first.\nAddress Clerk: \"192.168.1.20 — free. Nobody is using it.\"\nAddress Clerk: \"You may use it, little lamp.\"",
+        text: "At the junction station, the Address Clerk opens the big ledger.\nHe runs a claw down the written numbers first.\nAddress Clerk: \"192.168.1.20 — free. Nobody is using it.\"\nAddress Clerk: \"You may use it, little lamp.\"",
         illustration: <SceneLanDesk />,
       },
       body: (
@@ -220,7 +220,7 @@ export function MomoGetsOnlineWalkthroughDraft({
         <p>
           This is the DHCP Request — and it is broadcast too, on purpose. Every station hears
           which address Momo picked, so nobody else asks for it. There is only one address
-          office in this house, but the announcement keeps the whole line honest.
+          clerk, at the junction, but the announcement keeps the whole line honest.
         </p>
       ),
       visual: <LanMap devices={houseDevices} conflictIds={new Set()} packet={null} />,
@@ -229,7 +229,7 @@ export function MomoGetsOnlineWalkthroughDraft({
       section: "2. Asking for a Number",
       title: "Written in the Ledger",
       story: {
-        text: "The clerk writes in the ledger: 192.168.1.20 — the hallway lamp.\nThen he hangs a number plate on Momo's station.\nMomo: \"Now anyone can call me!\"\nPip: \"Now anyone can.\"",
+        text: "Back at the junction, the Address Clerk writes in the ledger.\nAddress Clerk: \"192.168.1.20 — the hallway lamp.\"\nThe answer rolls back down the line.\nA number plate goes up on Momo's station.\nMomo: \"Now anyone can call me!\"\nPip: \"Now anyone can.\"",
         illustration: <SceneMomoArrives />,
       },
       body: (
@@ -252,7 +252,7 @@ export function MomoGetsOnlineWalkthroughDraft({
       section: "3. Borrowed, Not Owned",
       title: "Until the Bell",
       story: {
-        text: "Momo: \"Will it always be mine?\"\nAddress Clerk: \"It is lent until the bell, little lamp.\"\nAddress Clerk: \"Ask quietly before then, and it simply carries on.\"\nPip: \"Wait — my number is borrowed too?\"",
+        text: "Momo calls down the line, toward the junction.\nMomo: \"Will it always be mine?\"\nThe answer comes back.\nAddress Clerk: \"It is lent until the bell, little lamp.\"\nAddress Clerk: \"Ask quietly before then, and it simply carries on.\"\nPip: \"Wait — my number is borrowed too?\"",
         illustration: <SceneLanDesk />,
       },
       body: (
@@ -268,7 +268,7 @@ export function MomoGetsOnlineWalkthroughDraft({
       section: "3. Borrowed, Not Owned",
       title: "Gone and Back Again",
       story: {
-        text: "Pip: \"What if she's switched off for a long, long time?\"\nAddress Clerk: \"The ledger remembers her for a while.\"\nAddress Clerk: \"If her number is still free, she gets it back.\"\nAddress Clerk: \"If it was lent away, she gets another.\"",
+        text: "Pip calls the junction too.\nPip: \"What if she's switched off for a long, long time?\"\nAddress Clerk: \"The ledger remembers her for a while.\"\nAddress Clerk: \"If her number is still free, she gets it back.\"\nAddress Clerk: \"If it was lent away, she gets another.\"",
         illustration: <SceneFallingAsleep />,
       },
       body: (
@@ -321,7 +321,7 @@ export function MomoGetsOnlineWalkthroughDraft({
       section: "4. Two Stations, One Number",
       title: "Ask the Ledger",
       story: {
-        text: "The painted plate comes down.\nThe old station asks properly this time, like Momo did.\nThe clerk checks the ledger, and lends it a free number.\nMomo: \"Now I know it's really you, Pip.\"",
+        text: "The painted plate comes down.\nThe old station asks properly this time, like Momo did.\nThe Address Clerk checks the ledger, and lends it a free number.\nMomo: \"Now I know it's really you, Pip.\"",
         illustration: <SceneFixed />,
       },
       body: (

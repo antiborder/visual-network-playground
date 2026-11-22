@@ -225,7 +225,7 @@ export function MomoGetsOnlineWalkthroughDraft({
       section: "2. Asking for a Number",
       title: "An Answer from the Junction",
       story: {
-        text: "At the junction station, the Address Clerk opens the big ledger.\nHe runs a claw down the written numbers first.\nAddress Clerk: \"192.168.1.20 — free. Nobody is using it.\"\nAddress Clerk: \"You may use it, little lamp.\"",
+        text: "At the junction station, the Address Clerk opens the big ledger.\nHe runs a claw down the written numbers first.\nThen he calls the answer back down the line.\nAddress Clerk: \"192.168.1.20 — free. Nobody is using it.\"\nAddress Clerk: \"You may use it, little lamp.\"",
         illustration: <SceneLanDesk />,
       },
       body: (

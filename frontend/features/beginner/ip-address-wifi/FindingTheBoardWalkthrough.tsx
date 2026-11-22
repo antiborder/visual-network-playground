@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { Term } from "@/components/Term";
 import { SegmentedProgressBar } from "@/components/SegmentedProgressBar";
 import { StoryText } from "@/components/StoryText";
@@ -51,9 +51,19 @@ const RECORD_ROWS = [
  * house. Reuses the existing (non-story) DNS chapter's pure diagram
  * components (UrlAnatomy, DomainHierarchy, ResolverRoles,
  * RecursiveVsIterative) wherever they're already domain-agnostic. */
-export function FindingTheBoardWalkthrough({ onComplete }: { onComplete: () => void }) {
-  const [step, setStep] = useState(0);
-
+export function FindingTheBoardWalkthrough({
+  onComplete,
+  initialStep,
+  onStepChange,
+}: {
+  onComplete: () => void;
+  /** 0-based step to open on, from the page URL (?step=, 1-based) —
+   * reloads and shared step links resume there. */
+  initialStep?: number;
+  /** Fires whenever the current step changes, so the playground can keep
+   * the URL's ?step= in sync. */
+  onStepChange?: (step: number, total: number) => void;
+}) {
   // --- "How Long to Remember" TTL tradeoff sandbox ---
   const [ttlChoice, setTtlChoice] = useState<"short" | "long">("short");
 
@@ -653,8 +663,21 @@ export function FindingTheBoardWalkthrough({ onComplete }: { onComplete: () => v
     },
   ];
 
+  // Declared after `steps` so the URL's initial step can be clamped to
+  // this chapter's real range (the MeetTheNetworkWalkthrough pattern).
+  const [step, setStep] = useState(() =>
+    initialStep !== undefined
+      ? Math.max(0, Math.min(initialStep, steps.length - 1))
+      : 0,
+  );
+
   const total = steps.length;
   const current = steps[step];
+
+  // Keep the playground (and through it, the URL) posted on step changes.
+  useEffect(() => {
+    onStepChange?.(step, total);
+  }, [step, total, onStepChange]);
   const isLast = step === total - 1;
   const isFirst = step === 0;
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { Term } from "@/components/Term";
 import { Equation } from "@/components/Equation";
 import { SegmentedProgressBar } from "@/components/SegmentedProgressBar";
@@ -139,6 +139,8 @@ import {
 export function TheShortWayHomeWalkthroughDraft({
   onComplete,
   onNavigatePrevious,
+  initialStep,
+  onStepChange,
 }: {
   onComplete: () => void;
   /** When provided, the first step's disabled "Back" button is replaced
@@ -146,9 +148,13 @@ export function TheShortWayHomeWalkthroughDraft({
    * lets the reader step back into Chapter 1 rather than hitting a dead
    * end at the start of this one. */
   onNavigatePrevious?: () => void;
+  /** 0-based step to open on, from the page URL (?step=, 1-based) —
+   * reloads and shared step links resume there. */
+  initialStep?: number;
+  /** Fires whenever the current step changes, so the playground can keep
+   * the URL's ?step= in sync. */
+  onStepChange?: (step: number, total: number) => void;
 }) {
-  const [step, setStep] = useState(0);
-
   // --- "The Short Way Home" sandbox ---
   const [arpDevices] = useState<Device[]>(DEFAULT_DEVICES);
   const arpPacket = usePacketSend();
@@ -1178,8 +1184,21 @@ export function TheShortWayHomeWalkthroughDraft({
     },
   ];
 
+  // Declared after `steps` so the URL's initial step can be clamped to
+  // this chapter's real range (the MeetTheNetworkWalkthrough pattern).
+  const [step, setStep] = useState(() =>
+    initialStep !== undefined
+      ? Math.max(0, Math.min(initialStep, steps.length - 1))
+      : 0,
+  );
+
   const total = steps.length;
   const current = steps[step];
+
+  // Keep the playground (and through it, the URL) posted on step changes.
+  useEffect(() => {
+    onStepChange?.(step, total);
+  }, [step, total, onStepChange]);
   const isLast = step === total - 1;
   const isFirst = step === 0;
 

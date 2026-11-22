@@ -50,6 +50,7 @@ export function MeetTheNetworkWalkthrough({
   finishLabel = "Finish",
   onStepChange,
   startAtEnd = false,
+  initialStep,
 }: {
   onComplete: () => void;
   /** Label for the button shown on the last step — "Finish" by default, or
@@ -64,6 +65,9 @@ export function MeetTheNetworkWalkthrough({
    * reader arrives here by clicking "Previous Chapter" from Chapter 2, and
    * should land back where they'd have been, not at the very beginning. */
   startAtEnd?: boolean;
+  /** 0-based step to open on, from the page URL (?step=, 1-based) — a
+   * reload or a shared link to a step resumes there. Wins over startAtEnd. */
+  initialStep?: number;
 }) {
   // --- "Chasing the Signal" interference sandbox ---
   const [wallCount, setWallCount] = useState<0 | 1 | 2>(2);
@@ -609,7 +613,13 @@ export function MeetTheNetworkWalkthrough({
     },
   ];
 
-  const [step, setStep] = useState(startAtEnd ? steps.length - 1 : 0);
+  const [step, setStep] = useState(() =>
+    initialStep !== undefined
+      ? Math.max(0, Math.min(initialStep, steps.length - 1))
+      : startAtEnd
+        ? steps.length - 1
+        : 0,
+  );
 
   const total = steps.length;
   const current = steps[step];

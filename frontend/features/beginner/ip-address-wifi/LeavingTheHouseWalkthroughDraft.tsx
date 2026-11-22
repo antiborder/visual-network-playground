@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { SegmentedProgressBar } from "@/components/SegmentedProgressBar";
 import { StoryText } from "@/components/StoryText";
 import { isPrivateIpv4 } from "./network";
@@ -43,9 +43,19 @@ const ADDRESS_EXAMPLES = [
  * behind in the house once the packet leaves. Every `body` below is a
  * placeholder — only the picture-book story half was requested for this
  * pass. */
-export function LeavingTheHouseWalkthroughDraft({ onComplete }: { onComplete: () => void }) {
-  const [step, setStep] = useState(0);
-
+export function LeavingTheHouseWalkthroughDraft({
+  onComplete,
+  initialStep,
+  onStepChange,
+}: {
+  onComplete: () => void;
+  /** 0-based step to open on, from the page URL (?step=, 1-based) —
+   * reloads and shared step links resume there. */
+  initialStep?: number;
+  /** Fires whenever the current step changes, so the playground can keep
+   * the URL's ?step= in sync. */
+  onStepChange?: (step: number, total: number) => void;
+}) {
   // --- "Try It Yourself" private/global sandbox ---
   const [exampleIdx, setExampleIdx] = useState(0);
 
@@ -279,8 +289,21 @@ export function LeavingTheHouseWalkthroughDraft({ onComplete }: { onComplete: ()
     },
   ];
 
+  // Declared after `steps` so the URL's initial step can be clamped to
+  // this chapter's real range (the MeetTheNetworkWalkthrough pattern).
+  const [step, setStep] = useState(() =>
+    initialStep !== undefined
+      ? Math.max(0, Math.min(initialStep, steps.length - 1))
+      : 0,
+  );
+
   const total = steps.length;
   const current = steps[step];
+
+  // Keep the playground (and through it, the URL) posted on step changes.
+  useEffect(() => {
+    onStepChange?.(step, total);
+  }, [step, total, onStepChange]);
   const isLast = step === total - 1;
   const isFirst = step === 0;
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { Term } from "@/components/Term";
 import { SegmentedProgressBar } from "@/components/SegmentedProgressBar";
 import { StoryText } from "@/components/StoryText";
@@ -49,14 +49,20 @@ import {
 export function MomoGetsOnlineWalkthroughDraft({
   onComplete,
   onNavigatePrevious,
+  initialStep,
+  onStepChange,
 }: {
   onComplete: () => void;
   /** When provided, the first step's disabled "Back" button is replaced
    * with an enabled "Previous Chapter" button that calls this instead. */
   onNavigatePrevious?: () => void;
+  /** 0-based step to open on, from the page URL (?step=, 1-based) —
+   * reloads and shared step links resume there. */
+  initialStep?: number;
+  /** Fires whenever the current step changes, so the playground can keep
+   * the URL's ?step= in sync. */
+  onStepChange?: (step: number, total: number) => void;
 }) {
-  const [step, setStep] = useState(0);
-
   // The house as Chapter 2 left it — Momo is not on the network yet.
   const houseDevices: Device[] = DEFAULT_DEVICES.filter((d) => d.id !== "iot");
   // The house once Momo holds 192.168.1.20.
@@ -351,8 +357,21 @@ export function MomoGetsOnlineWalkthroughDraft({
     },
   ];
 
+  // Declared after `steps` so the URL's initial step can be clamped to
+  // this chapter's real range (the MeetTheNetworkWalkthrough pattern).
+  const [step, setStep] = useState(() =>
+    initialStep !== undefined
+      ? Math.max(0, Math.min(initialStep, steps.length - 1))
+      : 0,
+  );
+
   const total = steps.length;
   const current = steps[step];
+
+  // Keep the playground (and through it, the URL) posted on step changes.
+  useEffect(() => {
+    onStepChange?.(step, total);
+  }, [step, total, onStepChange]);
   const isLast = step === total - 1;
   const isFirst = step === 0;
 

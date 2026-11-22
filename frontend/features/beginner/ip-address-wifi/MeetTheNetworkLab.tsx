@@ -20,11 +20,19 @@ import { MeetTheNetworkPlayground } from "./MeetTheNetworkPlayground";
 export function MeetTheNetworkLab({
   onNavigateNext,
   startAtEnd = false,
+  initialStep,
+  onStepChange,
 }: {
   onNavigateNext?: () => void;
   /** Land on the last step instead of the first — set when the reader
    * arrives via Chapter 2's "Previous Chapter" button. */
   startAtEnd?: boolean;
+  /** 0-based step to open on, from the page URL — forwarded to the
+   * walkthrough so reloads and step links resume in place. */
+  initialStep?: number;
+  /** Fires whenever the walkthrough's current step changes, so the
+   * playground can keep the URL's ?step= in sync. */
+  onStepChange?: (step: number) => void;
 }) {
   const [reachedEnd, setReachedEnd] = useState(startAtEnd);
 
@@ -34,8 +42,10 @@ export function MeetTheNetworkLab({
         onComplete={() => onNavigateNext?.()}
         finishLabel="Next Chapter"
         startAtEnd={startAtEnd}
+        initialStep={initialStep}
         onStepChange={(step, total) => {
           if (step === total - 1) setReachedEnd(true);
+          onStepChange?.(step);
         }}
       />
 

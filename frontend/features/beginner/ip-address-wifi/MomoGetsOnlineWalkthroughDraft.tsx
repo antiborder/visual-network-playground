@@ -119,7 +119,7 @@ export function MomoGetsOnlineWalkthroughDraft({
       section: "Welcome",
       title: "The chapter at a glance",
       story: {
-        text: "A parcel arrives at Pip's house.\nInside the box sits a new smart bulb.\nPip carries it to the hallway.\nHe screws it into the empty socket himself.\nClick — the bulb lights up.\nPip stares at it.\nPip: \"...is it just me, or is it calling me?\"\nBut his eyes are heavy.\nHe shuffles off to bed.",
+        text: "A parcel arrives at Pip's house.\nPip: \"What's in here?\"\nHe opens the box.\nInside sits a new smart bulb.\nThe hallway light has stopped working.\nPip: \"Then this one has to go up.\"\nHe drags in a stepladder.\nHe climbs up, and takes the old bulb out.\nThen he screws the new one in.\nClick — it lights up.\nPip stares at it.\nPip: \"...is it just me, or is it calling me?\"\nBut his eyes are heavy.\nHe shuffles off to bed.",
         illustration: <SceneHallwayBox />,
       },
       body: (
@@ -136,13 +136,14 @@ export function MomoGetsOnlineWalkthroughDraft({
       section: "1. A New Light",
       title: "A New Station Nearby",
       story: {
-        text: "Pip blinks.\nHe is standing at Phone Station again.\nThe Clerk leans out of the booth.\nClerk: \"Back again, are you?\"\nClerk: \"A new station came in near here today.\"\nPip looks down the line.\nA small voice seems to drift over.\nPip: \"...someone's calling.\"\nHe walks toward the voice.",
+        text: "Pip blinks.\nHe is standing at Phone Station again.\nThe Clerk leans out of the booth.\nClerk: \"Back again, are you?\"\nClerk: \"Your cheese photo reached Dad's PC, by the way.\"\nPip: \"It really arrived?\"\nClerk: \"Safe and sound. And listen — a new station came in near here today.\"\nPip looks down the line.\nA small voice seems to drift over.\nPip: \"...someone's calling.\"\nHe walks toward the voice.",
         illustration: <SceneWakingAtStation />,
       },
       body: (
         <p>
-          Same dream, same line. Inside the network&rsquo;s world, the hallway bulb has a
-          station of its own — every device does. It arrived today, the way the parcel did.
+          Same dream, same line. First, the receipt for last chapter: the photo Pip delivered
+          really is sitting on Dad&rsquo;s PC now. And inside this world, the hallway bulb
+          has a station of its own — every device does.
         </p>
       ),
       visual: <LanMap devices={houseDevices} conflictIds={new Set()} packet={null} />,

@@ -46,6 +46,33 @@ import {
  * 1–2's own maps is a separate, not-yet-implemented change; this file
  * does not touch those chapters.) Illustrations are the existing
  * StorybookScenes placeholders, as with Chapter 2's first draft. */
+/** The whole DHCP exchange at a glance, with the current step marked —
+ * shown at the top of each §2 explanation so the reader always knows
+ * where this step sits inside Discover → Offer → Request → Ack
+ * (Atsushi's requirement, 2026-11-22). */
+function DoraProgress({ current }: { current: 0 | 1 | 2 | 3 }) {
+  const names = ["Discover", "Offer", "Request", "Ack"] as const;
+  return (
+    <ol className="flex flex-wrap items-center gap-1 text-xs" aria-label="The four DHCP steps">
+      {names.map((name, i) => (
+        <li key={name} className="flex items-center gap-1">
+          <span
+            className={
+              i === current
+                ? "rounded bg-storybook-accent px-2 py-0.5 font-semibold text-white"
+                : "rounded bg-white/60 px-2 py-0.5 text-storybook-ink/60"
+            }
+          >
+            {i + 1}. {name}
+            {i === current ? " ← now" : ""}
+          </span>
+          {i < names.length - 1 && <span aria-hidden="true">→</span>}
+        </li>
+      ))}
+    </ol>
+  );
+}
+
 export function MomoGetsOnlineWalkthroughDraft({
   onComplete,
   onNavigatePrevious,
@@ -180,6 +207,7 @@ export function MomoGetsOnlineWalkthroughDraft({
       },
       body: (
         <div className="space-y-3">
+          <DoraProgress current={0} />
           <p>
             This call goes to every station on the line at once — a broadcast. Momo sends it
             because she has no address yet, and no idea who hands them out.
@@ -201,11 +229,14 @@ export function MomoGetsOnlineWalkthroughDraft({
         illustration: <SceneLanDesk />,
       },
       body: (
-        <p>
-          The answer is the DHCP Offer. The router keeps the ledger of every address it has
-          lent out — and it checks the ledger before offering. A lent address is never
-          offered twice. That one habit is what normally keeps duplicates from happening.
-        </p>
+        <div className="space-y-3">
+          <DoraProgress current={1} />
+          <p>
+            The answer is the DHCP Offer. The router keeps the ledger of every address it has
+            lent out — and it checks the ledger before offering. A lent address is never
+            offered twice. That one habit is what normally keeps duplicates from happening.
+          </p>
+        </div>
       ),
       visual: <LanMap devices={houseDevices} conflictIds={new Set()} packet={null} />,
     },
@@ -217,11 +248,14 @@ export function MomoGetsOnlineWalkthroughDraft({
         illustration: <SceneDoraExchange />,
       },
       body: (
-        <p>
-          This is the DHCP Request — and it is broadcast too, on purpose. Every station hears
-          which address Momo picked, so nobody else asks for it. There is only one address
-          clerk, at the junction, but the announcement keeps the whole line honest.
-        </p>
+        <div className="space-y-3">
+          <DoraProgress current={2} />
+          <p>
+            This is the DHCP Request — and it is broadcast too, on purpose. Every station hears
+            which address Momo picked, so nobody else asks for it. There is only one address
+            clerk, at the junction, but the announcement keeps the whole line honest.
+          </p>
+        </div>
       ),
       visual: <LanMap devices={houseDevices} conflictIds={new Set()} packet={null} />,
     },
@@ -234,6 +268,7 @@ export function MomoGetsOnlineWalkthroughDraft({
       },
       body: (
         <div className="space-y-3">
+          <DoraProgress current={3} />
           <p>
             The confirmation is the Ack. The four steps have a nickname: DORA — Discover,
             Offer, Request, Ack.

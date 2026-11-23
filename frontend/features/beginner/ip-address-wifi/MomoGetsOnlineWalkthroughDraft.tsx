@@ -222,7 +222,7 @@ export function MomoGetsOnlineWalkthroughDraft({
       section: "2. One Number, Two Stations",
       title: "Two Answers",
       story: {
-        text: "Momo tries her wish at once — she calls Pip.\nShe calls down the line: \"192.168.1.10!\"\nTwo stations answer — Pip's, and her own.\nMomo: \"I called your number... and I answered too?\"\nPip sends an answer crate back, addressed to .10.\nIt rolls to Pip's station — not to Momo's.\nPip: \"Nobody can tell us apart any more.\"",
+        text: "Momo wants the whole line to know her number.\nMomo: \"Hello, everyone! I'm Momo, the hallway lamp!\"\nMomo: \"My number is 192.168.1.10 — please call me!\"\nJust then, Dad's PC sends an answer crate to Pip's phone.\nFirst, the PC asks the line who .10 is — and two stations answer.\nThe crate rolls to Momo's station, not to Pip's.\nMomo: \"Pip... this crate is yours, isn't it?\"",
         illustration: <SceneTwoAnswers />,
       },
       body: (
@@ -245,7 +245,7 @@ export function MomoGetsOnlineWalkthroughDraft({
       section: "2. One Number, Two Stations",
       title: "Ask Everyone",
       story: {
-        text: "Pip stares at the two matching boards.\nPip: \"Wait. This is wrong.\"\nPip: \"When my phone looked for Dad's PC's station, it didn't guess.\"\nPip: \"It called out to the whole line — and the station answered.\"\nMomo: \"Ask... everyone?\"\nPip: \"A number isn't something a friend hands you, Momo.\"\nPip: \"You have to ask everyone.\"\nMomo takes the copied number down. Her board is blank again.",
+        text: "Pip carries the answer crate home to his own station himself.\nThen he stares at the two matching boards.\nPip: \"Wait. This is wrong.\"\nPip: \"When my phone looked for Dad's PC's station, it didn't guess.\"\nPip: \"It called out to the whole line — and the station answered.\"\nMomo: \"Ask... everyone?\"\nPip: \"A number isn't something a friend hands you, Momo.\"\nPip: \"You have to ask everyone.\"\nMomo takes the copied number down. Her board is blank again.",
         illustration: <SceneStationAnnouncement />,
       },
       body: (

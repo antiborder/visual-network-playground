@@ -9,11 +9,11 @@ import { DEFAULT_DEVICES, findConflicts, type Device } from "./network";
 import {
   SceneDoraExchange,
   SceneFallingAsleep,
-  SceneFixed,
   SceneHallwayBox,
   SceneLanDesk,
   SceneMixUp,
   SceneMomoArrives,
+  SceneStationAnnouncement,
   SceneTwoAnswers,
   SceneWakingAtStation,
 } from "./StorybookScenes";
@@ -94,17 +94,13 @@ export function MomoGetsOnlineWalkthroughDraft({
   const houseDevices: Device[] = DEFAULT_DEVICES.filter((d) => d.id !== "iot");
   // The house once Momo holds 192.168.1.20.
   const onlineDevices: Device[] = DEFAULT_DEVICES;
-  // §4: a forgotten old tablet, switched on again, still wearing a
-  // hand-painted 192.168.1.10 from long ago.
-  const oldTablet: Device = {
-    id: "old-tablet",
-    label: "Old tablet",
-    kind: "pc",
-    lastOctet: 10,
-    mac: "00:11:22:33:44:55",
-  };
-  const conflictDevices: Device[] = [...onlineDevices, oldTablet];
-  const fixedDevices: Device[] = [...onlineDevices, { ...oldTablet, lastOctet: 30 }];
+  // §2: Momo wearing Pip's own 192.168.1.10, copied from him — the
+  // duplicate this chapter now opens with (order decided 2026-11-23:
+  // the failure comes first, DORA arrives as its fix; the old tablet
+  // that used to appear from nowhere in §4 is gone).
+  const sharedDevices: Device[] = DEFAULT_DEVICES.map((d) =>
+    d.id === "iot" ? { ...d, lastOctet: 10 } : d,
+  );
 
   interface Step {
     section: string;
@@ -134,9 +130,9 @@ export function MomoGetsOnlineWalkthroughDraft({
           </p>
           <ol className="list-decimal pl-5 space-y-0.5">
             <li>A New Light</li>
+            <li>One Number, Two Stations</li>
             <li>Asking for a Number</li>
             <li>Borrowed, Not Owned</li>
-            <li>Two Stations, One Number</li>
           </ol>
         </div>
       ),
@@ -152,8 +148,9 @@ export function MomoGetsOnlineWalkthroughDraft({
       body: (
         <p>
           In short: the new bulb is lit, and its station stands on the line. But it has no
-          address, so nothing can be sent to it. Tonight, Pip watches how a newcomer asks for
-          an address — and what breaks when two stations share one.
+          address, so nobody can call it. Pip&rsquo;s first idea — give it his own number —
+          goes wrong in an interesting way. What puts it right is how a newcomer really gets
+          an address.
         </p>
       ),
       visual: <LanMap devices={houseDevices} conflictIds={new Set()} packet={null} />,
@@ -197,12 +194,81 @@ export function MomoGetsOnlineWalkthroughDraft({
       ),
       visual: <LanMap devices={houseDevices} conflictIds={new Set()} packet={null} />,
     },
-    // --------------------- 2. Asking for a Number --------------------
+    // ------------------ 2. One Number, Two Stations ------------------
     {
-      section: "2. Asking for a Number",
+      section: "2. One Number, Two Stations",
+      title: "Use Mine",
+      story: {
+        text: "Pip thinks hard.\nPip: \"I know! Use my number.\"\nPip: \"192.168.1.10 — that's mine. Put it on your board.\"\nMomo: \"Your number? Can I really?\"\nPip: \"Sure! Then anyone can call you, like they call me.\"\nMomo writes 192.168.1.10 on her blank board.",
+        illustration: <SceneMixUp />,
+      },
+      body: (
+        <div className="space-y-3">
+          <p>
+            Momo&rsquo;s board was blank — now it shows Pip&rsquo;s number, copied from his
+            own. It feels like a kind, simple fix.
+          </p>
+          <p>
+            One number, though, is supposed to name exactly one station. The line is about to
+            find out what happens when it names two.
+          </p>
+        </div>
+      ),
+      visual: (
+        <LanMap devices={sharedDevices} conflictIds={findConflicts(sharedDevices)} packet={null} />
+      ),
+    },
+    {
+      section: "2. One Number, Two Stations",
+      title: "Two Answers",
+      story: {
+        text: "Momo wants to try her new number at once.\nShe calls down the line: \"192.168.1.10!\"\nTwo stations answer — Pip's, and her own.\nMomo: \"I called your number... and I answered too?\"\nA crate for Pip's phone rolls up to Momo's station instead.\nPip: \"Nobody can tell us apart any more.\"",
+        illustration: <SceneTwoAnswers />,
+      },
+      body: (
+        <div className="space-y-3">
+          <p>
+            With two stations on one number, nobody can tell them apart — not callers, not
+            the junction. Both answer to the same call.
+          </p>
+          <p>
+            Deliveries land at whichever station catches them, and replies come back mixed.
+            One number has to mean one station.
+          </p>
+        </div>
+      ),
+      visual: (
+        <LanMap devices={sharedDevices} conflictIds={findConflicts(sharedDevices)} packet={null} />
+      ),
+    },
+    {
+      section: "2. One Number, Two Stations",
+      title: "Ask Everyone",
+      story: {
+        text: "Pip stares at the two matching boards.\nPip: \"Wait. This is wrong.\"\nPip: \"When my phone looked for Dad's PC's station, it didn't guess.\"\nPip: \"It called out to the whole line — and the station answered.\"\nMomo: \"Ask... everyone?\"\nPip: \"A number isn't something a friend hands you, Momo.\"\nPip: \"You have to ask everyone.\"\nMomo takes the copied number down. Her board is blank again.",
+        illustration: <SceneStationAnnouncement />,
+      },
+      body: (
+        <div className="space-y-3">
+          <p>
+            Momo&rsquo;s number was set by hand — copied, not assigned. A hand-set number
+            skips the only check that keeps numbers unique: nobody compared it with the
+            numbers already in use.
+          </p>
+          <p>
+            That is how two stations ended up wearing one number. The fix starts with
+            asking — out loud, to everyone.
+          </p>
+        </div>
+      ),
+      visual: <LanMap devices={houseDevices} conflictIds={new Set()} packet={null} />,
+    },
+    // --------------------- 3. Asking for a Number --------------------
+    {
+      section: "3. Asking for a Number",
       title: "Calling Out to Everyone",
       story: {
-        text: "Pip: \"There's a way to ask the whole line at once.\"\nPip: \"My phone did the same thing, looking for an address's owner.\"\nMomo takes a deep breath.\nMomo: \"Hello, everyone! I need a number of my own!\"\nMomo: \"Will someone give me one, so I can talk to you all?\"\nThe call rolls down the whole line.",
+        text: "Momo takes a deep breath.\nMomo: \"Hello, everyone! I need a number of my own!\"\nMomo: \"Will someone give me one, so I can talk to you all?\"\nThe call rolls down the whole line.",
         illustration: <SceneDoraExchange />,
       },
       body: (
@@ -222,7 +288,7 @@ export function MomoGetsOnlineWalkthroughDraft({
       visual: <LanMap devices={houseDevices} conflictIds={new Set()} packet={null} />,
     },
     {
-      section: "2. Asking for a Number",
+      section: "3. Asking for a Number",
       title: "An Answer from the Junction",
       story: {
         text: "At the junction station, the Address Clerk opens the big ledger.\nHe runs a claw down the written numbers first.\nThen he calls the answer back down the line.\nAddress Clerk: \"192.168.1.20 — free. Nobody is using it.\"\nAddress Clerk: \"You may use it, little lamp.\"",
@@ -241,7 +307,7 @@ export function MomoGetsOnlineWalkthroughDraft({
       visual: <LanMap devices={houseDevices} conflictIds={new Set()} packet={null} />,
     },
     {
-      section: "2. Asking for a Number",
+      section: "3. Asking for a Number",
       title: "Asking Out Loud",
       story: {
         text: "Momo: \"Then I'll take 192.168.1.20, please!\"\nShe says it loudly, for the whole line to hear.\nPip: \"Everyone heard that. The number is spoken for now.\"",
@@ -260,7 +326,7 @@ export function MomoGetsOnlineWalkthroughDraft({
       visual: <LanMap devices={houseDevices} conflictIds={new Set()} packet={null} />,
     },
     {
-      section: "2. Asking for a Number",
+      section: "3. Asking for a Number",
       title: "Written in the Ledger",
       story: {
         text: "Back at the junction, the Address Clerk writes in the ledger.\nAddress Clerk: \"192.168.1.20 — the hallway lamp.\"\nThe answer rolls back down the line.\nA number plate goes up on Momo's station.\nMomo: \"Now anyone can call me!\"\nPip: \"Now anyone can.\"",
@@ -282,9 +348,9 @@ export function MomoGetsOnlineWalkthroughDraft({
       ),
       visual: <LanMap devices={onlineDevices} conflictIds={new Set()} packet={null} />,
     },
-    // --------------------- 3. Borrowed, Not Owned --------------------
+    // --------------------- 4. Borrowed, Not Owned --------------------
     {
-      section: "3. Borrowed, Not Owned",
+      section: "4. Borrowed, Not Owned",
       title: "Until the Bell",
       story: {
         text: "Momo calls down the line, toward the junction.\nMomo: \"Will it always be mine?\"\nThe answer comes back.\nAddress Clerk: \"It is lent until the bell, little lamp.\"\nAddress Clerk: \"Ask quietly before then, and it simply carries on.\"\nPip: \"Wait — my number is borrowed too?\"",
@@ -300,7 +366,7 @@ export function MomoGetsOnlineWalkthroughDraft({
       visual: <LanMap devices={onlineDevices} conflictIds={new Set()} packet={null} />,
     },
     {
-      section: "3. Borrowed, Not Owned",
+      section: "4. Borrowed, Not Owned",
       title: "Gone and Back Again",
       story: {
         text: "Pip calls the junction too.\nPip: \"What if she's switched off for a long, long time?\"\nAddress Clerk: \"The ledger remembers her for a while.\"\nAddress Clerk: \"If her number is still free, she gets it back.\"\nAddress Clerk: \"If it was lent away, she gets another.\"",
@@ -315,59 +381,6 @@ export function MomoGetsOnlineWalkthroughDraft({
       ),
       visual: <LanMap devices={onlineDevices} conflictIds={new Set()} packet={null} />,
     },
-    // ------------------ 4. Two Stations, One Number ------------------
-    {
-      section: "4. Two Stations, One Number",
-      title: "The Hand-Painted Plate",
-      story: {
-        text: "Far down the line stands a dusty little station.\nAn old tablet, found in a drawer and switched on again.\nLong ago, someone painted its number by hand.\nThe painted number reads: 192.168.1.10.\nPip: \"But... that's MY number.\"",
-        illustration: <SceneMixUp />,
-      },
-      body: (
-        <p>
-          A hand-set address never goes near the ledger. Nobody checked it, and nobody wrote
-          it down. The ledger&rsquo;s protection only covers devices that ask — this one
-          never did.
-        </p>
-      ),
-      visual: (
-        <LanMap devices={conflictDevices} conflictIds={findConflicts(conflictDevices)} packet={null} />
-      ),
-    },
-    {
-      section: "4. Two Stations, One Number",
-      title: "Two Answers",
-      story: {
-        text: "The line calls out: \"192.168.1.10!\"\nTwo stations answer at once.\nMomo: \"Pip? I called you — but two voices answered!\"\nMomo: \"Which one is really you?\"\nA crate for Pip's phone rolls to the dusty station instead.\nPip: \"Someone else is answering to my number.\"",
-        illustration: <SceneTwoAnswers />,
-      },
-      body: (
-        <p>
-          With two stations on one number, nobody can tell them apart — not callers, not the
-          junction. Both answer. Deliveries land at whichever station catches them, and
-          replies come back mixed. One number has to mean one station.
-        </p>
-      ),
-      visual: (
-        <LanMap devices={conflictDevices} conflictIds={findConflicts(conflictDevices)} packet={null} />
-      ),
-    },
-    {
-      section: "4. Two Stations, One Number",
-      title: "Ask the Ledger",
-      story: {
-        text: "The painted plate comes down.\nThe old station asks properly this time, like Momo did.\nThe Address Clerk checks the ledger, and lends it a free number.\nMomo: \"Now I know it's really you, Pip.\"",
-        illustration: <SceneFixed />,
-      },
-      body: (
-        <p>
-          The fix is always the same: take the painted plate down, and take a number from the
-          ledger instead. Asked-for addresses cannot collide — the ledger never lends the
-          same one twice.
-        </p>
-      ),
-      visual: <LanMap devices={fixedDevices} conflictIds={new Set()} packet={null} />,
-    },
     // ------------------------------ Wrap-up --------------------------
     {
       section: "Wrap-up",
@@ -376,11 +389,11 @@ export function MomoGetsOnlineWalkthroughDraft({
         <div className="space-y-3">
           <p>Here&rsquo;s everything this chapter covered:</p>
           <ul className="list-disc pl-5 space-y-1">
-            <li>A device with no address asks the whole line at once. That broadcast is the DHCP Discover, sent from 0.0.0.0.</li>
-            <li>The router offers a free address from its ledger (Offer), the device requests it out loud (Request), and the ledger writes it down (Ack). The four steps are nicknamed DORA.</li>
+            <li>One number has to mean one station. When two stations wear the same number, both answer — and nobody can tell them apart.</li>
+            <li>A number is never taken from a friend, or set by hand. It is asked for, out loud, from the whole line.</li>
+            <li>That asking is DHCP: Discover (ask everyone), Offer (the router offers a free one), Request (ask for it out loud), Ack (the ledger writes it down). The four steps are nicknamed DORA.</li>
             <li>The ledger is why duplicates normally never happen: a lent address is never offered twice.</li>
             <li>An address is a loan with a time limit — a lease. Asking quietly before the limit renews it.</li>
-            <li>A hand-set address skips the ledger entirely. If it matches someone else&rsquo;s, both stations answer, and nobody can tell them apart.</li>
           </ul>
           <p>
             Back home, the hallway bulb hangs lit, on the map at 192.168.1.20. Momo can talk

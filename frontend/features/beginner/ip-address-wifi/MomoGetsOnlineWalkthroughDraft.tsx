@@ -245,7 +245,7 @@ export function MomoGetsOnlineWalkthroughDraft({
       section: "2. One Number, Two Stations",
       title: "Ask Everyone",
       story: {
-        text: "Pip picks up the crate.\nHis station is right next door — he could just carry it home himself.\nThen he stares at the two matching boards.\nPip: \"Wait. This is wrong.\"\nPip: \"And I've seen the right way before.\"\nPip: \"When my phone needed Dad's PC, the Clerk announced it to the whole line.\"\nPip: \"Every station heard. Only Dad's PC answered.\"\nMomo: \"Ask... everyone?\"\nPip: \"A number isn't something a friend hands you, Momo.\"\nPip: \"You have to ask everyone — like that announcement.\"\nMomo takes the copied number down. Her board is blank again.",
+        text: "Pip picks up the crate.\nHis station is right next door — he could just carry it home himself.\nThen he stares at the two matching boards.\nPip: \"Wait. This is wrong.\"\nPip: \"And I've seen the right way before.\"\nMomo: \"Seen it?\"\nPip: \"When my phone needed Dad's PC, the Clerk announced it to the whole line.\"\nPip: \"Every station heard. Only Dad's PC answered.\"\nMomo: \"Ask... everyone?\"\nPip: \"A number isn't something a friend hands you, Momo.\"\nPip: \"You have to ask everyone — like that announcement.\"\nMomo takes the copied number down. Her board is blank again.",
         illustration: <SceneStationAnnouncement />,
       },
       body: (

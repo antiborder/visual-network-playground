@@ -160,14 +160,14 @@ export function MomoGetsOnlineWalkthroughDraft({
       section: "1. A New Light",
       title: "A New Station Nearby",
       story: {
-        text: "Pip blinks.\nHe is standing at Phone Station again.\nThe Clerk leans out of the booth.\nClerk: \"Back again, are you?\"\nClerk: \"Your cheese photo reached Dad's PC, by the way.\"\nPip: \"It really arrived?\"\nClerk: \"Safe and sound. And listen — a new station came in near here today.\"\nPip looks down the line.\nA small voice seems to drift over.\nPip: \"...someone's calling.\"\nHe walks toward the voice.",
+        text: "Pip blinks.\nHe is standing at Phone Station again.\nThe Clerk leans out of the booth.\nClerk: \"Back again, are you?\"\nClerk: \"Listen — a new station came in near here today.\"\nPip looks down the line.\nA small voice seems to drift over.\nPip: \"...someone's calling.\"\nHe walks toward the voice.",
         illustration: <SceneWakingAtStation />,
       },
       body: (
         <p>
-          Same dream, same line. First, the receipt for last chapter: the photo Pip delivered
-          really is sitting on Dad&rsquo;s PC now. And inside this world, the hallway bulb
-          has a station of its own — every device does.
+          Same dream, same line — and no loose ends from last time. Pip delivered the cheese
+          photo to Dad&rsquo;s PC himself, and saw the delivery log stamped. Tonight&rsquo;s
+          news is different: the hallway bulb has a station of its own now. Every device does.
         </p>
       ),
       visual: <LanMap devices={houseDevices} conflictIds={new Set()} packet={null} />,

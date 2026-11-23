@@ -1147,7 +1147,7 @@ export function TheShortWayHomeWalkthroughDraft({
       section: "8. Back Together",
       title: "Delivered — the Short Way",
       story: {
-        text: "A porter at Dad's PC Station stamps the delivery log.\nPorter: \"Delivered — straight into the shared folder, right where it belongs.\"\nPip: \"That's the short way home. Didn't even need to go anywhere near the mainline for this one.\"",
+        text: "A porter at Dad's PC Station stamps the delivery log.\nPorter: \"Delivered — straight into the shared folder, right where it belongs.\"\nDad: \"Thank you, Pip. What a magnificent cheese!\"\nPip: \"That's the short way home. Didn't even need to go anywhere near the mainline for this one.\"",
         illustration: <SceneArrivalAtDadStation />,
       },
       body: (

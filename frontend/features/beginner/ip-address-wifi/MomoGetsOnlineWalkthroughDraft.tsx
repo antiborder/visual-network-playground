@@ -40,6 +40,12 @@ import {
  * (standing in front of someone is not network traffic); what the
  * number buys her is being callable by the whole line.
  *
+ * The chapter's payoff sits outside the dream (Atsushi, 2026-11-23):
+ * the dream finishes the setup only — the whole address process — and
+ * the first real use happens after Pip wakes: he brightens the real
+ * hallway bulb from his phone and says the title line, "Momo got
+ * online." No phone-to-bulb operation is staged inside the dream.
+ *
  * Map discipline inside this chapter: Momo appears on the LanMap only
  * from the Ack step on — before that she has no address, so she is not
  * on the network map yet. (The decided removal of `iot` from Chapters
@@ -384,6 +390,28 @@ export function MomoGetsOnlineWalkthroughDraft({
     // ------------------------------ Wrap-up --------------------------
     {
       section: "Wrap-up",
+      title: "Momo Got Online",
+      story: {
+        text: "Pip wakes in his own bed.\nMorning. The hallway is still dim.\nHe takes out his phone and opens the lamp's app.\nOne tap — and the hallway bulb blooms bright.\nPip: \"Momo got online.\"",
+        illustration: <SceneHallwayBox />,
+      },
+      body: (
+        <div className="space-y-3">
+          <p>
+            Everything in the dream was the setup: the asking, the offer, the ledger, the
+            loan. This one tap is the first time Pip&rsquo;s phone actually speaks to the
+            lamp — and it works because the address came first.
+          </p>
+          <p>
+            In the real house it takes a second. The app finds the bulb at 192.168.1.20 and
+            sends one small command: brighten. And the hallway answers.
+          </p>
+        </div>
+      ),
+      visual: <LanMap devices={onlineDevices} conflictIds={new Set()} packet={null} />,
+    },
+    {
+      section: "Wrap-up",
       title: "Now it's your turn",
       body: (
         <div className="space-y-3">
@@ -396,7 +424,7 @@ export function MomoGetsOnlineWalkthroughDraft({
             <li>An address is a loan with a time limit — a lease. Asking quietly before the limit renews it.</li>
           </ul>
           <p>
-            Back home, the hallway bulb hangs lit, on the map at 192.168.1.20. Momo can talk
+            Momo can talk
             to every station in the house now. But one thought stays with Pip: she got her
             number just by asking. Can anyone join the line, just by asking?
           </p>

@@ -199,7 +199,7 @@ export function MomoGetsOnlineWalkthroughDraft({
       section: "2. One Number, Two Stations",
       title: "Use Mine",
       story: {
-        text: "Pip thinks hard.\nPip: \"I know! Use my number.\"\nPip: \"192.168.1.10 — that's mine. Put it on your board.\"\nMomo: \"Your number? Can I really?\"\nPip: \"Sure! Then anyone can call you, like they call me.\"\nMomo writes 192.168.1.10 on her blank board.",
+        text: "Pip thinks hard.\nHe looks at Momo's little station.\nIts number board is blank.\nPip: \"That's why you can't talk to anyone.\"\nPip: \"You have no address.\"\nPip: \"So — you just need an address!\"\nPip: \"Use mine: 192.168.1.10. The same as mine.\"\nMomo: \"Your number? Can I really?\"\nPip: \"Sure! Then anyone can call you, like they call me.\"\nMomo writes 192.168.1.10 on her blank board.",
         illustration: <SceneMixUp />,
       },
       body: (

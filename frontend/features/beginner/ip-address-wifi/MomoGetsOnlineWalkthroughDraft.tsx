@@ -245,7 +245,7 @@ export function MomoGetsOnlineWalkthroughDraft({
       section: "2. One Number, Two Stations",
       title: "Ask Everyone",
       story: {
-        text: "Pip picks up the crate.\nHis station is right next door — he could just carry it home himself.\nThen he stares at the two matching boards.\nPip: \"Wait. This is wrong.\"\nPip: \"When my phone looked for Dad's PC's station, it didn't guess.\"\nPip: \"It called out to the whole line — and the station answered.\"\nMomo: \"Ask... everyone?\"\nPip: \"A number isn't something a friend hands you, Momo.\"\nPip: \"You have to ask everyone.\"\nMomo takes the copied number down. Her board is blank again.",
+        text: "Pip picks up the crate.\nHis station is right next door — he could just carry it home himself.\nThen he stares at the two matching boards.\nPip: \"Wait. This is wrong.\"\nPip: \"And I've seen the right way before.\"\nPip: \"When my phone needed Dad's PC, the Clerk announced it to the whole line.\"\nPip: \"Every station heard. Only Dad's PC answered.\"\nMomo: \"Ask... everyone?\"\nPip: \"A number isn't something a friend hands you, Momo.\"\nPip: \"You have to ask everyone — like that announcement.\"\nMomo takes the copied number down. Her board is blank again.",
         illustration: <SceneStationAnnouncement />,
       },
       body: (
@@ -268,7 +268,7 @@ export function MomoGetsOnlineWalkthroughDraft({
       section: "3. Asking for a Number",
       title: "Calling Out to Everyone",
       story: {
-        text: "Momo takes a deep breath.\nMomo: \"Hello, everyone! I need a number of my own!\"\nMomo: \"Will someone give me one, so I can talk to you all?\"\nThe call rolls down the whole line.",
+        text: "Pip: \"Now you try it — like the Clerk's announcement.\"\nPip: \"Call down the whole line. Say you need a number of your own.\"\nMomo takes a deep breath.\nMomo: \"Hello, everyone! I need a number of my own!\"\nMomo: \"Will someone give me one, so I can talk to you all?\"\nThe call rolls down the whole line.",
         illustration: <SceneDoraExchange />,
       },
       body: (

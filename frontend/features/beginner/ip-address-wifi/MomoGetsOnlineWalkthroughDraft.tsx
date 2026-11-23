@@ -222,7 +222,7 @@ export function MomoGetsOnlineWalkthroughDraft({
       section: "2. One Number, Two Stations",
       title: "Two Answers",
       story: {
-        text: "Momo wants the whole line to know her number.\nMomo: \"Hello, everyone! I'm Momo, the hallway lamp!\"\nMomo: \"My number is 192.168.1.10 — please call me!\"\nJust then, Dad's PC sends an answer crate to Pip's phone.\nFirst, the PC asks the line who .10 is — and two stations answer.\nThe crate rolls to Momo's station, not to Pip's.\nMomo: \"Pip... this crate is yours, isn't it?\"",
+        text: "Momo wants the whole line to know her number.\nMomo: \"Hello, everyone! I'm Momo, the hallway lamp!\"\nMomo: \"My number is 192.168.1.10 — please call me!\"\nJust then, Dad's PC sends a crate to Pip's phone.\nThe PC asks the line who .10 is — and two stations answer.\nThe crate rolls in — to Momo's station.\nMomo opens it at once. Her very first crate!\nShe reads the card inside out loud.\nMomo: \"'Pip, the cheese photo arrived! That cheese looks delicious. Let's eat one together soon. — Dad'\"\nMomo: \"Wait... this is for Pip, isn't it?\"\nPip: \"It's from Dad. An email for me — at your station? Why?\"",
         illustration: <SceneTwoAnswers />,
       },
       body: (

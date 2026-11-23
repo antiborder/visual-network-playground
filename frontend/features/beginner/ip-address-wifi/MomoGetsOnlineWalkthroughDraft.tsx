@@ -222,7 +222,7 @@ export function MomoGetsOnlineWalkthroughDraft({
       section: "2. One Number, Two Stations",
       title: "Two Answers",
       story: {
-        text: "Momo wants to try her new number at once.\nShe calls down the line: \"192.168.1.10!\"\nTwo stations answer — Pip's, and her own.\nMomo: \"I called your number... and I answered too?\"\nA crate for Pip's phone rolls up to Momo's station instead.\nPip: \"Nobody can tell us apart any more.\"",
+        text: "Momo tries her wish at once — she calls Pip.\nShe calls down the line: \"192.168.1.10!\"\nTwo stations answer — Pip's, and her own.\nMomo: \"I called your number... and I answered too?\"\nPip sends an answer crate back, addressed to .10.\nIt rolls to Pip's station — not to Momo's.\nPip: \"Nobody can tell us apart any more.\"",
         illustration: <SceneTwoAnswers />,
       },
       body: (

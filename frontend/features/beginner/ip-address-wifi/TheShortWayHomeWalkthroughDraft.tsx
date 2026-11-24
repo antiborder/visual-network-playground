@@ -1165,7 +1165,7 @@ export function TheShortWayHomeWalkthroughDraft({
       section: "Wrap-up",
       title: "Now it's your turn",
       story: {
-        text: "Dad: \"What are you mumbling about, sleepyhead?\"\nPip: \"Huh? Dad?\"\nDad: \"Time to get up.\"\nPip opens his eyes. This is his own room. His own bed.\nPip: \"The cheese... it arrived...\"\nDad: \"What a magnificent cheese!\"\nPip: \"Right?! Oh — I was going to post it on the Cheese-Lovers' Board too!\"\nDad: \"What are you talking about? It's a school day today.\"\nPip: \"Huh?\"\nPip looks at the clock.\nPip: \"Oh no — I'm going to be late!\"\nHe scrambles out of bed and hurries to get ready.",
+        text: "Dad: \"What are you mumbling about, sleepyhead?\"\nPip: \"Huh? Dad?\"\nDad: \"Time to get up.\"\nPip opens his eyes. This is his own room. His own bed.\nPip: \"The cheese... it arrived...\"\nDad: \"What a magnificent cheese!\"\nPip: \"Right?! Oh — I was going to post it on the Cheese-Lovers' Board too!\"\nDad: \"What are you talking about? It's a school day today.\"\nPip: \"Huh?\"\nPip looks at the clock.\nPip: \"Oh no — it's this late already? That was a long trip.\"\nDad: \"Still half asleep? Get up, hurry!\"\nHe scrambles out of bed and hurries to get ready.",
         illustration: <ScenePipsHouse />,
       },
       body: (

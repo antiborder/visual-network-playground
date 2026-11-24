@@ -27,6 +27,7 @@ import {
   ScenePipBoardsTrain,
   ScenePipOnTrain,
   SceneArrivalAtDadStation,
+  ScenePipsHouse,
 } from "./StorybookScenes";
 
 /** DRAFT — Chapter 2 "The Short Way Home", fully rewritten (story half only)
@@ -1147,7 +1148,7 @@ export function TheShortWayHomeWalkthroughDraft({
       section: "8. Back Together",
       title: "Delivered — the Short Way",
       story: {
-        text: "A porter at Dad's PC Station stamps the delivery log.\nPorter: \"Delivered — straight into the shared folder, right where it belongs.\"\nDad: \"Thank you, Pip. What a magnificent cheese!\"\nPip: \"That's the short way home. Didn't even need to go anywhere near the mainline for this one.\"",
+        text: "A porter at Dad's PC Station stamps the delivery log.\nPorter: \"Delivered — straight into the shared folder, right where it belongs.\"\nDad's voice: \"Thank you...\"\nPip: \"Huh? Dad?\"\nPip looks all around the platform. No Dad anywhere.\nWas that really his voice? Or did he just imagine it?\nDad's voice: \"I got it, Pip.\"\nPip: \"Dad? Where are you?\"",
         illustration: <SceneArrivalAtDadStation />,
       },
       body: (
@@ -1163,6 +1164,10 @@ export function TheShortWayHomeWalkthroughDraft({
     {
       section: "Wrap-up",
       title: "Now it's your turn",
+      story: {
+        text: "Dad: \"What are you mumbling about, sleepyhead?\"\nPip: \"Huh? Dad?\"\nDad: \"Time to get up.\"\nPip opens his eyes. This is his own room. His own bed.\nPip: \"The cheese... it arrived...\"\nDad: \"What a magnificent cheese!\"\nPip: \"Right?! Oh — I was going to post it on the Cheese-Lovers' Board too!\"\nDad: \"What are you talking about? It's a school day today.\"\nPip: \"Huh?\"\nPip looks at the clock.\nPip: \"Oh no — I'm going to be late!\"\nHe scrambles out of bed and hurries to get ready.",
+        illustration: <ScenePipsHouse />,
+      },
       body: (
         <div className="space-y-3">
           <p>Here&rsquo;s everything this chapter covered:</p>

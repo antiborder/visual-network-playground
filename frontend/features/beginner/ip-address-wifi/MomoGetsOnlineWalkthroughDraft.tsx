@@ -186,7 +186,7 @@ export function MomoGetsOnlineWalkthroughDraft({
       section: "1. A New Light",
       title: "The Only Person She's Met",
       story: {
-        text: "The little station stands in its place, lamp lit.\nBut its number board is blank.\nA small voice pipes up.\nMomo: \"Thank you for installing me earlier!\"\nPip: \"Huh? Wait — are you the bulb in the hallway?\"\nMomo: \"That's me! I've been waiting for you to come again.\"\nPip: \"Me? Why me?\"\nMomo: \"Because you're the only person I've ever met.\"\nPip: \"Huh?\"\nMomo: \"I want to talk to other people too. How do I do that?\"",
+        text: "The little station stands in its place, lamp lit.\nBut its number board is blank.\nA small voice pipes up.\nMomo: \"Thank you for installing me earlier!\"\nPip: \"The bulb talked?\"\nMomo: \"How rude! I'm not just a bulb. I'm a smart bulb.\"\nPip: \"Huh? Wait — are you the bulb in the hallway?\"\nMomo: \"That's me! I've been waiting for you to come again.\"\nPip: \"Me? Why me?\"\nMomo: \"Because you're the only person I've ever met.\"\nPip: \"Huh?\"\nMomo: \"I want to talk to other people too. How do I do that?\"",
         illustration: <SceneMomoArrives />,
       },
       body: (

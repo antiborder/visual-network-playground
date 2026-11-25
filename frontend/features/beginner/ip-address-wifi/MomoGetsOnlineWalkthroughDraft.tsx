@@ -123,6 +123,10 @@ export function MomoGetsOnlineWalkthroughDraft({
     {
       section: "Welcome",
       title: "What you learn from this chapter",
+      story: {
+        text: "Pip: \"What a day.\"\nThis morning he delivered the cheese photo by train.\nThen he woke — and it was straight off to school.\nA busy, rushing day.\nPip: \"Oh! I have to send that photo to the Cheese-Lovers' Board before bed.\"\nHe heads for his room.\nPip: \"Oh? Whoa!\"\nA small box sits in the hallway.\nPip: \"What's this?\"\nSomehow, he feels as if the box is calling him.",
+        illustration: <SceneHallwayBox />,
+      },
       body: (
         <div className="space-y-3">
           <p>
@@ -148,7 +152,7 @@ export function MomoGetsOnlineWalkthroughDraft({
       section: "Welcome",
       title: "The chapter at a glance",
       story: {
-        text: "A parcel arrives at Pip's house.\nPip: \"What's in here?\"\nHe opens the box.\nInside sits a new smart bulb.\nThe hallway light has stopped working.\nPip: \"Then this one has to go up.\"\nHe drags in a stepladder.\nHe climbs up, and takes the old bulb out.\nThen he screws the new one in.\nClick — it lights up.\nPip stares at it.\nPip: \"...is it just me, or is it calling me?\"\nBut his eyes are heavy.\nHe shuffles off to bed.",
+        text: "Pip: \"Did Dad leave this here?\"\nHe opens the box.\nPip: \"A light bulb?\"\nCome to think of it, the hallway is dim.\nPip: \"Will it get brighter if I put this up?\"\nHe fetches a stepladder and fits the bulb.\nPip: \"Switch on!\"\nHe presses the wall button — and the hallway blooms bright.\nPip: \"There. That's done.\"\nPip: \"Hmm... I'm getting sleepy.\"",
         illustration: <SceneHallwayBox />,
       },
       body: (

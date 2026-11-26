@@ -429,8 +429,7 @@ export function MomoGetsOnlineWalkthroughDraft({
           </ul>
           <p>
             Momo can talk
-            to every station in the house now. But one thought stays with Pip: she got her
-            number just by asking. Can anyone join the line, just by asking?
+            to every station in the house now.
           </p>
         </div>
       ),

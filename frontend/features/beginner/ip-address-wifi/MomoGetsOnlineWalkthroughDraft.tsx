@@ -152,7 +152,7 @@ export function MomoGetsOnlineWalkthroughDraft({
       section: "Welcome",
       title: "The chapter at a glance",
       story: {
-        text: "Pip: \"Did Dad leave this here?\"\nHe opens the box.\nPip: \"A light bulb?\"\nCome to think of it, the hallway is dim.\nPip: \"Will it get brighter if I put this up?\"\nHe fetches a stepladder and fits the bulb.\nPip: \"Switch on!\"\nHe presses the wall button — and the hallway blooms bright.\nPip: \"There. That's done.\"\nPip: \"Hmm... I'm getting sleepy.\"",
+        text: "Pip: \"Did Dad leave this here?\"\nHe opens the box.\nPip: \"A light bulb?\"\nCome to think of it, the hallway is dim.\nPip: \"Will it get brighter if I put this up?\"\nHe fetches a stepladder and fits the bulb.\nPip: \"Switch on!\"\nHe presses the wall button — and the hallway blooms bright.\nPip: \"There. That's done.\"\nPip: \"Hmm... I'm getting sleepy.\"\nHe shuffles off to bed.",
         illustration: <SceneHallwayBox />,
       },
       body: (
@@ -170,7 +170,7 @@ export function MomoGetsOnlineWalkthroughDraft({
       section: "1. A New Light",
       title: "A New Station Nearby",
       story: {
-        text: "Pip blinks.\nHe is standing at Phone Station again.\nThe Clerk leans out of the booth.\nClerk: \"Back again, are you?\"\nClerk: \"Listen — a new station came in near here today.\"\nPip looks down the line.\nA small voice seems to drift over.\nPip: \"...someone's calling.\"\nHe walks toward the voice.",
+        text: "Pip opens his eyes.\nHe is standing at Phone Station again.\nThe Clerk leans out of the booth.\nClerk: \"Back again, are you?\"\nClerk: \"Listen — a new station came in near here today.\"\nPip looks down the line.\nA small voice seems to drift over.\nPip: \"...someone's calling.\"\nHe walks toward the voice.",
         illustration: <SceneWakingAtStation />,
       },
       body: (

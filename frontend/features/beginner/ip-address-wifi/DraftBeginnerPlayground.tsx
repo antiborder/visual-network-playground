@@ -2,10 +2,12 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { MeetTheNetworkLab } from "./MeetTheNetworkLab";
-import { FindingTheBoardWalkthrough } from "./FindingTheBoardWalkthrough";
+import { FindingTheBoardWalkthroughDraft } from "./FindingTheBoardWalkthroughDraft";
 import { TheShortWayHomeWalkthroughDraft } from "./TheShortWayHomeWalkthroughDraft";
 import { LeavingTheHouseWalkthroughDraft } from "./LeavingTheHouseWalkthroughDraft";
 import { MomoGetsOnlineWalkthroughDraft } from "./MomoGetsOnlineWalkthroughDraft";
+import { SeeingItAllAtOnceWalkthroughDraft } from "./SeeingItAllAtOnceWalkthroughDraft";
+import { Room443WalkthroughDraft } from "./Room443WalkthroughDraft";
 
 const CHAPTERS = [
   { id: "meet-the-network", label: "Chapter 1: Meet the Network" },
@@ -13,6 +15,8 @@ const CHAPTERS = [
   { id: "momo-gets-online", label: "Chapter 3: Momo Gets Online" },
   { id: "finding-the-board", label: "Chapter 4: Finding the Board" },
   { id: "leaving-the-house", label: "Chapter 5: Leaving the House" },
+  { id: "seeing-it-all-at-once", label: "Chapter 6: Seeing It All at Once" },
+  { id: "room-443", label: "Chapter 7: Room 443" },
 ] as const;
 
 export type DraftChapterId = (typeof CHAPTERS)[number]["id"];
@@ -57,9 +61,15 @@ function writeUrl(ch: DraftChapterId, step: number | undefined, push: boolean) {
  * intentionally left undecided for a later chapter. "momo-gets-online"
  * was rewritten 2026-11-19 into the story-format
  * `MomoGetsOnlineWalkthroughDraft` (Pip leads, Momo speaks; the old
- * `DhcpLab` remains only in the legacy Unit). "Who Goes There?", "Did It
- * Work?", and "Seeing It All at Once" still need to be written/ported in
- * too.
+ * `DhcpLab` remains only in the legacy Unit). Chapters 4–7 were written
+ * into story-format drafts on 2026-11-27 from the current story designs
+ * (~/workspace/networking-course/ch4–ch7-story-proposal.md): the
+ * firewall chapter was postponed, so "Finding the Board" (DNS core
+ * only) replaces the old full-coverage `FindingTheBoardWalkthrough`
+ * here, "Leaving the House" was rewritten around the Gatekeeper, and
+ * "Seeing It All at Once" (recap + the arrival arc's reveal) and
+ * "Room 443" (ports; the investigation's first chapter) are new.
+ * "Did It Work?" still needs to be written/ported in too.
  *
  * The address bar carries ?ch=<chapter>&step=<1-based step> (2026-11-22):
  * reloading resumes on the same step, a link can point straight at a
@@ -165,7 +175,7 @@ export function DraftBeginnerPlayground() {
         />
       )}
       {ready && activeChapter === "finding-the-board" && (
-        <FindingTheBoardWalkthrough
+        <FindingTheBoardWalkthroughDraft
           key={navNonce}
           onComplete={() => {}}
           initialStep={initialStep}
@@ -174,6 +184,22 @@ export function DraftBeginnerPlayground() {
       )}
       {ready && activeChapter === "leaving-the-house" && (
         <LeavingTheHouseWalkthroughDraft
+          key={navNonce}
+          onComplete={() => {}}
+          initialStep={initialStep}
+          onStepChange={handleStepChange}
+        />
+      )}
+      {ready && activeChapter === "seeing-it-all-at-once" && (
+        <SeeingItAllAtOnceWalkthroughDraft
+          key={navNonce}
+          onComplete={() => {}}
+          initialStep={initialStep}
+          onStepChange={handleStepChange}
+        />
+      )}
+      {ready && activeChapter === "room-443" && (
+        <Room443WalkthroughDraft
           key={navNonce}
           onComplete={() => {}}
           initialStep={initialStep}

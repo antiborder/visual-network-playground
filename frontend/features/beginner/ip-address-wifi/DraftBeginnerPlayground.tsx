@@ -9,6 +9,7 @@ import { MomoGetsOnlineWalkthroughDraft } from "./MomoGetsOnlineWalkthroughDraft
 import { SeeingItAllAtOnceWalkthroughDraft } from "./SeeingItAllAtOnceWalkthroughDraft";
 import { Room443WalkthroughDraft } from "./Room443WalkthroughDraft";
 import { SortedByNameWalkthroughDraft } from "./SortedByNameWalkthroughDraft";
+import { JunctionByJunctionWalkthroughDraft } from "./JunctionByJunctionWalkthroughDraft";
 
 const CHAPTERS = [
   { id: "meet-the-network", label: "Chapter 1: Meet the Network" },
@@ -19,6 +20,7 @@ const CHAPTERS = [
   { id: "seeing-it-all-at-once", label: "Chapter 6: Seeing It All at Once" },
   { id: "sorted-by-name", label: "Chapter 7: Sorted by Name" },
   { id: "room-443", label: "Chapter 8: Room 443" },
+  { id: "junction-by-junction", label: "Chapter 9: Junction by Junction" },
 ] as const;
 
 export type DraftChapterId = (typeof CHAPTERS)[number]["id"];
@@ -78,7 +80,10 @@ function writeUrl(ch: DraftChapterId, step: number | undefined, push: boolean) {
  * Name" (the inside stretch) is Chapter 7 and "Room 443" — re-staged
  * as the stop at the Gatekeeper's desk before the gate crossing — is
  * Chapter 8. Folding the ports material into Chapter 5 was the
- * rejected alternative. "Did It Work?" still needs to be
+ * rejected alternative. "Junction by Junction" (routing; the
+ * investigation's last chapter, travelling the outside road) followed
+ * the same day from ch9-story-proposal.md v1; its title is
+ * provisional. "Did It Work?" still needs to be
  * written/ported in too.
  *
  * The address bar carries ?ch=<chapter>&step=<1-based step> (2026-11-22):
@@ -218,6 +223,14 @@ export function DraftBeginnerPlayground() {
       )}
       {ready && activeChapter === "room-443" && (
         <Room443WalkthroughDraft
+          key={navNonce}
+          onComplete={() => {}}
+          initialStep={initialStep}
+          onStepChange={handleStepChange}
+        />
+      )}
+      {ready && activeChapter === "junction-by-junction" && (
+        <JunctionByJunctionWalkthroughDraft
           key={navNonce}
           onComplete={() => {}}
           initialStep={initialStep}

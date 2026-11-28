@@ -1,53 +1,73 @@
 "use client";
 
-import { useState, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { SegmentedProgressBar } from "@/components/SegmentedProgressBar";
 import { StoryText } from "@/components/StoryText";
-import { isPrivateIpv4 } from "./network";
+import { LanMap } from "./LanMap";
+import { DEFAULT_DEVICES } from "./network";
 import {
-  SceneCheesePhoto,
-  ScenePipsPhone,
   SceneAddressCheck,
+  SceneBeyondHouse,
+  SceneCheesePhoto,
   SceneGatewayDoor,
-  SceneCgnatCity,
-  SceneCheckpoint,
+  SceneHandingOff,
   SceneLogbook,
-  ScenePrivateGlobal,
   SceneOceanCrossing,
+  ScenePrivateGlobal,
+  SceneRecordBook,
+  SceneWalkingSignal,
+  SceneWorldNetworks,
 } from "./StorybookScenes";
 
-const ADDRESS_EXAMPLES = [
-  { label: "This home network", firstOctet: 192, secondOctet: 168, example: "192.168.1.10" },
-  { label: "A public DNS server", firstOctet: 8, secondOctet: 8, example: "8.8.8.8" },
-  { label: "Another home network", firstOctet: 10, secondOctet: 0, example: "10.0.0.5" },
-] as const;
-
-/** DRAFT (v2) — story-half only. Chapter 4 "Leaving the House" from the
- * beginner story-based redesign (see docs/beginner-story-redesign.md) —
- * reordered to run AFTER the new Chapter 3 "The Short Way Home"
- * (`TheShortWayHomeWalkthroughDraft.tsx`), where Dad's PC request already
- * introduced packet slicing, source labeling, and the "is this a
- * neighbor?" subnet check. This chapter only reviews those (the check now
- * comes out the opposite way — not a neighbor) instead of re-teaching them,
- * then builds forward: the default gateway, CGNAT, NAT/NAPT, and a
- * private/global recap grounded in this specific journey. Deliberately
- * ends on a cliffhanger right as the packet reaches the open internet —
- * whether it actually arrives at the Cheese-Lovers' Board (and what a
- * reply's return trip looks like, including the stateful-inspection beat,
- * item 102) is unresolved and left for a later chapter once routing,
- * switching, TCP, and TLS have been taught; see the chat that reordered
- * this for why. Broken into finer, one-idea-per-step beats with the same
- * richly conversational style as the other chapters — matching precedent,
- * the speakers here are Pip and the network entities themselves (Phone,
- * Router, Checkpoint, a passing signal) rather than Dad, since Dad stays
- * behind in the house once the packet leaves. Every `body` below is a
- * placeholder — only the picture-book story half was requested for this
- * pass. */
-export function LeavingTheHouseWalkthroughDraft({ onComplete }: { onComplete: () => void }) {
-  const [step, setStep] = useState(0);
-
-  // --- "Try It Yourself" private/global sandbox ---
-  const [exampleIdx, setExampleIdx] = useState(0);
+/** DRAFT — Chapter 5 "Leaving the House" (NAT), rewritten 2026-11-27 to
+ * the current story design (~/workspace/networking-course/
+ * ch5-story-proposal.md), replacing the old v2 draft whose speakers were
+ * the devices themselves. The dream continues straight from Chapter 4 —
+ * no waking: the number (203.0.113.50) is in the Operator's notebook,
+ * the cheese appears, and the photo is packed and sent. Cast follows the
+ * settled rules: keepers are mice and stay at their stations; only the
+ * crates travel. The rewrite at the way out is done by the Gatekeeper —
+ * a different mouse at the same Junction station, at the desk on the
+ * exit side (decided 2026-11-27: switching and NAT are different roles
+ * that happen to share this station; the story never explains this, he
+ * is simply a different mouse). Covers items 53, 54, 50, 52, with 51
+ * (the room number tells the house's stations apart) and 55 (there are
+ * not enough outside numbers to go round) as single beats. CGNAT and
+ * dynamic routing stay deferred. The chapter ends on the arrival arc's
+ * cliffhanger (design B, 2026-11-19): Pip believes the photo is on its
+ * way to the Board. It is not — he learns that in Chapter 6.
+ * Port staging corrected 2026-11-28 (Atsushi's questions): the phone's
+ * own room [source port] (51234, chosen by the phone) and the
+ * Gatekeeper's room (60001, chosen at the desk) are different numbers
+ * with different owners; the rewrite replaces both halves of the return
+ * address, the book pairs the inside and outside halves, and replies
+ * are addressed to the outside room — the global address alone would
+ * not say whose reply it is. Story text annotates technical
+ * counterparts in [] (room number [port], book [NAT table], …), the
+ * series' standing rule from 2026-11-28. Port teaching trimmed the
+ * same day (Atsushi, as a trial): Step 4 shows the phone's room on
+ * the label without explaining it — who chose it and that it is
+ * per-conversation are Chapter 8's discovery now; Step 9's "the room
+ * says whose" stays, as it is the NAT rewrite's own reason. Atsushi's
+ * standing reservation, noted with the trial: numbers the reader
+ * cannot yet understand are better not shown at all — if the bare
+ * 51234 still reads wrong, the next step is removing it from this
+ * chapter's labels and book line entirely.
+ * Illustrations are the existing StorybookScenes placeholders. */
+export function LeavingTheHouseWalkthroughDraft({
+  onComplete,
+  initialStep,
+  onStepChange,
+}: {
+  onComplete: () => void;
+  /** 0-based step to open on, from the page URL (?step=, 1-based) —
+   * reloads and shared step links resume there. */
+  initialStep?: number;
+  /** Fires whenever the current step changes, so the playground can keep
+   * the URL's ?step= in sync. */
+  onStepChange?: (step: number, total: number) => void;
+}) {
+  const houseDevices = DEFAULT_DEVICES.filter((d) => d.id !== "iot");
 
   interface Step {
     section: string;
@@ -55,232 +75,304 @@ export function LeavingTheHouseWalkthroughDraft({ onComplete }: { onComplete: ()
     story?: { text: string; illustration: ReactNode };
     body: ReactNode;
     visual?: ReactNode;
-    controls?: ReactNode;
-    resetAction?: () => void;
   }
-
-  const PENDING = (
-    <p className="text-storybook-ink/40 italic">(Technical explanation — not yet written.)</p>
-  );
 
   const steps: Step[] = [
     // ----------------------------- Welcome ---------------------------
     {
       section: "Welcome",
       title: "What you learn from this chapter",
+      story: {
+        text: "The notebook is closed. The number [IP address] is in it: 203.0.113.50.\nPip turns from the Operator's desk.\nFar off, beside the line, the cheese is waiting — enormous.\nPip: \"Now we can send it.\"\nPip: \"All the way outside.\"",
+        illustration: <SceneCheesePhoto />,
+      },
       body: (
         <div className="space-y-3">
           <p>
-            With Dad&rsquo;s copy safely saved, Pip finally has a real number in hand —
-            203.0.113.50 — and turns back to the real plan. This chapter follows his photo out
-            the door, through the internet provider&rsquo;s own hidden city, past a border
-            checkpoint, and out into the open internet. Whether it actually reaches the
-            Cheese-Lovers&rsquo; Board is a story for another chapter.
+            The dream does not stop between chapters. The address is settled, the cheese
+            is here, and tonight the photo finally leaves the house.
+          </p>
+          <p>
+            Getting out turns out to need one more thing: the address written on the
+            crates for the way back. Inside numbers mean nothing outside — so at the way
+            out, they are rewritten, and the rewriting is written down.
           </p>
           <ol className="list-decimal pl-5 space-y-0.5">
             <li>Getting Ready to Send</li>
-            <li>The Provider&rsquo;s Hidden City</li>
-            <li>The Border Checkpoint</li>
-            <li>Across the Open Internet</li>
+            <li>The Address That Means Nothing Outside</li>
+            <li>The Rewrite</li>
+            <li>Out</li>
           </ol>
         </div>
       ),
+      visual: <LanMap devices={houseDevices} conflictIds={new Set()} packet={null} />,
     },
     {
       section: "Welcome",
       title: "The chapter at a glance",
-      body: PENDING,
+      body: (
+        <p>
+          In short: the photo is split and labelled with the Board&rsquo;s number. At the
+          Junction&rsquo;s exit desk, the Gatekeeper stops the crates — their return
+          address is a house number, and outside, that means nothing. He rewrites it to
+          the house&rsquo;s one outside number, adds a room number for this conversation,
+          and writes the pairing in his book. Then the crates go out.
+        </p>
+      ),
+      visual: <LanMap devices={houseDevices} conflictIds={new Set()} packet={null} />,
     },
-    // ---------------------------- The story ---------------------------
+    // --------------------- 1. Getting Ready to Send -------------------
     {
       section: "1. Getting Ready to Send",
-      title: "Knocking on the Door",
+      title: "Too Big to Send Whole — Again",
       story: {
-        text: "Pip: \"Okay, Dad's got his copy. Now, back to the real plan — 203.0.113.50, let's actually get this photo moving!\"\nHe taps to send.\nPhone: \"On it. Sending something this big takes a little preparation first — though you know the drill by now.\"",
+        text: "Pip walks up to the cheese.\nIt towers over him, the way it did before.\nPip: \"Same cheese. Same problem.\"\nPip: \"Too big for one crate.\"\nSo the work begins, the way it did for Dad's PC: slice it into pieces that fit.",
         illustration: <SceneCheesePhoto />,
       },
-      body: PENDING,
+      body: (
+        <p>
+          Nothing about the cheese has changed since Chapter 2 — same photo, same size.
+          It still cannot travel in one piece, so it is split first, exactly as before.
+        </p>
+      ),
     },
     {
       section: "1. Getting Ready to Send",
-      title: "Too Big to Send Whole",
+      title: "Numbered and Labeled",
       story: {
-        text: "Phone: \"Same as with Dad's copy — this whole photo won't fit through in one go, so I'll slice it into small labeled packets, ready to be put back together on the other end.\"\nPip: \"Right, I remember!\"",
-        illustration: <ScenePipsPhone />,
-      },
-      body: PENDING,
-    },
-    {
-      section: "1. Getting Ready to Send",
-      title: "Every Piece, Labeled",
-      story: {
-        text: "Phone: \"And just like with Dad's PC, every piece carries my own address, 192.168.1.10, so whoever answers knows exactly where to send a reply.\"\nPip: \"Right, same trick as always.\"",
-        illustration: <ScenePipsPhone />,
-      },
-      body: PENDING,
-    },
-    {
-      section: "1. Getting Ready to Send",
-      title: "Not a Neighbor",
-      story: {
-        text: "Phone: \"Now for the same check as before — is 203.0.113.50 a neighbor on our own network, or somewhere else entirely?\"\nPip: \"Last time it was a 'yes.' This time?\"\nPhone: \"My own address starts 192.168.1. ... this one doesn't even come close. Not a neighbor — it's out past our own network entirely, this time.\"",
+        text: "The pieces are packed, one by one.\nEach crate gets its number — four thousand, six hundred and forty-nine in all.\nThen the addresses are written.\nTo: 203.0.113.50 — the number [IP address] from the Operator's notebook.\nFrom: 192.168.1.10, room 51234.\nPip: \"There. Ready.\"",
         illustration: <SceneAddressCheck />,
       },
-      body: PENDING,
+      body: (
+        <div className="space-y-3">
+          <p>
+            Same count as last time — it is the same photo. What is new is the destination:
+            not a station in this house, but the number the lookup found.
+          </p>
+          <p>
+            And each crate carries a source address, as crates always do: Pip&rsquo;s own
+            number, 192.168.1.10, and the phone&rsquo;s source port, 51234. Remember
+            these numbers. The way out has something to say about them.
+          </p>
+        </div>
+      ),
+      visual: <LanMap devices={houseDevices} conflictIds={new Set()} packet={null} />,
     },
     {
       section: "1. Getting Ready to Send",
-      title: "The One Address Everyone Knows",
+      title: "To the Junction",
       story: {
-        text: "Pip: \"So if it's not a neighbor, who do you even ask?\"\nPhone: \"There's exactly one address I always try first, whenever somewhere is out past our own network — our router, at 192.168.1.1.\"\nRouter: \"Can't hand this to a neighbor, then — same as any letter addressed elsewhere, it comes to me to forward.\"",
+        text: "The crates roll out in a long row.\nPip goes with them, down the line to the Junction.\nEverything in the house passes this station — and the way out is here too.\nAt the far side of the station stands another desk.\nA different mouse is sitting at it, with a big book [NAT table].",
+        illustration: <SceneWalkingSignal />,
+      },
+      body: (
+        <p>
+          The Junction is the middle of the house&rsquo;s line — and it is also the
+          house&rsquo;s only way out. The crates are headed for the desk on its far side:
+          the exit desk.
+        </p>
+      ),
+      visual: <LanMap devices={houseDevices} conflictIds={new Set()} packet={null} />,
+    },
+    // ---------- 2. The Address That Means Nothing Outside -------------
+    {
+      section: "2. The Address That Means Nothing Outside",
+      title: "Stopped at the Gate",
+      story: {
+        text: "The first crate reaches the desk.\nThe mouse looks at its label — and raises a paw.\nGatekeeper: \"Stop.\"\nGatekeeper: \"This return address won't do.\"\nPip: \"Won't do? It's my number [IP address]. 192.168.1.10.\"\nGatekeeper: \"In here, yes. Out there — nothing.\"",
         illustration: <SceneGatewayDoor />,
       },
-      body: PENDING,
+      body: (
+        <div className="space-y-3">
+          <p>
+            The Gatekeeper&rsquo;s desk is where crates leave the house, and his word is
+            final there. What he is objecting to is not the destination — it is the
+            return address.
+          </p>
+          <p>
+            192.168.1.10 is a private IP address: a number that means something only
+            inside this house.
+          </p>
+        </div>
+      ),
     },
     {
-      section: "2. The Provider's Hidden City",
-      title: "Past the Router",
+      section: "2. The Address That Means Nothing Outside",
+      title: "Every House Has a .10",
       story: {
-        text: "Pip's packet steps past the router into an enormous, unfamiliar city.\nPacket: \"Whoa — where am I?\"\nPassing signal: \"You're in our network now. Every house on this street has a router just like yours — we all share this one, before anyone reaches the real internet.\"",
-        illustration: <SceneCgnatCity />,
+        text: "Pip: \"Nothing? But it's my address!\"\nGatekeeper: \"Yours — and not only yours.\"\nGatekeeper: \"Every house on every street uses the same inside numbers [private IP addresses].\"\nGatekeeper: \"Somewhere out there, thousands of stations are .10, just like you.\"\nPip: \"Then an answer addressed to .10...\"\nGatekeeper: \"...would not know which house. Which you.\"\nGatekeeper: \"It is like writing 'my room' as the return address on a letter to another town.\"",
+        illustration: <SceneWorldNetworks />,
       },
-      body: PENDING,
+      body: (
+        <div className="space-y-3">
+          <p>
+            Inside numbers are reused by every house in the world. That is fine inside —
+            the line here knows its own .10 from any other.
+          </p>
+          <p>
+            Outside, the number carries no meaning at all. A reply addressed to it could
+            never find this house, let alone this phone.
+          </p>
+        </div>
+      ),
     },
     {
-      section: "2. The Provider's Hidden City",
-      title: "A Second Address",
+      section: "2. The Address That Means Nothing Outside",
+      title: "One Number for the Whole House",
       story: {
-        text: "Packet: \"So I'm still carrying my house's address, 192.168.1.10 — is that enough to get around in here?\"\nPassing signal: \"Not quite. In here, you'll need a second address too — one this whole hidden city hands out.\"\nAnd with that, Pip's packet picks up a fresh tag: 10.64.20.5.",
-        illustration: <SceneCgnatCity />,
+        text: "Pip: \"Then how does anything get an answer?\"\nGatekeeper: \"The house has one number of its own. An outside number [global IP address].\"\nGatekeeper: \"One number, for the whole house. The whole world knows that one.\"\nPip: \"One? For all of us?\"\nGatekeeper: \"Outside numbers are precious. There are not enough for every station in the world.\"\nGatekeeper: \"So the house shares one — and I keep track of who is who.\"",
+        illustration: <ScenePrivateGlobal />,
       },
-      body: PENDING,
+      body: (
+        <div className="space-y-3">
+          <p>
+            The house&rsquo;s outside number is a global IP address: one of a kind in the
+            whole world, and the only address the outside can use for anyone in this
+            house.
+          </p>
+          <p>
+            Two kinds of numbers exist because they have to: there are not enough global
+            addresses for every device, so houses reuse private numbers inside and share
+            one global number at the door.
+          </p>
+        </div>
+      ),
     },
+    // --------------------------- 3. The Rewrite ------------------------
     {
-      section: "2. The Provider's Hidden City",
-      title: "Why Hide So Many Houses Together",
+      section: "3. The Rewrite",
+      title: "Rewritten at the Gate",
       story: {
-        text: "Pip's packet looks around at just how many houses share this one hidden city.\nPacket: \"Why not just give every house its own real address, out on the internet?\"\nPassing signal: \"There simply aren't enough of those real addresses to go around — so we share, and only step out one at a time, when someone actually needs to.\"",
-        illustration: <SceneCgnatCity />,
+        text: "The Gatekeeper takes the first crate's label and rewrites it.\nFrom: the house's outside number [global IP address] — and room [port] 60001.\nPip: \"A different room?\"\nGatekeeper: \"The room on the new label is mine. Chosen here, at this desk.\"\nGatekeeper: \"The house's number alone would not be enough. An answer sent to the house could be for you — or for Dad's PC.\"\nGatekeeper: \"The room says whose it is.\"\nThe destination does not change: 203.0.113.50.\nCrate by crate, he rewrites them all.",
+        illustration: <SceneRecordBook />,
       },
-      body: PENDING,
+      body: (
+        <div className="space-y-3">
+          <p>
+            This rewriting is the heart of the chapter. On every crate, both halves of the
+            source address are replaced: the private IP address becomes the house&rsquo;s
+            global IP address, and the source port becomes a port of the router&rsquo;s
+            own choosing — 60001.
+          </p>
+          <p>
+            The port is not decoration. The global IP address names the whole house; only
+            the port says which conversation — whose — a reply belongs to. The destination
+            is not touched. Only the way back is rewritten, so that a way back exists at
+            all.
+          </p>
+        </div>
+      ),
     },
     {
-      section: "3. The Border Checkpoint",
-      title: "One Way Out",
+      section: "3. The Rewrite",
+      title: "Written in the Gate Book",
       story: {
-        text: "Pip's packet reaches the edge of the hidden city — a checkpoint, gate down.\nCheckpoint: \"Hold on. Your return address is still your house's own — leave it like that, and you won't be able to get back.\"\nPip: \"Huh? Really?\"\nCheckpoint: \"Really. The moment you step outside, telling everyone 'I'm in such-and-such room of my house' won't get you anywhere — nobody out there knows where your house is.\"",
-        illustration: <SceneCheckpoint />,
-      },
-      body: PENDING,
-    },
-    {
-      section: "3. The Border Checkpoint",
-      title: "Swapping Addresses",
-      story: {
-        text: "Pip: \"Oh no, that's a problem. What do I do?\"\nCheckpoint: \"Don't worry. Let's swap that address for this checkpoint's own — now you can go out there and still find your way home.\"\nPip: \"Wow, thank you!\"\nSwapping one address for another so a reply can find its way back — that's called NAT.",
-        illustration: <SceneCheckpoint />,
-      },
-      body: PENDING,
-    },
-    {
-      section: "3. The Border Checkpoint",
-      title: "Why a Port Too",
-      story: {
-        text: "Pip: \"Wait, this checkpoint only has the one address for everyone leaving?\"\nCheckpoint: \"Just the one, yes — but I also hand out a little number alongside it, just for you. That way, even sharing one address, nobody gets mixed up.\"\nThat little number is a port — and swapping both together has its own name: NAPT.",
-        illustration: <SceneCheckpoint />,
-      },
-      body: PENDING,
-    },
-    {
-      section: "3. The Border Checkpoint",
-      title: "The Logbook",
-      story: {
-        text: "The checkpoint carefully writes something down before waving Pip's packet through.\nPip: \"What's that for?\"\nCheckpoint: \"My logbook. I'm writing down exactly which address and number I gave you, and which house you actually came from — so when your reply comes back, I know exactly where to send it.\"",
+        text: "As he rewrites, the Gatekeeper writes in his big book [NAT table].\nOne line: inside — 192.168.1.10, room 51234. Outside — the house's number, room 60001.\nPip: \"Why write it down?\"\nGatekeeper: \"So the answer can find its way home.\"\nGatekeeper: \"An answer will come to the house's number [global IP address], to room 60001.\"\nGatekeeper: \"This line is how it will know that room means your phone.\"",
         illustration: <SceneLogbook />,
       },
-      body: PENDING,
-    },
-    {
-      section: "4. Across the Open Internet",
-      title: "Two Addresses, One Trip",
-      story: {
-        text: "Pip's packet looks back at the trip so far.\nPacket: \"Hold on — I've carried two different addresses this whole time: my house's, and then the checkpoint's own. Why two?\"\nOne of those addresses only ever meant something inside its own network — a private address.",
-        illustration: <ScenePrivateGlobal />,
-      },
-      body: PENDING,
-    },
-    {
-      section: "4. Across the Open Internet",
-      title: "Try It Yourself",
-      story: {
-        text: "Checkpoint: \"Because each one has its own job — one only has to make sense inside your own house, the other has to make sense to the entire world.\"\nPrivate for home, global for the whole wide world — two very different kinds of address.",
-        illustration: <ScenePrivateGlobal />,
-      },
-      body: PENDING,
-      controls: (
-        <div className="flex flex-wrap gap-2">
-          {ADDRESS_EXAMPLES.map((ex, i) => (
-            <button
-              key={ex.label}
-              type="button"
-              onClick={() => setExampleIdx(i)}
-              className={`px-3 py-1.5 rounded-md text-sm ${
-                exampleIdx === i
-                  ? "bg-storybook-accent text-white"
-                  : "bg-neutral-100 text-neutral-700 hover:bg-neutral-200"
-              }`}
-            >
-              {ex.label}
-            </button>
-          ))}
+      body: (
+        <div className="space-y-3">
+          <p>
+            The pairing — the inside IP address and source port, matched to the outside
+            IP address and port — is written in the Gatekeeper&rsquo;s book. That book is
+            the NAT table: the house&rsquo;s memory of which conversation belongs to
+            whom.
+          </p>
+          <p>
+            The rewriting and the writing-down are one act. A rewritten label with no book
+            entry would be a one-way trip.
+          </p>
         </div>
       ),
-      visual: (
-        <div className="rounded-lg border border-neutral-200 bg-white p-4 max-w-xl w-full space-y-1">
-          <div className="font-mono text-lg text-neutral-800">{ADDRESS_EXAMPLES[exampleIdx].example}</div>
-          <div
-            className={`text-sm font-medium ${
-              isPrivateIpv4(ADDRESS_EXAMPLES[exampleIdx].firstOctet, ADDRESS_EXAMPLES[exampleIdx].secondOctet)
-                ? "text-emerald-600"
-                : "text-cyan-700"
-            }`}
-          >
-            {isPrivateIpv4(ADDRESS_EXAMPLES[exampleIdx].firstOctet, ADDRESS_EXAMPLES[exampleIdx].secondOctet)
-              ? "Private — only meaningful inside its own LAN"
-              : "Global — unique across the whole internet"}
-          </div>
-        </div>
-      ),
-      resetAction: () => setExampleIdx(0),
     },
     {
-      section: "4. Across the Open Internet",
-      title: "Side by Side",
+      section: "3. The Rewrite",
+      title: "How Answers Come Home",
       story: {
-        text: "Pip: \"So mine is private, and the checkpoint's own is global?\"\nCheckpoint: \"Exactly. Side by side, they don't look all that different — but what they're allowed to do is worlds apart.\"",
-        illustration: <ScenePrivateGlobal />,
+        text: "Pip: \"So when the Board answers...\"\nGatekeeper: \"It answers the label. The house's outside number, room 60001.\"\nGatekeeper: \"The answer comes here, to my desk. I look the room up in my book.\"\nGatekeeper: \"Then I write your address [local address] back on it — 192.168.1.10, room 51234 — and send it down the line to your station.\"\nPip: \"And if there were no book?\"\nGatekeeper: \"Then the answer would stand at the door, with nowhere to go.\"",
+        illustration: <SceneHandingOff />,
       },
-      body: PENDING,
+      body: (
+        <p>
+          Replies do not find their own way in. They arrive at the house&rsquo;s one
+          global IP address, at the router&rsquo;s port — and the NAT table is read in
+          reverse to carry them to the right station, at the phone&rsquo;s own IP address
+          and source port. Without the table, a reply could reach the house — and still
+          never reach Pip.
+        </p>
+      ),
     },
+    // ------------------------------ 4. Out -----------------------------
     {
-      section: "4. Across the Open Internet",
-      title: "Out Into the Open",
+      section: "4. Out",
+      title: "Through the Gate",
       story: {
-        text: "Passport in hand, Pip's packet slips into the vast internet — router after router passing it along like a bucket brigade.\nRouters: \"203.0.113.50? That way!\"\nPacket: \"How do they all know exactly which way to send me?\"\nA passing router: \"We're always trading notes on the fastest way to everywhere — pick a path, and if one ever breaks, we quietly pick another.\"\nAnd with that, after such a long journey, Pip's cheese photo is finally out in the internet's wide open sky.\nPip: \"Did it actually make it to the Cheese-Lovers' Board?\"\n...to be continued.",
+        text: "The last label is rewritten. The last line is in the book.\nThe Gatekeeper steps back.\nGatekeeper: \"They can go.\"\nThe crates roll past the desk, out of the station —\n— and onto the great main line, away from the house.\nTo: 203.0.113.50. From: the house's outside number, room 60001.",
         illustration: <SceneOceanCrossing />,
       },
-      body: PENDING,
+      body: (
+        <p>
+          The photo has left the house — the first time any crate of Pip&rsquo;s has.
+          From here, the road belongs to the outside world: junction after junction,
+          none of them known to Pip.
+        </p>
+      ),
     },
-    // ------------------------------ Wrap-up --------------------------
     {
-      section: "Wrap-up",
+      section: "4. Out",
+      title: "Sent at Last",
+      story: {
+        text: "Pip watches the crates grow smaller down the main line.\nFour thousand, six hundred and forty-nine of them, all addressed, all on their way.\nPip: \"It went out.\"\nPip: \"It's on its way.\"\nHe turns back toward his own station, well pleased.\nBy now, surely, it is nearly there.",
+        illustration: <SceneBeyondHouse />,
+      },
+      body: (
+        <div className="space-y-3">
+          <p>
+            As far as Pip can see, everything is done: the number was found, the crates
+            were labelled, the way out rewrote what needed rewriting.
+          </p>
+          <p>
+            He saw them leave. He did not see them arrive — nobody did. Hold that thought
+            for the next chapter.
+          </p>
+        </div>
+      ),
+    },
+    {
+      section: "4. Out",
       title: "Now it's your turn",
-      body: PENDING,
+      body: (
+        <div className="space-y-3">
+          <p>What this chapter covered:</p>
+          <ul className="list-disc pl-5 space-y-1">
+            <li>Inside numbers are private: they mean something only in their own house, and every house reuses the same ones.</li>
+            <li>The house has one outside number — a global address, shared by everyone inside.</li>
+            <li>At the way out, each packet&rsquo;s source address is rewritten: the house&rsquo;s global IP address, plus a port the router chooses — because the house&rsquo;s address alone would not say whose a reply is.</li>
+            <li>The NAT table pairs the inside IP address and source port with the outside IP address and port; replies come back by reading the table in reverse.</li>
+            <li>Without the book, a reply could reach the house and still never reach Pip.</li>
+          </ul>
+          <p>Next chapter: the morning after — and a look back at the whole road.</p>
+        </div>
+      ),
+      visual: <LanMap devices={houseDevices} conflictIds={new Set()} packet={null} />,
     },
   ];
 
+  // Declared after `steps` so the URL's initial step can be clamped to
+  // this chapter's real range (the MeetTheNetworkWalkthrough pattern).
+  const [step, setStep] = useState(() =>
+    initialStep !== undefined
+      ? Math.max(0, Math.min(initialStep, steps.length - 1))
+      : 0,
+  );
+
   const total = steps.length;
   const current = steps[step];
+
+  // Keep the playground (and through it, the URL) posted on step changes.
+  useEffect(() => {
+    onStepChange?.(step, total);
+  }, [step, total, onStepChange]);
   const isLast = step === total - 1;
   const isFirst = step === 0;
 
@@ -334,20 +426,6 @@ export function LeavingTheHouseWalkthroughDraft({ onComplete }: { onComplete: ()
 
         <h3 className="text-2xl font-storybook-heading text-storybook-accent">{current.title}</h3>
         <div className="text-sm text-storybook-ink/90 leading-relaxed space-y-3">{current.body}</div>
-
-        {current.controls && (
-          <div className="rounded-md border border-storybook-ink/10 bg-white/50 p-3 flex flex-col items-start gap-2">
-            {current.controls}
-            {current.resetAction && (
-              <button
-                onClick={current.resetAction}
-                className="text-xs text-storybook-ink/60 hover:text-storybook-ink"
-              >
-                ↺ Undo this step
-              </button>
-            )}
-          </div>
-        )}
 
         {current.visual && <div className="space-y-3">{current.visual}</div>}
       </div>

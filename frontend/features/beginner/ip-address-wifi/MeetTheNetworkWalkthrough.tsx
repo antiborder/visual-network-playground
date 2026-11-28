@@ -50,6 +50,7 @@ export function MeetTheNetworkWalkthrough({
   finishLabel = "Finish",
   onStepChange,
   startAtEnd = false,
+  initialStep,
 }: {
   onComplete: () => void;
   /** Label for the button shown on the last step — "Finish" by default, or
@@ -64,6 +65,9 @@ export function MeetTheNetworkWalkthrough({
    * reader arrives here by clicking "Previous Chapter" from Chapter 2, and
    * should land back where they'd have been, not at the very beginning. */
   startAtEnd?: boolean;
+  /** 0-based step to open on, from the page URL (?step=, 1-based) — a
+   * reload or a shared link to a step resumes there. Wins over startAtEnd. */
+  initialStep?: number;
 }) {
   // --- "Chasing the Signal" interference sandbox ---
   const [wallCount, setWallCount] = useState<0 | 1 | 2>(2);
@@ -203,7 +207,7 @@ export function MeetTheNetworkWalkthrough({
       section: "1. Chasing the Wi-Fi",
       title: "Two Speeds to Choose From",
       story: {
-        text: "Pip nearly jumps out of his fur — someone's right behind him.\nDad: \"What are you up to?\"\nPip: \"Aah! Oh — it's just you, Dad. Don't sneak up on me like that.\"\nDad: \"Sorry, sorry. You looked like you were wandering around out here.\"\nPip explains what's going on.\nDad: \"Ah — try switching to 5GHz?\"\nDad: \"5 gigahertz is the express: faster up close, but it can't push through walls.\"\nDad: \"2.4 gigahertz is the local, all-stops line: slower, but it reaches farther and shrugs off walls better.\"\nPip: \"Huh — so it's not one Wi-Fi, it's two lines, and they trade off speed for reach.\"\nThat tradeoff, reach versus speed, is exactly what separates the 2.4GHz and 5GHz bands.",
+        text: "Pip nearly jumps out of his fur — someone's right behind him.\nDad: \"What are you up to?\"\nPip: \"Aah! Oh — it's just you, Dad. Don't sneak up on me like that.\"\nDad: \"Sorry, sorry. You looked like you were wandering around out here.\"\nPip explains what's going on.\nDad: \"Ah — try switching to 5GHz?\"\nDad: \"5 gigahertz is the express: faster up close, but it can't push through walls.\"\nPip: \"Faster, but walls stop it?\"\nDad: \"2.4 gigahertz is the local, all-stops line: slower, but it reaches farther and shrugs off walls better.\"\nPip: \"Huh — so it's not one Wi-Fi, it's two lines, and they trade off speed for reach.\"\nThat tradeoff, reach versus speed, is exactly what separates the 2.4GHz and 5GHz bands.",
         illustration: <SceneTwoBands />,
       },
       body: (
@@ -319,7 +323,7 @@ export function MeetTheNetworkWalkthrough({
       section: "2. The Home Network",
       title: "Everyone on the Same Team",
       story: {
-        text: "Pip looks around the study: his phone in hand, and Dad's PC humming away on the desk right there.\nPip: \"Is Dad's PC connected to the same router too?\"\nDad: \"Yep — we've only got the one junction station in this house.\"\nDad: \"It's what lets your phone and my PC ride between each other.\"\nDad: \"Everything else in the house rides on it too — all on our own little line.\"\nA group of stations like this, all sharing one junction in one place, is called a LAN.",
+        text: "Pip looks around the study: his phone in hand, and Dad's PC humming away on the desk right there.\nPip: \"Is Dad's PC connected to the same router too?\"\nDad: \"Yep — we've only got the one junction station in this house.\"\nPip: \"One junction station for the whole house?\"\nDad: \"It's what lets your phone and my PC ride between each other.\"\nDad: \"Everything else in the house rides on it too — all on our own little line.\"\nA group of stations like this, all sharing one junction in one place, is called a LAN.",
         illustration: <SceneLanDesk />,
       },
       body: (
@@ -609,7 +613,13 @@ export function MeetTheNetworkWalkthrough({
     },
   ];
 
-  const [step, setStep] = useState(startAtEnd ? steps.length - 1 : 0);
+  const [step, setStep] = useState(() =>
+    initialStep !== undefined
+      ? Math.max(0, Math.min(initialStep, steps.length - 1))
+      : startAtEnd
+        ? steps.length - 1
+        : 0,
+  );
 
   const total = steps.length;
   const current = steps[step];

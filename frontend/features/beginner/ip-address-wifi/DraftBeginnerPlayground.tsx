@@ -1,11 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { MeetTheNetworkLab } from "./MeetTheNetworkLab";
-import { FindingTheBoardWalkthrough } from "./FindingTheBoardWalkthrough";
+import { FindingTheBoardWalkthroughDraft } from "./FindingTheBoardWalkthroughDraft";
 import { TheShortWayHomeWalkthroughDraft } from "./TheShortWayHomeWalkthroughDraft";
 import { LeavingTheHouseWalkthroughDraft } from "./LeavingTheHouseWalkthroughDraft";
-import { DhcpLab } from "./DhcpLab";
+import { MomoGetsOnlineWalkthroughDraft } from "./MomoGetsOnlineWalkthroughDraft";
+import { SeeingItAllAtOnceWalkthroughDraft } from "./SeeingItAllAtOnceWalkthroughDraft";
+import { Room443WalkthroughDraft } from "./Room443WalkthroughDraft";
+import { SortedByNameWalkthroughDraft } from "./SortedByNameWalkthroughDraft";
+import { JunctionByJunctionWalkthroughDraft } from "./JunctionByJunctionWalkthroughDraft";
 
 const CHAPTERS = [
   { id: "meet-the-network", label: "Chapter 1: Meet the Network" },
@@ -13,9 +17,35 @@ const CHAPTERS = [
   { id: "momo-gets-online", label: "Chapter 3: Momo Gets Online" },
   { id: "finding-the-board", label: "Chapter 4: Finding the Board" },
   { id: "leaving-the-house", label: "Chapter 5: Leaving the House" },
+  { id: "seeing-it-all-at-once", label: "Chapter 6: Seeing It All at Once" },
+  { id: "sorted-by-name", label: "Chapter 7: Sorted by Name" },
+  { id: "room-443", label: "Chapter 8: Room 443" },
+  { id: "junction-by-junction", label: "Chapter 9: Junction by Junction" },
 ] as const;
 
 export type DraftChapterId = (typeof CHAPTERS)[number]["id"];
+
+/** Read ?ch= / ?step= from the address bar. `step` is 1-based in the URL
+ * (matching the on-screen "Step X of Y") and 0-based everywhere inside. */
+function parseUrlState(): { ch: DraftChapterId | null; step: number | undefined } {
+  const params = new URLSearchParams(window.location.search);
+  const chRaw = params.get("ch");
+  const ch = CHAPTERS.some((c) => c.id === chRaw) ? (chRaw as DraftChapterId) : null;
+  const stepNum = Number.parseInt(params.get("step") ?? "", 10);
+  const step = Number.isFinite(stepNum) && stepNum >= 1 ? stepNum - 1 : undefined;
+  return { ch, step };
+}
+
+/** Write the chapter (and optionally the 0-based step) into the address
+ * bar. Step changes use replaceState so they don't flood the history;
+ * chapter changes push, so Back returns to the previous chapter. */
+function writeUrl(ch: DraftChapterId, step: number | undefined, push: boolean) {
+  const url = new URL(window.location.href);
+  url.searchParams.set("ch", ch);
+  if (step === undefined || step <= 0) url.searchParams.delete("step");
+  else url.searchParams.set("step", String(step + 1));
+  window.history[push ? "pushState" : "replaceState"](null, "", url.toString());
+}
 
 /** The redesigned Beginner track (see docs/beginner-story-redesign.md § ③
  * for the decided chapter order and why), carved out into its own Unit so
@@ -33,19 +63,80 @@ export type DraftChapterId = (typeof CHAPTERS)[number]["id"];
  * these calls. "Leaving the House" now ends on a cliffhanger once the
  * packet reaches the open internet; whether/how it actually arrives is
  * intentionally left undecided for a later chapter. "momo-gets-online"
- * still renders the old, un-storified `DhcpLab` as a stopgap — it hasn't
- * been rewritten yet into a Pip-as-observer story (see
- * docs/beginner-story-redesign.md § ③) or converted to the train analogy
- * (see docs/network-train-analogy.md § 5). "Who Goes There?", "Did It
- * Work?", and "Seeing It All at Once" still need to be written/ported in
- * too. */
+ * was rewritten 2026-11-19 into the story-format
+ * `MomoGetsOnlineWalkthroughDraft` (Pip leads, Momo speaks; the old
+ * `DhcpLab` remains only in the legacy Unit). Chapters 4–7 were written
+ * into story-format drafts on 2026-11-27 from the current story designs
+ * (~/workspace/networking-course/ch4–ch7-story-proposal.md): the
+ * firewall chapter was postponed, so "Finding the Board" (DNS core
+ * only) replaces the old full-coverage `FindingTheBoardWalkthrough`
+ * here, "Leaving the House" was rewritten around the Gatekeeper, and
+ * "Seeing It All at Once" (recap + the arrival arc's reveal) and
+ * "Room 443" (ports) and "Seeing It All at Once" (recap + the arrival
+ * arc's reveal) are new. "Sorted by Name" (LAN switching) followed on
+ * 2026-11-28 from ch8-story-proposal.md v2. The investigation's chapter
+ * order was swapped the same day (Atsushi's decision): the
+ * investigation follows the journey's physical order, so "Sorted by
+ * Name" (the inside stretch) is Chapter 7 and "Room 443" — re-staged
+ * as the stop at the Gatekeeper's desk before the gate crossing — is
+ * Chapter 8. Folding the ports material into Chapter 5 was the
+ * rejected alternative. "Junction by Junction" (routing; the
+ * investigation's last chapter, travelling the outside road) followed
+ * the same day from ch9-story-proposal.md v1; its title is
+ * provisional. "Did It Work?" still needs to be
+ * written/ported in too.
+ *
+ * The address bar carries ?ch=<chapter>&step=<1-based step> (2026-11-22):
+ * reloading resumes on the same step, a link can point straight at a
+ * step, and the browser's Back/Forward move between chapters. Each
+ * walkthrough reports its step through onStepChange; the step named by
+ * the URL is handed back down as initialStep when a chapter mounts. */
 export function DraftBeginnerPlayground() {
   const [activeChapter, setActiveChapter] = useState<DraftChapterId>("meet-the-network");
+  // The step named by the URL, handed to whichever chapter mounts next.
+  const [initialStep, setInitialStep] = useState<number | undefined>(undefined);
+  // Chapters render only after the URL has been adopted on mount, so a
+  // reload never flashes Chapter 1 or overwrites the URL from step 0.
+  const [ready, setReady] = useState(false);
+  // Bumped on popstate so the active chapter remounts and re-reads
+  // initialStep even when only the step changed within the same chapter.
+  const [navNonce, setNavNonce] = useState(0);
   // True only when the reader arrived at Chapter 1 via Chapter 2's "Previous
   // Chapter" button — makes it land on the last step instead of the first.
   // Reset whenever a chapter tab is clicked directly, so that path still
   // always starts fresh.
   const [meetTheNetworkStartAtEnd, setMeetTheNetworkStartAtEnd] = useState(false);
+
+  useEffect(() => {
+    const { ch, step } = parseUrlState();
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time adoption of the address bar's chapter/step on mount: synchronizing React state with the URL, an external system
+    if (ch) setActiveChapter(ch);
+    setInitialStep(step);
+    setReady(true);
+    const onPopState = () => {
+      const s = parseUrlState();
+      if (s.ch) setActiveChapter(s.ch);
+      setInitialStep(s.step);
+      setMeetTheNetworkStartAtEnd(false);
+      setNavNonce((n) => n + 1);
+    };
+    window.addEventListener("popstate", onPopState);
+    return () => window.removeEventListener("popstate", onPopState);
+  }, []);
+
+  const goToChapter = useCallback((ch: DraftChapterId) => {
+    setMeetTheNetworkStartAtEnd(false);
+    setInitialStep(undefined);
+    setActiveChapter(ch);
+    writeUrl(ch, undefined, true);
+  }, []);
+
+  // Only the active chapter is mounted, so its reports always belong to
+  // activeChapter.
+  const handleStepChange = useCallback(
+    (step: number) => writeUrl(activeChapter, step, false),
+    [activeChapter],
+  );
 
   return (
     <div>
@@ -54,10 +145,7 @@ export function DraftBeginnerPlayground() {
           <button
             key={c.id}
             type="button"
-            onClick={() => {
-              if (c.id === "meet-the-network") setMeetTheNetworkStartAtEnd(false);
-              setActiveChapter(c.id);
-            }}
+            onClick={() => goToChapter(c.id)}
             className={`px-4 py-2 text-sm font-medium border-b-2 -mb-px whitespace-nowrap transition-colors ${
               activeChapter === c.id
                 ? "border-cyan-600 text-neutral-900"
@@ -69,24 +157,86 @@ export function DraftBeginnerPlayground() {
         ))}
       </div>
 
-      {activeChapter === "meet-the-network" && (
+      {ready && activeChapter === "meet-the-network" && (
         <MeetTheNetworkLab
-          onNavigateNext={() => setActiveChapter("short-way-home")}
+          key={navNonce}
+          onNavigateNext={() => goToChapter("short-way-home")}
           startAtEnd={meetTheNetworkStartAtEnd}
+          initialStep={initialStep}
+          onStepChange={handleStepChange}
         />
       )}
-      {activeChapter === "short-way-home" && (
+      {ready && activeChapter === "short-way-home" && (
         <TheShortWayHomeWalkthroughDraft
+          key={navNonce}
           onComplete={() => {}}
           onNavigatePrevious={() => {
             setMeetTheNetworkStartAtEnd(true);
+            setInitialStep(undefined);
             setActiveChapter("meet-the-network");
+            writeUrl("meet-the-network", undefined, true);
           }}
+          initialStep={initialStep}
+          onStepChange={handleStepChange}
         />
       )}
-      {activeChapter === "momo-gets-online" && <DhcpLab />}
-      {activeChapter === "finding-the-board" && <FindingTheBoardWalkthrough onComplete={() => {}} />}
-      {activeChapter === "leaving-the-house" && <LeavingTheHouseWalkthroughDraft onComplete={() => {}} />}
+      {ready && activeChapter === "momo-gets-online" && (
+        <MomoGetsOnlineWalkthroughDraft
+          key={navNonce}
+          onComplete={() => {}}
+          onNavigatePrevious={() => goToChapter("short-way-home")}
+          initialStep={initialStep}
+          onStepChange={handleStepChange}
+        />
+      )}
+      {ready && activeChapter === "finding-the-board" && (
+        <FindingTheBoardWalkthroughDraft
+          key={navNonce}
+          onComplete={() => {}}
+          initialStep={initialStep}
+          onStepChange={handleStepChange}
+        />
+      )}
+      {ready && activeChapter === "leaving-the-house" && (
+        <LeavingTheHouseWalkthroughDraft
+          key={navNonce}
+          onComplete={() => {}}
+          initialStep={initialStep}
+          onStepChange={handleStepChange}
+        />
+      )}
+      {ready && activeChapter === "seeing-it-all-at-once" && (
+        <SeeingItAllAtOnceWalkthroughDraft
+          key={navNonce}
+          onComplete={() => {}}
+          initialStep={initialStep}
+          onStepChange={handleStepChange}
+        />
+      )}
+      {ready && activeChapter === "sorted-by-name" && (
+        <SortedByNameWalkthroughDraft
+          key={navNonce}
+          onComplete={() => {}}
+          initialStep={initialStep}
+          onStepChange={handleStepChange}
+        />
+      )}
+      {ready && activeChapter === "room-443" && (
+        <Room443WalkthroughDraft
+          key={navNonce}
+          onComplete={() => {}}
+          initialStep={initialStep}
+          onStepChange={handleStepChange}
+        />
+      )}
+      {ready && activeChapter === "junction-by-junction" && (
+        <JunctionByJunctionWalkthroughDraft
+          key={navNonce}
+          onComplete={() => {}}
+          initialStep={initialStep}
+          onStepChange={handleStepChange}
+        />
+      )}
     </div>
   );
 }

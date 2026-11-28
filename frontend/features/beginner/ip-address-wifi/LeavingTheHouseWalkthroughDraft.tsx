@@ -44,7 +44,15 @@ import {
  * are addressed to the outside room — the global address alone would
  * not say whose reply it is. Story text annotates technical
  * counterparts in [] (room number [port], book [NAT table], …), the
- * series' standing rule from 2026-11-28.
+ * series' standing rule from 2026-11-28. Port teaching trimmed the
+ * same day (Atsushi, as a trial): Step 4 shows the phone's room on
+ * the label without explaining it — who chose it and that it is
+ * per-conversation are Chapter 8's discovery now; Step 9's "the room
+ * says whose" stays, as it is the NAT rewrite's own reason. Atsushi's
+ * standing reservation, noted with the trial: numbers the reader
+ * cannot yet understand are better not shown at all — if the bare
+ * 51234 still reads wrong, the next step is removing it from this
+ * chapter's labels and book line entirely.
  * Illustrations are the existing StorybookScenes placeholders. */
 export function LeavingTheHouseWalkthroughDraft({
   onComplete,
@@ -132,7 +140,7 @@ export function LeavingTheHouseWalkthroughDraft({
       section: "1. Getting Ready to Send",
       title: "Numbered and Labeled",
       story: {
-        text: "The pieces are packed, one by one.\nEach crate gets its number — four thousand, six hundred and forty-nine in all.\nThen the addresses are written.\nTo: 203.0.113.50 — the number [IP address] from the Operator's notebook.\nFrom: 192.168.1.10, room 51234.\nThe room [port] is the phone's own. Pip's phone chose it for this conversation, so an answer can find the right conversation waiting on the phone.\nPip: \"There. Ready.\"",
+        text: "The pieces are packed, one by one.\nEach crate gets its number — four thousand, six hundred and forty-nine in all.\nThen the addresses are written.\nTo: 203.0.113.50 — the number [IP address] from the Operator's notebook.\nFrom: 192.168.1.10, room 51234.\nPip: \"There. Ready.\"",
         illustration: <SceneAddressCheck />,
       },
       body: (
@@ -143,10 +151,8 @@ export function LeavingTheHouseWalkthroughDraft({
           </p>
           <p>
             And each crate carries a source address, as crates always do: Pip&rsquo;s own
-            number, 192.168.1.10, and the phone&rsquo;s source port, 51234. The phone
-            chose that port itself, just for this conversation — it belongs to this
-            conversation only, and the phone gives it up when the conversation ends.
-            Remember these numbers. The way out has something to say about them.
+            number, 192.168.1.10, and the phone&rsquo;s source port, 51234. Remember
+            these numbers. The way out has something to say about them.
           </p>
         </div>
       ),

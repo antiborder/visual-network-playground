@@ -27,7 +27,15 @@ import {
  * gate or a corridor. Honest premise, kept throughout: the ports were
  * there the first time too — the only difference is that Pip never read
  * them. The source port shown is 51234, the proposal's placeholder for
- * an ephemeral port. Illustrations are the existing StorybookScenes
+ * an ephemeral port. Port staging corrected 2026-11-28 (Atsushi's
+ * questions): two different rooms with two different owners — the
+ * phone's own room [source port] 51234, chosen by the phone and
+ * meaningful only together with the phone's address, and the
+ * Gatekeeper's room 60001, chosen at the desk at the rewrite, which is
+ * the room replies are actually addressed to; the book's line pairs
+ * the two halves. Story text annotates technical counterparts in []
+ * (room [port], book [NAT table], …), the series' standing rule from
+ * 2026-11-28. Illustrations are the existing StorybookScenes
  * placeholders. */
 export function Room443WalkthroughDraft({
   onComplete,
@@ -157,20 +165,23 @@ export function Room443WalkthroughDraft({
       section: "3. The Numbers He Never Read",
       title: "What's This Number?",
       story: {
-        text: "Pip stares at the line.\nSomething in it, he has never seen before.\nPip: \"What's this number? On the return side. I don't know this number.\"\nGatekeeper: \"Your room. For this conversation.\"\nGatekeeper: \"When your phone sent the crates, it chose a room for the answer to come to.\"\nGatekeeper: \"A new one, every conversation. Yours only while it lasts.\"",
+        text: "Pip stares at the line.\nSomething in it, he has never seen before.\nPip: \"What's this number? 51234 — next to my .10. I don't know this number.\"\nGatekeeper: \"Your phone's room [source port].\"\nGatekeeper: \"When your phone sent the crates, it chose that room itself — for the answer to come back to, on your phone.\"\nPip: \"My phone chose it?\"\nGatekeeper: \"A room alone doesn't say which phone. Together with your .10, it names the end of this conversation, inside the house.\"\nGatekeeper: \"Chosen for this conversation. Given up when it ends.\"",
         illustration: <SceneAddressCheck />,
       },
       body: (
         <div className="space-y-3">
           <p>
-            The number is 51234 — Pip&rsquo;s own port for that night&rsquo;s sending.
-            A reply addressed to the house&rsquo;s number alone could be for anyone in
-            the house. The room number is what makes it Pip&rsquo;s.
+            The number is 51234 — Pip&rsquo;s own port for that night&rsquo;s sending: the
+            source port. A reply addressed to the house&rsquo;s number alone could be for
+            anyone in the house; the answer&rsquo;s last step, inside the phone, is this
+            room — the conversation it belongs to.
           </p>
           <p>
             His phone chose it by itself, just for this conversation, and it is given up
             when the conversation ends. A port like this — chosen on the spot, kept
-            briefly — is called an ephemeral port.
+            briefly — is called an ephemeral port. Note whose room it is: the
+            phone&rsquo;s own. The phone knows nothing of the desk&rsquo;s rooms — that
+            is a different number, and it is in this same line. Step 8 reads it.
           </p>
         </div>
       ),
@@ -179,7 +190,7 @@ export function Room443WalkthroughDraft({
       section: "3. The Numbers He Never Read",
       title: "Room 443",
       story: {
-        text: "Pip: \"Then the other side has a room too?\"\nGatekeeper: \"Read the line.\"\nPip: \"...443.\"\nGatekeeper: \"The Board's room. The web's room.\"\nGatekeeper: \"That is where the Board's keeper waits, for every visitor.\"\nGatekeeper: \"It was written last time too, Pip. On every crate.\"\nPip: \"I just never read it.\"",
+        text: "Pip: \"Then the other side has a room too?\"\nGatekeeper: \"Read the line.\"\nPip: \"...443.\"\nGatekeeper: \"The Board's room [destination port]. The web's room.\"\nGatekeeper: \"That is where the Board's keeper waits, for every visitor.\"\nGatekeeper: \"It was written last time too, Pip. On every crate.\"\nPip: \"I just never read it.\"",
         illustration: <SceneRecordBook />,
       },
       body: (
@@ -202,36 +213,43 @@ export function Room443WalkthroughDraft({
       section: "4. Four Numbers",
       title: "Four Numbers, One Name",
       story: {
-        text: "The Gatekeeper reads the line one last time, slowly.\nGatekeeper: \"From: the house's outside number, room 51234.\"\nGatekeeper: \"To: 203.0.113.50, room 443.\"\nGatekeeper: \"Four numbers. Together, they name one conversation — yours, and no one else's.\"\nGatekeeper: \"When an answer comes, it is matched against this line, read backwards.\"\nPip: \"Now this conversation has a name.\"",
+        text: "The Gatekeeper reads the line one last time, slowly.\nGatekeeper: \"Your side: 192.168.1.10, room 51234 — your phone's address [local address], your phone's room.\"\nGatekeeper: \"My side: the house's outside number, room 60001 — the room I chose, at this desk.\"\nGatekeeper: \"Their side: 203.0.113.50, room 443.\"\nGatekeeper: \"An answer comes back to my room. This line says whose it is.\"\nPip: \"Now this conversation has a name.\"",
         illustration: <SceneLogbook />,
       },
       body: (
         <div className="space-y-3">
           <p>
-            Source number, source room, destination number, destination room: those four
-            together pick out exactly one conversation from all the traffic in the world.
-            That set of four is called the 4-tuple.
+            Look at the outside half of the line, together with the destination: the
+            house&rsquo;s number, room 60001, 203.0.113.50, room 443. Those four numbers
+            [the 4-tuple] pick out exactly one conversation from all the traffic in the
+            world — they are the name the outside world knows this conversation by.
           </p>
           <p>
-            The Gatekeeper&rsquo;s book is a list of such lines. A reply arrives carrying
-            the same four numbers in reverse — and the line it matches is the
-            conversation it belongs to.
+            And the line ties those four to the inside pair — the phone&rsquo;s address
+            and the phone&rsquo;s room. A reply arrives carrying the same four numbers in
+            reverse; the line it matches is the conversation it belongs to, and the
+            inside pair is where the desk sends it on to.
           </p>
         </div>
       ),
       visual: (
         <div className="rounded-md border border-storybook-ink/10 bg-white/50 p-3 text-sm">
-          <p className="font-semibold mb-2">One line of the book — one conversation</p>
-          <div className="grid grid-cols-2 gap-2">
+          <p className="font-semibold mb-2">One line of the book [NAT table] — one conversation</p>
+          <div className="grid grid-cols-3 gap-2">
             <div className="rounded bg-white/70 p-2">
-              <p className="text-xs uppercase tracking-wide text-storybook-ink/60">From</p>
-              <p>The house&rsquo;s outside number</p>
-              <p>Room 51234 — Pip&rsquo;s, for this conversation</p>
+              <p className="text-xs uppercase tracking-wide text-storybook-ink/60">Your side — the phone</p>
+              <p>192.168.1.10 [local address]</p>
+              <p>Room 51234 [source port] — the phone&rsquo;s own</p>
             </div>
             <div className="rounded bg-white/70 p-2">
-              <p className="text-xs uppercase tracking-wide text-storybook-ink/60">To</p>
-              <p>203.0.113.50 — the Board</p>
-              <p>Room 443 — the web&rsquo;s room</p>
+              <p className="text-xs uppercase tracking-wide text-storybook-ink/60">The gate&rsquo;s side</p>
+              <p>The house&rsquo;s outside number [global IP address]</p>
+              <p>Room 60001 — chosen at the desk</p>
+            </div>
+            <div className="rounded bg-white/70 p-2">
+              <p className="text-xs uppercase tracking-wide text-storybook-ink/60">Their side — the Board</p>
+              <p>203.0.113.50</p>
+              <p>Room 443 [destination port] — the web&rsquo;s room</p>
             </div>
           </div>
         </div>
@@ -264,14 +282,15 @@ export function Room443WalkthroughDraft({
       section: "5. Out Again",
       title: "Written by Hand This Time",
       story: {
-        text: "The new crates are ready.\nThis time, Pip writes the label himself.\nPip: \"To: 203.0.113.50, room 443.\"\nPip: \"From: the house's number, room 51234 — my room, for the answer.\"\nHe reads all four aloud, one by one.\nThe Gatekeeper nods. The crates roll out through the gate.\nPip: \"This time, I'm watching.\"",
+        text: "The new crates are ready.\nThis time, Pip writes the label himself.\nPip: \"To: 203.0.113.50, room 443.\"\nPip: \"From: 192.168.1.10, room 51234 — my address [local address], my room.\"\nHe reads all four aloud, one by one.\nThe Gatekeeper nods. The crates roll out through the gate.\nPip: \"This time, I'm watching.\"",
         illustration: <SceneReadyToUpload />,
       },
       body: (
         <p>
           The sending is the same sending. The difference is the sender: Pip now knows
-          what is written on his crates — all four numbers, and what each one is for.
-          The journey begins again, and this time every stretch of it will be watched.
+          what is written on his crates — the destination&rsquo;s number and room, his
+          own number and room — and what the desk will rewrite them to, and why. The
+          journey begins again, and this time every stretch of it will be watched.
         </p>
       ),
     },
@@ -282,10 +301,10 @@ export function Room443WalkthroughDraft({
         <div className="space-y-3">
           <p>What this chapter covered:</p>
           <ul className="list-disc pl-5 space-y-1">
-            <li>An address is a number plus a room (a port). The number alone does not say who, inside the building, a crate is for.</li>
-            <li>The Board waits in room 443 — the web&rsquo;s room, the same at every building.</li>
-            <li>A reply needs a room too: the source port, chosen by the sender&rsquo;s phone for that one conversation — an ephemeral port.</li>
-            <li>Four numbers together — source number, source port, destination number, destination port — name exactly one conversation. Replies are matched by reading the four in reverse.</li>
+            <li>An address is a number plus a room [port]. The number alone does not say who, inside the building, a crate is for.</li>
+            <li>The Board waits in room 443 [destination port] — the web&rsquo;s room, the same at every building.</li>
+            <li>A reply needs a room too: the phone&rsquo;s own room [source port], chosen by the phone for that one conversation — an ephemeral port. At the gate it is rewritten to the desk&rsquo;s own room, and the book [NAT table] pairs the two.</li>
+            <li>The four numbers the outside world sees — the house&rsquo;s number, the desk&rsquo;s room, the Board&rsquo;s number, room 443 [the 4-tuple] — name exactly one conversation. Replies are matched by reading the line in reverse.</li>
             <li>The ports were there the first time too. Pip just never read them.</li>
           </ul>
           <p>Next chapter: the road itself, stretch by stretch — starting inside the house.</p>

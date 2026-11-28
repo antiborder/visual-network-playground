@@ -36,6 +36,15 @@ import {
  * dynamic routing stay deferred. The chapter ends on the arrival arc's
  * cliffhanger (design B, 2026-11-19): Pip believes the photo is on its
  * way to the Board. It is not — he learns that in Chapter 6.
+ * Port staging corrected 2026-11-28 (Atsushi's questions): the phone's
+ * own room [source port] (51234, chosen by the phone) and the
+ * Gatekeeper's room (60001, chosen at the desk) are different numbers
+ * with different owners; the rewrite replaces both halves of the return
+ * address, the book pairs the inside and outside halves, and replies
+ * are addressed to the outside room — the global address alone would
+ * not say whose reply it is. Story text annotates technical
+ * counterparts in [] (room number [port], book [NAT table], …), the
+ * series' standing rule from 2026-11-28.
  * Illustrations are the existing StorybookScenes placeholders. */
 export function LeavingTheHouseWalkthroughDraft({
   onComplete,
@@ -123,7 +132,7 @@ export function LeavingTheHouseWalkthroughDraft({
       section: "1. Getting Ready to Send",
       title: "Numbered and Labeled",
       story: {
-        text: "The pieces are packed, one by one.\nEach crate gets its number — four thousand, six hundred and forty-nine in all.\nThen the addresses are written.\nTo: 203.0.113.50 — the number from the Operator's notebook.\nFrom: 192.168.1.10 — Pip's phone, so the answer knows the way back.\nPip: \"There. Ready.\"",
+        text: "The pieces are packed, one by one.\nEach crate gets its number — four thousand, six hundred and forty-nine in all.\nThen the addresses are written.\nTo: 203.0.113.50 — the number from the Operator's notebook.\nFrom: 192.168.1.10, room 51234.\nThe room number [port] is the phone's own. Pip's phone chose it for this conversation, so an answer can find the right conversation waiting on the phone.\nPip: \"There. Ready.\"",
         illustration: <SceneAddressCheck />,
       },
       body: (
@@ -133,9 +142,11 @@ export function LeavingTheHouseWalkthroughDraft({
             not a station in this house, but the number the lookup found.
           </p>
           <p>
-            And each crate carries a return address, as crates always do: Pip&rsquo;s own
-            number, 192.168.1.10. Remember that number. The way out has something to say
-            about it.
+            And each crate carries a return address [source address], as crates always do:
+            Pip&rsquo;s own number, 192.168.1.10, and the phone&rsquo;s room, 51234. The
+            phone chose that room itself, just for this conversation — it belongs to this
+            conversation only, and the phone gives it up when the conversation ends.
+            Remember these numbers. The way out has something to say about them.
           </p>
         </div>
       ),
@@ -173,8 +184,8 @@ export function LeavingTheHouseWalkthroughDraft({
             return address.
           </p>
           <p>
-            192.168.1.10 is a private address: a number that means something only inside
-            this house.
+            192.168.1.10 is a private address [private IP address]: a number that means
+            something only inside this house.
           </p>
         </div>
       ),
@@ -209,9 +220,9 @@ export function LeavingTheHouseWalkthroughDraft({
       body: (
         <div className="space-y-3">
           <p>
-            The house&rsquo;s outside number is a global address: one of a kind in the
-            whole world, and the only address the outside can use for anyone in this
-            house.
+            The house&rsquo;s outside number is a global address [global IP address]: one
+            of a kind in the whole world, and the only address the outside can use for
+            anyone in this house.
           </p>
           <p>
             Two kinds of numbers exist because they have to: there are not enough global
@@ -226,19 +237,22 @@ export function LeavingTheHouseWalkthroughDraft({
       section: "3. The Rewrite",
       title: "Rewritten at the Gate",
       story: {
-        text: "The Gatekeeper takes the first crate's label and rewrites it.\nFrom: the house's outside number — and a room number, for this conversation.\nPip: \"A room number too?\"\nGatekeeper: \"The outside number is the whole house. The room number says which conversation.\"\nGatekeeper: \"Many stations, one number. The room keeps you apart.\"\nThe destination does not change: 203.0.113.50.\nCrate by crate, he rewrites them all.",
+        text: "The Gatekeeper takes the first crate's label and rewrites it.\nFrom: the house's outside number [global IP address] — and room 60001.\nPip: \"A different room?\"\nGatekeeper: \"The room on the new label is mine. Chosen here, at this desk.\"\nGatekeeper: \"The house's number alone would not be enough. An answer sent to the house could be for you — or for Dad's PC.\"\nGatekeeper: \"The room says whose it is.\"\nThe destination does not change: 203.0.113.50.\nCrate by crate, he rewrites them all.",
         illustration: <SceneRecordBook />,
       },
       body: (
         <div className="space-y-3">
           <p>
-            This rewriting is the heart of the chapter. On every crate, the return address
-            — a private address — is replaced by the house&rsquo;s global address, plus a
-            room number (a port) chosen for this conversation.
+            This rewriting is the heart of the chapter. On every crate, both halves of the
+            return address are replaced: the private address becomes the house&rsquo;s
+            global address, and the phone&rsquo;s room [source port] becomes a room of
+            the Gatekeeper&rsquo;s own choosing — his desk&rsquo;s port, 60001.
           </p>
           <p>
-            The destination is not touched. Only the way back is rewritten, so that a way
-            back exists at all.
+            The room is not decoration. The global address names the whole house; only the
+            room says which conversation — whose — an answer belongs to. The destination
+            is not touched. Only the way back is rewritten, so that a way back exists at
+            all.
           </p>
         </div>
       ),
@@ -247,15 +261,16 @@ export function LeavingTheHouseWalkthroughDraft({
       section: "3. The Rewrite",
       title: "Written in the Gate Book",
       story: {
-        text: "As he rewrites, the Gatekeeper writes in his big book.\nOutside number, plus this room — that is Pip's phone, .10.\nPip: \"Why write it down?\"\nGatekeeper: \"So the answer can find its way home.\"\nGatekeeper: \"An answer will come to the house's number, to that room.\"\nGatekeeper: \"This book is how it will know the room means you.\"",
+        text: "As he rewrites, the Gatekeeper writes in his big book [NAT table].\nOne line: inside — 192.168.1.10, room 51234. Outside — the house's number, room 60001.\nPip: \"Why write it down?\"\nGatekeeper: \"So the answer can find its way home.\"\nGatekeeper: \"An answer will come to the house's number, to room 60001.\"\nGatekeeper: \"This line is how it will know that room means your phone.\"",
         illustration: <SceneLogbook />,
       },
       body: (
         <div className="space-y-3">
           <p>
-            The pairing — outside number plus room number, matched to the inside station —
-            is written in the Gatekeeper&rsquo;s book. That book is the translation table:
-            the house&rsquo;s memory of which conversation belongs to whom.
+            The pairing — the inside address and room, matched to the outside address and
+            room — is written in the Gatekeeper&rsquo;s book. That book is the translation
+            table [NAT table]: the house&rsquo;s memory of which conversation belongs to
+            whom.
           </p>
           <p>
             The rewriting and the writing-down are one act. A rewritten label with no book
@@ -268,15 +283,15 @@ export function LeavingTheHouseWalkthroughDraft({
       section: "3. The Rewrite",
       title: "How Answers Come Home",
       story: {
-        text: "Pip: \"So when the Board answers...\"\nGatekeeper: \"It answers the label. The house's outside number, and the room.\"\nGatekeeper: \"The answer comes here, to my desk.\"\nGatekeeper: \"I read my book backwards — and send it down the line to your station.\"\nPip: \"And if there were no book?\"\nGatekeeper: \"Then the answer would stand at the door, with nowhere to go.\"",
+        text: "Pip: \"So when the Board answers...\"\nGatekeeper: \"It answers the label. The house's outside number, room 60001.\"\nGatekeeper: \"The answer comes here, to my desk. I look the room up in my book.\"\nGatekeeper: \"Then I write your address back on it — 192.168.1.10, room 51234 — and send it down the line to your station.\"\nPip: \"And if there were no book?\"\nGatekeeper: \"Then the answer would stand at the door, with nowhere to go.\"",
         illustration: <SceneHandingOff />,
       },
       body: (
         <p>
           Replies do not find their own way in. They arrive at the house&rsquo;s one
-          outside number, and the book is read in reverse to carry them to the right
-          station. Without the book, a reply could reach the house — and still never
-          reach Pip.
+          outside number, at the desk&rsquo;s room — and the book is read in reverse to
+          carry them to the right station, at the phone&rsquo;s own address and room.
+          Without the book, a reply could reach the house — and still never reach Pip.
         </p>
       ),
     },
@@ -285,7 +300,7 @@ export function LeavingTheHouseWalkthroughDraft({
       section: "4. Out",
       title: "Through the Gate",
       story: {
-        text: "The last label is rewritten. The last line is in the book.\nThe Gatekeeper steps back.\nGatekeeper: \"They can go.\"\nThe crates roll past the desk, out of the station —\n— and onto the great main line, away from the house.\nTo: 203.0.113.50. From: the house's outside number, and a room.",
+        text: "The last label is rewritten. The last line is in the book.\nThe Gatekeeper steps back.\nGatekeeper: \"They can go.\"\nThe crates roll past the desk, out of the station —\n— and onto the great main line, away from the house.\nTo: 203.0.113.50. From: the house's outside number, room 60001.",
         illustration: <SceneOceanCrossing />,
       },
       body: (
@@ -325,8 +340,8 @@ export function LeavingTheHouseWalkthroughDraft({
           <ul className="list-disc pl-5 space-y-1">
             <li>Inside numbers are private: they mean something only in their own house, and every house reuses the same ones.</li>
             <li>The house has one outside number — a global address, shared by everyone inside.</li>
-            <li>At the way out, each crate&rsquo;s return address is rewritten to the outside number plus a room number for the conversation.</li>
-            <li>The pairing is written in the Gatekeeper&rsquo;s book; replies come back by reading the book in reverse.</li>
+            <li>At the way out, each crate&rsquo;s return address is rewritten: the house&rsquo;s global address, plus a room [port] the Gatekeeper chooses at his desk — because the house&rsquo;s number alone would not say whose an answer is.</li>
+            <li>The book [NAT table] pairs the inside address and room with the outside address and room; replies come back by reading the book in reverse.</li>
             <li>Without the book, a reply could reach the house and still never reach Pip.</li>
           </ul>
           <p>Next chapter: the morning after — and a look back at the whole road.</p>

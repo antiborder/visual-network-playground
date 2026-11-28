@@ -101,6 +101,14 @@ Where a Step has a picture-book "story" half above the technical explanation:
 - **Make it visually clear whether something is a vector, a matrix, or a single component of a
   vector** — through notation, labeling, or how it's described — so a reader can always tell
   which one they're looking at.
+- **In the story chapters (Pip's Network Story), annotate a story counterpart with its technical
+  term in square brackets** at the points where the reader needs the mapping — e.g.
+  `room number [port]`, `address [IP address]`, `the big book [NAT table]`, and contextually
+  `[local address]` / `[global IP address]` / `[source port]` / `[destination port]`. Use `[]`
+  uniformly for this (never parentheses or other marks), for objects like the notebook as well as
+  for terms. Annotate where it aids the reader — at a term's first or key appearances — rather
+  than on every repetition. (Rule set 2026-11-28; applied opportunistically as chapters are
+  rewritten or newly written.)
 
 ## Interactivity
 

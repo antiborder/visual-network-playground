@@ -8,6 +8,7 @@ import { LeavingTheHouseWalkthroughDraft } from "./LeavingTheHouseWalkthroughDra
 import { MomoGetsOnlineWalkthroughDraft } from "./MomoGetsOnlineWalkthroughDraft";
 import { SeeingItAllAtOnceWalkthroughDraft } from "./SeeingItAllAtOnceWalkthroughDraft";
 import { Room443WalkthroughDraft } from "./Room443WalkthroughDraft";
+import { SortedByNameWalkthroughDraft } from "./SortedByNameWalkthroughDraft";
 
 const CHAPTERS = [
   { id: "meet-the-network", label: "Chapter 1: Meet the Network" },
@@ -17,6 +18,7 @@ const CHAPTERS = [
   { id: "leaving-the-house", label: "Chapter 5: Leaving the House" },
   { id: "seeing-it-all-at-once", label: "Chapter 6: Seeing It All at Once" },
   { id: "room-443", label: "Chapter 7: Room 443" },
+  { id: "sorted-by-name", label: "Chapter 8: Sorted by Name" },
 ] as const;
 
 export type DraftChapterId = (typeof CHAPTERS)[number]["id"];
@@ -69,7 +71,10 @@ function writeUrl(ch: DraftChapterId, step: number | undefined, push: boolean) {
  * here, "Leaving the House" was rewritten around the Gatekeeper, and
  * "Seeing It All at Once" (recap + the arrival arc's reveal) and
  * "Room 443" (ports; the investigation's first chapter) are new.
- * "Did It Work?" still needs to be written/ported in too.
+ * "Sorted by Name" (LAN switching; the investigation's second chapter,
+ * travelling the inside stretch with the crates) followed on 2026-11-28
+ * from ch8-story-proposal.md v2. "Did It Work?" still needs to be
+ * written/ported in too.
  *
  * The address bar carries ?ch=<chapter>&step=<1-based step> (2026-11-22):
  * reloading resumes on the same step, a link can point straight at a
@@ -200,6 +205,14 @@ export function DraftBeginnerPlayground() {
       )}
       {ready && activeChapter === "room-443" && (
         <Room443WalkthroughDraft
+          key={navNonce}
+          onComplete={() => {}}
+          initialStep={initialStep}
+          onStepChange={handleStepChange}
+        />
+      )}
+      {ready && activeChapter === "sorted-by-name" && (
+        <SortedByNameWalkthroughDraft
           key={navNonce}
           onComplete={() => {}}
           initialStep={initialStep}

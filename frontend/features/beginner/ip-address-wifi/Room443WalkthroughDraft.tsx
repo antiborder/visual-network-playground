@@ -179,9 +179,10 @@ export function Room443WalkthroughDraft({
           <p>
             His phone chose it by itself, just for this conversation, and it is given up
             when the conversation ends. A port like this — chosen on the spot, kept
-            briefly — is called an ephemeral port. Note whose room it is: the
-            phone&rsquo;s own. The phone knows nothing of the desk&rsquo;s rooms — that
-            is a different number, and it is in this same line. Step 8 reads it.
+            briefly — is called an ephemeral port. Note whose port it is: the
+            phone&rsquo;s own. The phone knows nothing of the router&rsquo;s port,
+            assigned at the NAT rewrite — that is a different number, and it is in this
+            same line. Step 8 reads it.
           </p>
         </div>
       ),
@@ -220,36 +221,37 @@ export function Room443WalkthroughDraft({
         <div className="space-y-3">
           <p>
             Look at the outside half of the line, together with the destination: the
-            house&rsquo;s number, room 60001, 203.0.113.50, room 443. Those four numbers
-            [the 4-tuple] pick out exactly one conversation from all the traffic in the
-            world — they are the name the outside world knows this conversation by.
+            house&rsquo;s global IP address, port 60001, 203.0.113.50, port 443. Those
+            four values — the 4-tuple — pick out exactly one conversation from all the
+            traffic in the world. They are the name the outside world knows this
+            conversation by.
           </p>
           <p>
-            And the line ties those four to the inside pair — the phone&rsquo;s address
-            and the phone&rsquo;s room. A reply arrives carrying the same four numbers in
-            reverse; the line it matches is the conversation it belongs to, and the
-            inside pair is where the desk sends it on to.
+            And the line ties those four to the inside pair — the phone&rsquo;s IP address
+            and source port. A reply arrives carrying the same four values in reverse;
+            the line it matches is the conversation it belongs to, and the inside pair is
+            where the router sends it on to.
           </p>
         </div>
       ),
       visual: (
         <div className="rounded-md border border-storybook-ink/10 bg-white/50 p-3 text-sm">
-          <p className="font-semibold mb-2">One line of the book [NAT table] — one conversation</p>
+          <p className="font-semibold mb-2">One line of the NAT table — one conversation</p>
           <div className="grid grid-cols-3 gap-2">
             <div className="rounded bg-white/70 p-2">
               <p className="text-xs uppercase tracking-wide text-storybook-ink/60">Your side — the phone</p>
-              <p>192.168.1.10 [local address]</p>
-              <p>Room 51234 [source port] — the phone&rsquo;s own</p>
+              <p>Local address: 192.168.1.10</p>
+              <p>Source port: 51234 — the phone&rsquo;s own</p>
             </div>
             <div className="rounded bg-white/70 p-2">
-              <p className="text-xs uppercase tracking-wide text-storybook-ink/60">The gate&rsquo;s side</p>
-              <p>The house&rsquo;s outside number [global IP address]</p>
-              <p>Room 60001 — chosen at the desk</p>
+              <p className="text-xs uppercase tracking-wide text-storybook-ink/60">The gate&rsquo;s side — the router</p>
+              <p>Global IP address: the house&rsquo;s outside number</p>
+              <p>Port: 60001 — chosen by the router</p>
             </div>
             <div className="rounded bg-white/70 p-2">
               <p className="text-xs uppercase tracking-wide text-storybook-ink/60">Their side — the Board</p>
               <p>203.0.113.50</p>
-              <p>Room 443 [destination port] — the web&rsquo;s room</p>
+              <p>Destination port: 443 — the web&rsquo;s port</p>
             </div>
           </div>
         </div>
@@ -288,9 +290,10 @@ export function Room443WalkthroughDraft({
       body: (
         <p>
           The sending is the same sending. The difference is the sender: Pip now knows
-          what is written on his crates — the destination&rsquo;s number and room, his
-          own number and room — and what the desk will rewrite them to, and why. The
-          journey begins again, and this time every stretch of it will be watched.
+          what is written on his packets — the destination IP address and port, his own
+          IP address and source port — and what the router will rewrite them to, and
+          why. The journey begins again, and this time every stretch of it will be
+          watched.
         </p>
       ),
     },
@@ -301,10 +304,10 @@ export function Room443WalkthroughDraft({
         <div className="space-y-3">
           <p>What this chapter covered:</p>
           <ul className="list-disc pl-5 space-y-1">
-            <li>An address is a number plus a room [port]. The number alone does not say who, inside the building, a crate is for.</li>
-            <li>The Board waits in room 443 [destination port] — the web&rsquo;s room, the same at every building.</li>
-            <li>A reply needs a room too: the phone&rsquo;s own room [source port], chosen by the phone for that one conversation — an ephemeral port. At the gate it is rewritten to the desk&rsquo;s own room, and the book [NAT table] pairs the two.</li>
-            <li>The four numbers the outside world sees — the house&rsquo;s number, the desk&rsquo;s room, the Board&rsquo;s number, room 443 [the 4-tuple] — name exactly one conversation. Replies are matched by reading the line in reverse.</li>
+            <li>An address is an IP address plus a port. The IP address alone does not say who, inside the building, a packet is for.</li>
+            <li>The Board waits at port 443 — the web&rsquo;s port, the same at every server.</li>
+            <li>A reply needs a port too: the source port, chosen by the phone itself for that one conversation — an ephemeral port. At the router it is rewritten to the router&rsquo;s own port, and the NAT table pairs the two.</li>
+            <li>The four values the outside world sees — the house&rsquo;s global IP address, the router&rsquo;s port, the Board&rsquo;s IP address, port 443 — are the 4-tuple: they name exactly one conversation. Replies are matched by reading the table line in reverse.</li>
             <li>The ports were there the first time too. Pip just never read them.</li>
           </ul>
           <p>Next chapter: the road itself, stretch by stretch — starting inside the house.</p>

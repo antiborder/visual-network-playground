@@ -142,9 +142,9 @@ export function LeavingTheHouseWalkthroughDraft({
             not a station in this house, but the number the lookup found.
           </p>
           <p>
-            And each crate carries a return address [source address], as crates always do:
-            Pip&rsquo;s own number, 192.168.1.10, and the phone&rsquo;s room, 51234. The
-            phone chose that room itself, just for this conversation — it belongs to this
+            And each crate carries a source address, as crates always do: Pip&rsquo;s own
+            number, 192.168.1.10, and the phone&rsquo;s source port, 51234. The phone
+            chose that port itself, just for this conversation — it belongs to this
             conversation only, and the phone gives it up when the conversation ends.
             Remember these numbers. The way out has something to say about them.
           </p>
@@ -184,8 +184,8 @@ export function LeavingTheHouseWalkthroughDraft({
             return address.
           </p>
           <p>
-            192.168.1.10 is a private address [private IP address]: a number that means
-            something only inside this house.
+            192.168.1.10 is a private IP address: a number that means something only
+            inside this house.
           </p>
         </div>
       ),
@@ -220,9 +220,9 @@ export function LeavingTheHouseWalkthroughDraft({
       body: (
         <div className="space-y-3">
           <p>
-            The house&rsquo;s outside number is a global address [global IP address]: one
-            of a kind in the whole world, and the only address the outside can use for
-            anyone in this house.
+            The house&rsquo;s outside number is a global IP address: one of a kind in the
+            whole world, and the only address the outside can use for anyone in this
+            house.
           </p>
           <p>
             Two kinds of numbers exist because they have to: there are not enough global
@@ -244,13 +244,13 @@ export function LeavingTheHouseWalkthroughDraft({
         <div className="space-y-3">
           <p>
             This rewriting is the heart of the chapter. On every crate, both halves of the
-            return address are replaced: the private address becomes the house&rsquo;s
-            global address, and the phone&rsquo;s room [source port] becomes a room of
-            the Gatekeeper&rsquo;s own choosing — his desk&rsquo;s port, 60001.
+            source address are replaced: the private IP address becomes the house&rsquo;s
+            global IP address, and the source port becomes a port of the router&rsquo;s
+            own choosing — 60001.
           </p>
           <p>
-            The room is not decoration. The global address names the whole house; only the
-            room says which conversation — whose — an answer belongs to. The destination
+            The port is not decoration. The global IP address names the whole house; only
+            the port says which conversation — whose — a reply belongs to. The destination
             is not touched. Only the way back is rewritten, so that a way back exists at
             all.
           </p>
@@ -267,9 +267,9 @@ export function LeavingTheHouseWalkthroughDraft({
       body: (
         <div className="space-y-3">
           <p>
-            The pairing — the inside address and room, matched to the outside address and
-            room — is written in the Gatekeeper&rsquo;s book. That book is the translation
-            table [NAT table]: the house&rsquo;s memory of which conversation belongs to
+            The pairing — the inside IP address and source port, matched to the outside
+            IP address and port — is written in the Gatekeeper&rsquo;s book. That book is
+            the NAT table: the house&rsquo;s memory of which conversation belongs to
             whom.
           </p>
           <p>
@@ -289,9 +289,10 @@ export function LeavingTheHouseWalkthroughDraft({
       body: (
         <p>
           Replies do not find their own way in. They arrive at the house&rsquo;s one
-          outside number, at the desk&rsquo;s room — and the book is read in reverse to
-          carry them to the right station, at the phone&rsquo;s own address and room.
-          Without the book, a reply could reach the house — and still never reach Pip.
+          global IP address, at the router&rsquo;s port — and the NAT table is read in
+          reverse to carry them to the right station, at the phone&rsquo;s own IP address
+          and source port. Without the table, a reply could reach the house — and still
+          never reach Pip.
         </p>
       ),
     },
@@ -340,8 +341,8 @@ export function LeavingTheHouseWalkthroughDraft({
           <ul className="list-disc pl-5 space-y-1">
             <li>Inside numbers are private: they mean something only in their own house, and every house reuses the same ones.</li>
             <li>The house has one outside number — a global address, shared by everyone inside.</li>
-            <li>At the way out, each crate&rsquo;s return address is rewritten: the house&rsquo;s global address, plus a room [port] the Gatekeeper chooses at his desk — because the house&rsquo;s number alone would not say whose an answer is.</li>
-            <li>The book [NAT table] pairs the inside address and room with the outside address and room; replies come back by reading the book in reverse.</li>
+            <li>At the way out, each packet&rsquo;s source address is rewritten: the house&rsquo;s global IP address, plus a port the router chooses — because the house&rsquo;s address alone would not say whose a reply is.</li>
+            <li>The NAT table pairs the inside IP address and source port with the outside IP address and port; replies come back by reading the table in reverse.</li>
             <li>Without the book, a reply could reach the house and still never reach Pip.</li>
           </ul>
           <p>Next chapter: the morning after — and a look back at the whole road.</p>

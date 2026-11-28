@@ -75,7 +75,7 @@ export function LeavingTheHouseWalkthroughDraft({
       section: "Welcome",
       title: "What you learn from this chapter",
       story: {
-        text: "The notebook is closed. The number is in it: 203.0.113.50.\nPip turns from the Operator's desk.\nFar off, beside the line, the cheese is waiting — enormous.\nPip: \"Now we can send it.\"\nPip: \"All the way outside.\"",
+        text: "The notebook is closed. The number [IP address] is in it: 203.0.113.50.\nPip turns from the Operator's desk.\nFar off, beside the line, the cheese is waiting — enormous.\nPip: \"Now we can send it.\"\nPip: \"All the way outside.\"",
         illustration: <SceneCheesePhoto />,
       },
       body: (
@@ -132,7 +132,7 @@ export function LeavingTheHouseWalkthroughDraft({
       section: "1. Getting Ready to Send",
       title: "Numbered and Labeled",
       story: {
-        text: "The pieces are packed, one by one.\nEach crate gets its number — four thousand, six hundred and forty-nine in all.\nThen the addresses are written.\nTo: 203.0.113.50 — the number from the Operator's notebook.\nFrom: 192.168.1.10, room 51234.\nThe room number [port] is the phone's own. Pip's phone chose it for this conversation, so an answer can find the right conversation waiting on the phone.\nPip: \"There. Ready.\"",
+        text: "The pieces are packed, one by one.\nEach crate gets its number — four thousand, six hundred and forty-nine in all.\nThen the addresses are written.\nTo: 203.0.113.50 — the number [IP address] from the Operator's notebook.\nFrom: 192.168.1.10, room 51234.\nThe room [port] is the phone's own. Pip's phone chose it for this conversation, so an answer can find the right conversation waiting on the phone.\nPip: \"There. Ready.\"",
         illustration: <SceneAddressCheck />,
       },
       body: (
@@ -156,7 +156,7 @@ export function LeavingTheHouseWalkthroughDraft({
       section: "1. Getting Ready to Send",
       title: "To the Junction",
       story: {
-        text: "The crates roll out in a long row.\nPip goes with them, down the line to the Junction.\nEverything in the house passes this station — and the way out is here too.\nAt the far side of the station stands another desk.\nA different mouse is sitting at it, with a big book.",
+        text: "The crates roll out in a long row.\nPip goes with them, down the line to the Junction.\nEverything in the house passes this station — and the way out is here too.\nAt the far side of the station stands another desk.\nA different mouse is sitting at it, with a big book [NAT table].",
         illustration: <SceneWalkingSignal />,
       },
       body: (
@@ -173,7 +173,7 @@ export function LeavingTheHouseWalkthroughDraft({
       section: "2. The Address That Means Nothing Outside",
       title: "Stopped at the Gate",
       story: {
-        text: "The first crate reaches the desk.\nThe mouse looks at its label — and raises a paw.\nGatekeeper: \"Stop.\"\nGatekeeper: \"This return address won't do.\"\nPip: \"Won't do? It's my number. 192.168.1.10.\"\nGatekeeper: \"In here, yes. Out there — nothing.\"",
+        text: "The first crate reaches the desk.\nThe mouse looks at its label — and raises a paw.\nGatekeeper: \"Stop.\"\nGatekeeper: \"This return address won't do.\"\nPip: \"Won't do? It's my number [IP address]. 192.168.1.10.\"\nGatekeeper: \"In here, yes. Out there — nothing.\"",
         illustration: <SceneGatewayDoor />,
       },
       body: (
@@ -194,7 +194,7 @@ export function LeavingTheHouseWalkthroughDraft({
       section: "2. The Address That Means Nothing Outside",
       title: "Every House Has a .10",
       story: {
-        text: "Pip: \"Nothing? But it's my address!\"\nGatekeeper: \"Yours — and not only yours.\"\nGatekeeper: \"Every house on every street uses the same inside numbers.\"\nGatekeeper: \"Somewhere out there, thousands of stations are .10, just like you.\"\nPip: \"Then an answer addressed to .10...\"\nGatekeeper: \"...would not know which house. Which you.\"\nGatekeeper: \"It is like writing 'my room' as the return address on a letter to another town.\"",
+        text: "Pip: \"Nothing? But it's my address!\"\nGatekeeper: \"Yours — and not only yours.\"\nGatekeeper: \"Every house on every street uses the same inside numbers [private IP addresses].\"\nGatekeeper: \"Somewhere out there, thousands of stations are .10, just like you.\"\nPip: \"Then an answer addressed to .10...\"\nGatekeeper: \"...would not know which house. Which you.\"\nGatekeeper: \"It is like writing 'my room' as the return address on a letter to another town.\"",
         illustration: <SceneWorldNetworks />,
       },
       body: (
@@ -214,7 +214,7 @@ export function LeavingTheHouseWalkthroughDraft({
       section: "2. The Address That Means Nothing Outside",
       title: "One Number for the Whole House",
       story: {
-        text: "Pip: \"Then how does anything get an answer?\"\nGatekeeper: \"The house has one number of its own. An outside number.\"\nGatekeeper: \"One number, for the whole house. The whole world knows that one.\"\nPip: \"One? For all of us?\"\nGatekeeper: \"Outside numbers are precious. There are not enough for every station in the world.\"\nGatekeeper: \"So the house shares one — and I keep track of who is who.\"",
+        text: "Pip: \"Then how does anything get an answer?\"\nGatekeeper: \"The house has one number of its own. An outside number [global IP address].\"\nGatekeeper: \"One number, for the whole house. The whole world knows that one.\"\nPip: \"One? For all of us?\"\nGatekeeper: \"Outside numbers are precious. There are not enough for every station in the world.\"\nGatekeeper: \"So the house shares one — and I keep track of who is who.\"",
         illustration: <ScenePrivateGlobal />,
       },
       body: (
@@ -237,7 +237,7 @@ export function LeavingTheHouseWalkthroughDraft({
       section: "3. The Rewrite",
       title: "Rewritten at the Gate",
       story: {
-        text: "The Gatekeeper takes the first crate's label and rewrites it.\nFrom: the house's outside number [global IP address] — and room 60001.\nPip: \"A different room?\"\nGatekeeper: \"The room on the new label is mine. Chosen here, at this desk.\"\nGatekeeper: \"The house's number alone would not be enough. An answer sent to the house could be for you — or for Dad's PC.\"\nGatekeeper: \"The room says whose it is.\"\nThe destination does not change: 203.0.113.50.\nCrate by crate, he rewrites them all.",
+        text: "The Gatekeeper takes the first crate's label and rewrites it.\nFrom: the house's outside number [global IP address] — and room [port] 60001.\nPip: \"A different room?\"\nGatekeeper: \"The room on the new label is mine. Chosen here, at this desk.\"\nGatekeeper: \"The house's number alone would not be enough. An answer sent to the house could be for you — or for Dad's PC.\"\nGatekeeper: \"The room says whose it is.\"\nThe destination does not change: 203.0.113.50.\nCrate by crate, he rewrites them all.",
         illustration: <SceneRecordBook />,
       },
       body: (
@@ -261,7 +261,7 @@ export function LeavingTheHouseWalkthroughDraft({
       section: "3. The Rewrite",
       title: "Written in the Gate Book",
       story: {
-        text: "As he rewrites, the Gatekeeper writes in his big book [NAT table].\nOne line: inside — 192.168.1.10, room 51234. Outside — the house's number, room 60001.\nPip: \"Why write it down?\"\nGatekeeper: \"So the answer can find its way home.\"\nGatekeeper: \"An answer will come to the house's number, to room 60001.\"\nGatekeeper: \"This line is how it will know that room means your phone.\"",
+        text: "As he rewrites, the Gatekeeper writes in his big book [NAT table].\nOne line: inside — 192.168.1.10, room 51234. Outside — the house's number, room 60001.\nPip: \"Why write it down?\"\nGatekeeper: \"So the answer can find its way home.\"\nGatekeeper: \"An answer will come to the house's number [global IP address], to room 60001.\"\nGatekeeper: \"This line is how it will know that room means your phone.\"",
         illustration: <SceneLogbook />,
       },
       body: (
@@ -283,7 +283,7 @@ export function LeavingTheHouseWalkthroughDraft({
       section: "3. The Rewrite",
       title: "How Answers Come Home",
       story: {
-        text: "Pip: \"So when the Board answers...\"\nGatekeeper: \"It answers the label. The house's outside number, room 60001.\"\nGatekeeper: \"The answer comes here, to my desk. I look the room up in my book.\"\nGatekeeper: \"Then I write your address back on it — 192.168.1.10, room 51234 — and send it down the line to your station.\"\nPip: \"And if there were no book?\"\nGatekeeper: \"Then the answer would stand at the door, with nowhere to go.\"",
+        text: "Pip: \"So when the Board answers...\"\nGatekeeper: \"It answers the label. The house's outside number, room 60001.\"\nGatekeeper: \"The answer comes here, to my desk. I look the room up in my book.\"\nGatekeeper: \"Then I write your address [local address] back on it — 192.168.1.10, room 51234 — and send it down the line to your station.\"\nPip: \"And if there were no book?\"\nGatekeeper: \"Then the answer would stand at the door, with nowhere to go.\"",
         illustration: <SceneHandingOff />,
       },
       body: (

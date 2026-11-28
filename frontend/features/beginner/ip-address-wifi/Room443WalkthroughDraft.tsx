@@ -111,7 +111,7 @@ export function Room443WalkthroughDraft({
       section: "1. Questions First",
       title: "A List of Questions",
       story: {
-        text: "Pip arrives at the Junction carrying no crates.\nHe carries questions.\nPip: \"Why didn't it arrive?\"\nThe Gatekeeper does not answer at once.\nGatekeeper: \"One by one. First, we look at the record.\"\nHe opens his big book, and turns to that night.",
+        text: "Pip arrives at the Junction carrying no crates.\nHe carries questions.\nPip: \"Why didn't it arrive?\"\nThe Gatekeeper does not answer at once.\nGatekeeper: \"One by one. First, we look at the record.\"\nHe opens his big book [NAT table], and turns to that night.",
         illustration: <SceneLanDesk />,
       },
       body: (
@@ -133,7 +133,7 @@ export function Room443WalkthroughDraft({
       section: "2. One Line in the Book",
       title: "The Address Was Right",
       story: {
-        text: "Pip: \"First — was the address wrong?\"\nThe Gatekeeper runs a paw down the line.\nGatekeeper: \"To: 203.0.113.50.\"\nGatekeeper: \"The number from the Operator's note. Copied onto every crate.\"\nPip: \"So the address wasn't wrong.\"\nGatekeeper: \"The address was right.\"",
+        text: "Pip: \"First — was the address wrong?\"\nThe Gatekeeper runs a paw down the line.\nGatekeeper: \"To: 203.0.113.50.\"\nGatekeeper: \"The number [IP address] from the Operator's note. Copied onto every crate.\"\nPip: \"So the address wasn't wrong.\"\nGatekeeper: \"The address was right.\"",
         illustration: <SceneRecordBook />,
       },
       body: (
@@ -149,7 +149,7 @@ export function Room443WalkthroughDraft({
       section: "2. One Line in the Book",
       title: "It Went Out",
       story: {
-        text: "Pip: \"Did it even go out?\"\nGatekeeper: \"This line exists because your crates passed this desk.\"\nGatekeeper: \"And here — the return address, rewritten. My hand.\"\nPip: \"It went out.\"\nGatekeeper: \"It went out. Whatever happened, happened past here.\"",
+        text: "Pip: \"Did it even go out?\"\nGatekeeper: \"This line exists because your crates passed this desk.\"\nGatekeeper: \"And here — the return address [source address], rewritten. My hand.\"\nPip: \"It went out.\"\nGatekeeper: \"It went out. Whatever happened, happened past here.\"",
         illustration: <SceneLogbook />,
       },
       body: (
@@ -214,7 +214,7 @@ export function Room443WalkthroughDraft({
       section: "4. Four Numbers",
       title: "Four Numbers, One Name",
       story: {
-        text: "The Gatekeeper reads the line one last time, slowly.\nGatekeeper: \"Your side: 192.168.1.10, room 51234 — your phone's address [local address], your phone's room.\"\nGatekeeper: \"My side: the house's outside number, room 60001 — the room I chose, at this desk.\"\nGatekeeper: \"Their side: 203.0.113.50, room 443.\"\nGatekeeper: \"An answer comes back to my room. This line says whose it is.\"\nPip: \"Now this conversation has a name.\"",
+        text: "The Gatekeeper reads the line one last time, slowly.\nGatekeeper: \"Your side: 192.168.1.10, room 51234 — your phone's address [local address], your phone's room.\"\nGatekeeper: \"My side: the house's outside number [global IP address], room 60001 — the room I chose, at this desk.\"\nGatekeeper: \"Their side: 203.0.113.50, room 443.\"\nGatekeeper: \"An answer comes back to my room. This line says whose it is.\"\nPip: \"Now this conversation has a name.\"",
         illustration: <SceneLogbook />,
       },
       body: (

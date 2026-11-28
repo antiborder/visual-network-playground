@@ -17,8 +17,8 @@ const CHAPTERS = [
   { id: "finding-the-board", label: "Chapter 4: Finding the Board" },
   { id: "leaving-the-house", label: "Chapter 5: Leaving the House" },
   { id: "seeing-it-all-at-once", label: "Chapter 6: Seeing It All at Once" },
-  { id: "room-443", label: "Chapter 7: Room 443" },
-  { id: "sorted-by-name", label: "Chapter 8: Sorted by Name" },
+  { id: "sorted-by-name", label: "Chapter 7: Sorted by Name" },
+  { id: "room-443", label: "Chapter 8: Room 443" },
 ] as const;
 
 export type DraftChapterId = (typeof CHAPTERS)[number]["id"];
@@ -70,10 +70,15 @@ function writeUrl(ch: DraftChapterId, step: number | undefined, push: boolean) {
  * only) replaces the old full-coverage `FindingTheBoardWalkthrough`
  * here, "Leaving the House" was rewritten around the Gatekeeper, and
  * "Seeing It All at Once" (recap + the arrival arc's reveal) and
- * "Room 443" (ports; the investigation's first chapter) are new.
- * "Sorted by Name" (LAN switching; the investigation's second chapter,
- * travelling the inside stretch with the crates) followed on 2026-11-28
- * from ch8-story-proposal.md v2. "Did It Work?" still needs to be
+ * "Room 443" (ports) and "Seeing It All at Once" (recap + the arrival
+ * arc's reveal) are new. "Sorted by Name" (LAN switching) followed on
+ * 2026-11-28 from ch8-story-proposal.md v2. The investigation's chapter
+ * order was swapped the same day (Atsushi's decision): the
+ * investigation follows the journey's physical order, so "Sorted by
+ * Name" (the inside stretch) is Chapter 7 and "Room 443" — re-staged
+ * as the stop at the Gatekeeper's desk before the gate crossing — is
+ * Chapter 8. Folding the ports material into Chapter 5 was the
+ * rejected alternative. "Did It Work?" still needs to be
  * written/ported in too.
  *
  * The address bar carries ?ch=<chapter>&step=<1-based step> (2026-11-22):
@@ -203,16 +208,16 @@ export function DraftBeginnerPlayground() {
           onStepChange={handleStepChange}
         />
       )}
-      {ready && activeChapter === "room-443" && (
-        <Room443WalkthroughDraft
+      {ready && activeChapter === "sorted-by-name" && (
+        <SortedByNameWalkthroughDraft
           key={navNonce}
           onComplete={() => {}}
           initialStep={initialStep}
           onStepChange={handleStepChange}
         />
       )}
-      {ready && activeChapter === "sorted-by-name" && (
-        <SortedByNameWalkthroughDraft
+      {ready && activeChapter === "room-443" && (
+        <Room443WalkthroughDraft
           key={navNonce}
           onComplete={() => {}}
           initialStep={initialStep}

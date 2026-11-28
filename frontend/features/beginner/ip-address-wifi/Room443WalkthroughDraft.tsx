@@ -7,27 +7,31 @@ import { LanMap } from "./LanMap";
 import { DEFAULT_DEVICES, type Device } from "./network";
 import {
   SceneAddressCheck,
-  SceneFallingAsleep,
+  SceneGatewayDoor,
   SceneLanDesk,
   SceneLogbook,
-  SceneReadyToUpload,
   SceneRecordBook,
 } from "./StorybookScenes";
 
-/** DRAFT — Chapter 7 "Room 443" (ports), written 2026-11-27 to the v2
- * story design (~/workspace/networking-course/ch7-story-proposal.md).
- * The middle track opens: the arrival arc's investigation, chapter one.
- * The resolve was already made at Chapter 6's close, so this chapter
- * starts with its execution — Pip leads, questioning the departure side
- * before anything is sent. The evidence is one line of the Gatekeeper's
- * book (the NAT table) from that night; the chapter reads that line
- * piece by piece and clears the whole departure side, while the cause
- * stays missing: the book ends at the gate. Port's counterpart is a
- * room (decided 2026-11-26): part of the address, two-way, unlike a
- * gate or a corridor. Honest premise, kept throughout: the ports were
- * there the first time too — the only difference is that Pip never read
- * them. The source port shown is 51234, the proposal's placeholder for
- * an ephemeral port. Port staging corrected 2026-11-28 (Atsushi's
+/** DRAFT — Chapter 8 "Room 443" (ports), written 2026-11-27 to the v2
+ * story design (~/workspace/networking-course/ch7-story-proposal.md),
+ * and re-staged 2026-11-28 when the chapter order was swapped
+ * (Atsushi's decision): the investigation follows the journey's
+ * physical order, so the switching chapter ("Sorted by Name") now
+ * opens the investigation, and this chapter is the stop at the
+ * Gatekeeper's desk — Pip arrives at the Junction with this time's
+ * crates (end of Chapter 7), and before they cross the gate he reads
+ * the record of last time with the Gatekeeper. The evidence is one
+ * line of the Gatekeeper's book (the NAT table) from that night; the
+ * chapter reads that line piece by piece and clears the whole
+ * departure side, while the cause stays missing: the book ends at the
+ * gate. The chapter now ends with the crates handed over at the desk,
+ * before the rewrite — the gate crossing is the next chapter's
+ * stretch. Port's counterpart is a room (decided 2026-11-26): part of
+ * the address, two-way, unlike a gate or a corridor. Honest premise,
+ * kept throughout: the ports were there the first time too — the only
+ * difference is that Pip never read them. The source port shown is
+ * 51234, the proposal's placeholder for an ephemeral port. Port staging corrected 2026-11-28 (Atsushi's
  * questions): two different rooms with two different owners — the
  * phone's own room [source port] 51234, chosen by the phone and
  * meaningful only together with the phone's address, and the
@@ -66,27 +70,28 @@ export function Room443WalkthroughDraft({
       section: "Welcome",
       title: "What you learn from this chapter",
       story: {
-        text: "Pip sits on his bed.\nHe is not sleepy. He is ready.\nLast night he decided: next time, he will make sure — all the way.\nPip: \"This time, I ask everything first.\"\nPip: \"Then I send it.\"\nHe closes his eyes.",
-        illustration: <SceneFallingAsleep />,
+        text: "The crates roll across the Junction, to the Gatekeeper's desk — and stop.\nBefore the gate, Pip wants one thing.\nPip: \"Wait. Before they cross — I want to check last time.\"\nGatekeeper: \"Last time?\"\nPip: \"The record. It's in your book.\"",
+        illustration: <SceneLanDesk />,
       },
       body: (
         <div className="space-y-3">
           <p>
-            The photo did not arrive, and nobody knows why. This time, Pip is not sending
-            first and wondering later. Before a single crate moves, he goes to the
-            Junction with a list of questions.
+            The inside stretch is checked — Chapter 7 watched it, crate by crate. Now
+            the crates stand at the Gatekeeper&rsquo;s desk, about to cross the gate.
+            Before they do, Pip stops. The one piece of written evidence in this whole
+            story is here: the record of last time&rsquo;s sending, one line in the
+            Gatekeeper&rsquo;s book.
           </p>
           <p>
-            The evidence is one line in the Gatekeeper&rsquo;s book — the record of that
-            night&rsquo;s sending. Reading it closely teaches this chapter&rsquo;s subject:
-            an address is not finished at the number. It needs a room as well.
+            Reading that line closely teaches this chapter&rsquo;s subject: an address
+            is not finished at the number. It needs a room as well.
           </p>
           <ol className="list-decimal pl-5 space-y-0.5">
             <li>Questions First</li>
             <li>One Line in the Book</li>
             <li>The Numbers He Never Read</li>
             <li>Four Numbers</li>
-            <li>Out Again</li>
+            <li>This Time</li>
           </ol>
         </div>
       ),
@@ -97,8 +102,9 @@ export function Room443WalkthroughDraft({
       title: "The chapter at a glance",
       body: (
         <p>
-          In short: Pip checks the departure side, doubt by doubt — the address, the
-          going out, the rewriting. All of it was right. Along the way he finds two
+          In short: at the desk, before this time&rsquo;s crates cross, Pip checks last
+          time&rsquo;s departure, doubt by doubt — the address, the going out, the
+          rewriting. All of it was right. Along the way he finds two
           numbers on the crates that he never read before: a room on the Board&rsquo;s
           side, and a room on his own. Four numbers together name one conversation. The
           cause of the failure is not in the book — the book ends at the gate.
@@ -111,7 +117,7 @@ export function Room443WalkthroughDraft({
       section: "1. Questions First",
       title: "A List of Questions",
       story: {
-        text: "Pip arrives at the Junction carrying no crates.\nHe carries questions.\nPip: \"Why didn't it arrive?\"\nThe Gatekeeper does not answer at once.\nGatekeeper: \"One by one. First, we look at the record.\"\nHe opens his big book [NAT table], and turns to that night.",
+        text: "Pip: \"Why didn't it arrive?\"\nThe Gatekeeper does not answer at once.\nGatekeeper: \"One by one. First, we look at the record.\"\nHe opens his big book [NAT table], and turns to that night.",
         illustration: <SceneLanDesk />,
       },
       body: (
@@ -122,8 +128,9 @@ export function Room443WalkthroughDraft({
             at a time, and check each against the record.
           </p>
           <p>
-            The record is the book from Chapter 5 — the pairing written when the crates
-            went out. Everything the gate knows about that night is in one line of it.
+            The record is the book from Chapter 5 — the pairing written when last
+            time&rsquo;s crates went out. Everything the gate knows about that night is
+            in one line of it. This time&rsquo;s crates wait at the desk while he reads.
           </p>
         </div>
       ),
@@ -262,38 +269,37 @@ export function Room443WalkthroughDraft({
       title: "Then Why?",
       story: {
         text: "Pip: \"Then why didn't it arrive?\"\nThe Gatekeeper closes the book.\nGatekeeper: \"Everything here was written right.\"\nGatekeeper: \"What happens past the gate is not in this book.\"\nPip looks down the main line, into the dark.\nSomewhere out there, the answer is — unwritten, in nobody's book.",
-        illustration: <SceneLanDesk />,
+        illustration: <SceneGatewayDoor />,
       },
       body: (
         <div className="space-y-3">
           <p>
-            The investigation&rsquo;s first chapter ends with the departure side fully
+            The desk check ends with the departure side fully
             cleared — and the cause unfound. That is a result, not a failure: it rules
             out everything the house controls.
           </p>
           <p>
-            What remains is the road itself, stretch by stretch, and no book covers it.
-            From the next chapter on, the only way to check the road is to travel it with
-            open eyes.
+            What remains is past the gate — the stretch no book covers. The only way to
+            check it is to cross it, watching.
           </p>
         </div>
       ),
     },
-    // ----------------------------- 5. Out Again -----------------------
+    // ----------------------------- 5. This Time -----------------------
     {
-      section: "5. Out Again",
-      title: "Written by Hand This Time",
+      section: "5. This Time",
+      title: "He Reads Them Himself",
       story: {
-        text: "The new crates are ready.\nThis time, Pip writes the label himself.\nPip: \"To: 203.0.113.50, room 443.\"\nPip: \"From: 192.168.1.10, room 51234 — my address [local address], my room.\"\nHe reads all four aloud, one by one.\nThe Gatekeeper nods. The crates roll out through the gate.\nPip: \"This time, I'm watching.\"",
-        illustration: <SceneReadyToUpload />,
+        text: "The Gatekeeper turns the book to a fresh page — tonight's line, not yet written.\nPip reads this time's labels himself, slowly.\nPip: \"To: 203.0.113.50, room 443.\"\nPip: \"From: 192.168.1.10, room 51234 — my address [local address], my room.\"\nPip: \"And you'll rewrite it. To the house's number — and your room.\"\nGatekeeper: \"60001. As always.\"\nPip: \"This time, I know what's written. All of it.\"",
+        illustration: <SceneAddressCheck />,
       },
       body: (
         <p>
           The sending is the same sending. The difference is the sender: Pip now knows
           what is written on his packets — the destination IP address and port, his own
           IP address and source port — and what the router will rewrite them to, and
-          why. The journey begins again, and this time every stretch of it will be
-          watched.
+          why. The crates are in the Gatekeeper&rsquo;s hands now. Next chapter: through
+          the gate, watching.
         </p>
       ),
     },
@@ -310,7 +316,7 @@ export function Room443WalkthroughDraft({
             <li>The four values the outside world sees — the house&rsquo;s global IP address, the router&rsquo;s port, the Board&rsquo;s IP address, port 443 — are the 4-tuple: they name exactly one conversation. Replies are matched by reading the table line in reverse.</li>
             <li>The ports were there the first time too. Pip just never read them.</li>
           </ul>
-          <p>Next chapter: the road itself, stretch by stretch — starting inside the house.</p>
+          <p>Next chapter: through the gate — the first stretch of the outside, watched this time.</p>
         </div>
       ),
       visual: <LanMap devices={houseDevices} conflictIds={new Set()} packet={null} />,

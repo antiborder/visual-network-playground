@@ -14,15 +14,19 @@ import {
   SceneWalkingSignal,
 } from "./StorybookScenes";
 
-/** DRAFT — Chapter 8 "Sorted by Name" (LAN switching), written
+/** DRAFT — Chapter 7 "Sorted by Name" (LAN switching), written
  * 2026-11-28 to the v2 story design
  * (~/workspace/networking-course/ch8-story-proposal.md). The arrival
- * arc's investigation, chapter two: the first stretch of the road,
- * inside the house, from Pip's station to the Junction. The chapter's
- * form is the re-sending itself — Pip travels WITH the crates whose
- * labels he wrote by hand at the end of Chapter 7, and everything the
- * Operator explains is explained about these very crates; there is no
- * side demonstration, and Momo does not appear. Teaching content
+ * arc's investigation, chapter one: the first stretch of the road,
+ * inside the house, from Pip's station to the Junction. Chapter order
+ * decided 2026-11-28 (Atsushi): the investigation follows the
+ * journey's physical order, so this chapter opens the investigation
+ * and the ports chapter ("Room 443") follows as the stop at the
+ * Gatekeeper's desk before the gate crossing — folding ports into
+ * Chapter 5 was the rejected alternative. The chapter's
+ * form is the re-sending itself — Pip travels WITH the crates, and
+ * everything the Operator explains is explained about these very
+ * crates; there is no side demonstration, and Momo does not appear. Teaching content
  * (curriculum items 44–45): inside the house, frames are forwarded by
  * the station's name [MAC address], not by the number [IP address],
  * which belongs to the whole journey and is not read on this stretch;
@@ -38,11 +42,7 @@ import {
  * did not vanish here. Story text annotates technical counterparts in
  * [] (the series' standing rule from 2026-11-28); explanation text
  * uses the technical terms directly. Illustrations are the existing
- * StorybookScenes placeholders. Note: this chapter is written to the
- * proposal's premise that Chapter 7 ends with the addressing finished
- * and the journey beginning here; Chapter 7's Step 10 currently sends
- * the crates out already — that seam is a known, still-open adjustment
- * (see the proposal's 未決). */
+ * StorybookScenes placeholders. */
 export function SortedByNameWalkthroughDraft({
   onComplete,
   initialStep,
@@ -78,10 +78,11 @@ export function SortedByNameWalkthroughDraft({
       body: (
         <div className="space-y-3">
           <p>
-            The crates are addressed — Pip wrote the labels himself, and read all four
-            numbers aloud. Now the journey begins again, and this time Pip travels with
-            them, stretch by stretch. The first stretch is the one inside the house:
-            from his own station to the Junction.
+            Last night, Pip learned that the photo never arrived — and decided: next
+            time, he will watch the whole way. Tonight the journey begins again. His
+            phone addresses the crates as it always does. The difference is that Pip
+            goes with them, stretch by stretch. The first stretch is the one inside the
+            house: from his own station to the Junction.
           </p>
           <p>
             What this chapter checks is how things are sorted inside the house. The
@@ -219,7 +220,7 @@ export function SortedByNameWalkthroughDraft({
       section: "3. Checked",
       title: "Not in the House",
       story: {
-        text: "Pip: \"So inside the house, a crate can't get lost?\"\nOperator: \"Inside the house, no. If I don't know, I can ask every line.\"\nPip: \"...Then my photo didn't vanish inside the house.\"\n(The crates roll across the station, to the Gatekeeper's desk.)\nPip: \"This stretch is checked. Next is outside.\"",
+        text: "Pip: \"So inside the house, a crate can't get lost?\"\nOperator: \"Inside the house, no. If I don't know, I can ask every line.\"\nPip: \"...Then my photo didn't vanish inside the house.\"\n(The crates roll across the station, to the Gatekeeper's desk.)\nPip: \"This stretch is checked. The desk next.\"",
         illustration: <SceneLanDesk />,
       },
       body: (
@@ -232,8 +233,9 @@ export function SortedByNameWalkthroughDraft({
           </p>
           <p>
             Pip watches his crates cross the station to the Gatekeeper&rsquo;s desk.
-            Whatever happened to the photo, it happened further on. Next chapter: the
-            gate, and the first stretch of the outside.
+            Whatever happened to the photo, it happened further on. But before the
+            crates cross the gate, there is one thing at this desk to check: the record
+            of last time. That is the next chapter.
           </p>
         </div>
       ),
@@ -252,7 +254,7 @@ export function SortedByNameWalkthroughDraft({
             <li>A name that is not in the table is flooded to every line except the one it came from. Only the addressed station takes the frame, and its reply puts the name into the table.</li>
             <li>Inside the house, a crate cannot get lost. The photo vanished further on.</li>
           </ul>
-          <p>Next chapter: through the gate, and the first stretch of the outside.</p>
+          <p>Next chapter: at the Gatekeeper&rsquo;s desk — the record of last time, and the numbers Pip never read.</p>
         </div>
       ),
       visual: <LanMap devices={houseDevices} conflictIds={new Set()} packet={null} />,
